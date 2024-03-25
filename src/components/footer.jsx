@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LanguageIcon from "@mui/icons-material/Language";
 
 export function Footer() {
   return (
-    <footer className="px-5 fixed bottom-16 z-0 w-full gap-7 bg-[var(--secondary-color)]">
+    <footer className="px-5 fixed bottom-16 z-0 w-full gap-7 bg-[var(--secondary-color)] md:bottom-0">
+      {/*Apartado about, privacidad, condiciones de uso*/}
       <section className="py-5 flex flex-col-reverse z-0 w-full gap-7 bg-[var(--secondary-color)] border-solid border-t-2">
-        <nav className="flex items-center jutify-center w-full text-xs font-thin">
-          <span className="flex flex-col gap-x-1 gap-1">
+        <nav className="flex items-center justify-start w-full text-xs font-thin md:items-center md:justify-center">
+          <span className="flex flex-col gap-x-1 gap-1 md:flex-row md:gap-x-2">
             <p>© 2024 Subrealista, Inc.</p>
             <Link to="/privacidad">Privacidad</Link>
             <Link to="/condiciones">Condiciones</Link>
@@ -13,20 +18,21 @@ export function Footer() {
           </span>
         </nav>
 
-        <nav className="flex flex-row items-center jutify-center w-full text-xs font-thin justify-between">
+        {/*Apartado redes sociales y lenguaje */}
+        <nav className="flex flex-row items-center jutify-center w-full text-xs font-thin justify-between md:justify-center md:gap-x-5">
           <span className="flex flex-row items-center">
-            <img src="/language.svg" alt="idioma" className="h-full mx-1" />
+            <LanguageIcon className="mx-1" />
             <p className="text-center h-full">Español (ES)</p>
           </span>
           <span className="flex flex-row items-center gap-3">
             <Link to="#">
-              <img src="/facebook.svg" alt="facebook" />
+              <FacebookIcon sx={{ fontSize: "2rem" }} />
             </Link>
             <Link to="#">
-              <img src="/twitter.svg" alt="twitter" />
+              <TwitterIcon sx={{ fontSize: "2rem" }} />
             </Link>
             <Link to="#">
-              <img src="instagram.svg" alt="instagram" />
+              <InstagramIcon sx={{ fontSize: "2rem" }} />
             </Link>
           </span>
         </nav>
