@@ -6,10 +6,10 @@ import LanguageIcon from "@mui/icons-material/Language";
 
 export function Footer() {
   return (
-    <footer className="px-5 sticky pb-16 z-0 w-full gap-7 bg-[var(--secondary-color)] md:bottom-0 md:pb-0 md:static">
+    <footer>
       {/*Apartado about, privacidad, condiciones de uso*/}
-      <section className="py-5 flex flex-col-reverse z-0 w-full gap-7 bg-[var(--secondary-color)] border-solid border-t-2">
-        <nav className="flex items-center justify-start w-full text-xs font-normal md:items-center md:justify-center">
+      <section className="py-5 w-full flex flex-col-reverse z-0 gap-7 bg-[var(--secondary-color)] border-solid border-t-2">
+        <nav className="flex items-center justify-start text-xs font-normal md:items-center md:justify-center">
           <span className="flex flex-col gap-x-1 gap-1 md:flex-row md:gap-x-2">
             <p>© 2024 Subrealista, Inc.</p>
             <Link to="/privacidad">Privacidad</Link>
