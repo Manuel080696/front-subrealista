@@ -20,7 +20,7 @@ export function Header() {
             className="flex flex-col justify-center items-center h-3/5"
           >
             <SearchIcon className="text-gray" />
-            <p className="my-1 font-thin">Explorar</p>
+            <p className="my-1 font-light">Explorar</p>
           </Link>
         </li>
         <li className="w-24 active:text-[var(--quaternary-color)]">
@@ -29,7 +29,7 @@ export function Header() {
             className="flex flex-col justify-center items-center h-3/5"
           >
             <FavoriteBorderIcon className="text-gray" />
-            <p className="my-1 font-thin">Favoritos</p>
+            <p className="my-1 font-light">Favoritos</p>
           </Link>
         </li>
         <li className="w-24 active:text-[var(--quaternary-color)] ">
@@ -38,7 +38,7 @@ export function Header() {
             className="w-24 h-full flex flex-col justify-center items-center"
           >
             <AccountCircleOutlinedIcon className="text-gray" />
-            <p className="my-1 font-thin">Iniciar Sesión</p>
+            <p className="my-1 font-light">Iniciar Sesión</p>
           </Link>
         </li>
       </ul>
@@ -71,4 +71,4 @@ export function Header() {
   );
 }
 
-export default header;
+export default Header;
