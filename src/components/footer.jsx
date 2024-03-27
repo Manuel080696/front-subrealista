@@ -6,10 +6,10 @@ import LanguageIcon from "@mui/icons-material/Language";
 
 export function Footer() {
   return (
-    <footer className="px-5 fixed bottom-16 z-0 w-full gap-7 bg-[var(--secondary-color)] md:bottom-0">
+    <footer className="px-5 sticky pb-16 z-0 w-full gap-7 bg-[var(--secondary-color)] md:bottom-0 md:pb-0 md:static">
       {/*Apartado about, privacidad, condiciones de uso*/}
       <section className="py-5 flex flex-col-reverse z-0 w-full gap-7 bg-[var(--secondary-color)] border-solid border-t-2">
-        <nav className="flex items-center justify-start w-full text-xs font-thin md:items-center md:justify-center">
+        <nav className="flex items-center justify-start w-full text-xs font-normal md:items-center md:justify-center">
           <span className="flex flex-col gap-x-1 gap-1 md:flex-row md:gap-x-2">
             <p>© 2024 Subrealista, Inc.</p>
             <Link to="/privacidad">Privacidad</Link>
@@ -19,7 +19,7 @@ export function Footer() {
         </nav>
 
         {/*Apartado redes sociales y lenguaje */}
-        <nav className="flex flex-row items-center jutify-center w-full text-xs font-thin justify-between md:justify-center md:gap-x-5">
+        <nav className="flex flex-row items-center jutify-center w-full text-xs font-normal justify-between md:justify-center md:gap-x-5">
           <span className="flex flex-row items-center">
             <LanguageIcon className="mx-1" />
             <p className="text-center h-full">Español (ES)</p>
@@ -41,4 +41,4 @@ export function Footer() {
   );
 }
 
-export default footer;
+export default Footer;
