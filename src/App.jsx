@@ -2,6 +2,7 @@ import { Footer } from "./components/footer";
 import { Header } from "./components/header";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
+import "./App.css";
 
 function App() {
   return (

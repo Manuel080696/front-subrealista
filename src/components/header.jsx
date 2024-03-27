@@ -11,7 +11,7 @@ import { useState } from "react";
 export function Header() {
   const [active, setActive] = useState(false);
   return (
-    <header className="min-h-min h-min fixed bottom-0 z-50 bg-[var(--primary-color)] md:top-0 md:sticky md:pt-2 md:pb-5 md:border-solid md:border-b-2 md:drop-shadow-sm">
+    <header className="min-h-min w-full h-min fixed bottom-0 z-50 bg-[var(--primary-color)] md:top-0 md:sticky md:pt-2 md:pb-5 md:border-solid md:border-b-2 md:drop-shadow-sm">
       {/*Header de móvil*/}
       <ul className="flex flex-row w-screen justify-center items-center h-16 text-[var(--quintanary-color)] text-xs md:hidden">
         <li className="w-24 active:text-[var(--quaternary-color)]   ">

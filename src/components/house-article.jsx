@@ -1,19 +1,13 @@
-import { useNavigate } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
-import ImagesCarrusel from "./images-carrusel";
+import Carousel from "./carousel";
 
-export default function HouseArticle() {
-  const navigate = useNavigate();
-
-  const handleNavigate = (e) => {
-    e.preventDefault();
-    navigate("/rent:id");
-  };
-
+export default function HouseArticle({ images }) {
   return (
-    <article className="flex flex-col gap-4">
-      <ImagesCarrusel />
-      <figcaption className="flex flex-row justify-between">
+    <article className="flex flex-col">
+      <section>
+        <Carousel images={images} />
+      </section>
+      <figcaption className="flex flex-row justify-between px-4 py-2">
         <section className="flex flex-col gap-2">
           <aside className="flex flex-col">
             <h4 className="font-semibold text-sm">Localización</h4>
