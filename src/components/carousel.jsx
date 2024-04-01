@@ -85,18 +85,18 @@ export default function Carousel({ images }) {
         className="carousel-inner"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {images.map((image, index) => (
+        {images?.map((image, index) => (
           <div className="carousel-item" key={index}>
             <img
               className="carousel-img"
-              src={image.imgPath}
+              src={image.rent_image}
               alt={`Slide ${index + 1}`}
             />
           </div>
         ))}
       </div>
       <div className="carousel-dots">
-        {images.map((_, index) => (
+        {images?.map((_, index) => (
           <div
             key={index}
             className={`dot ${index === currentIndex ? "active-dot" : ""}`}
