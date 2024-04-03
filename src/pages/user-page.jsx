@@ -1,4 +1,10 @@
-import { useEffect, useRef, useState, useCallback, useContext } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useContext,
+} from "react";
 import { Rating } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
@@ -201,19 +207,38 @@ export function UserPage() {
               </button>
             ) : null}
             <ul className="flex flex-col mt-5 gap-5">
+              {userData ? (
+                userData.bio?.length || userData.address?.length !== 0 ? (
+                  <React.Fragment>
+                    {userData.address && userData.address.length !== 0 && (
+                      <li className="flex flex-row gap-2">
+                        <LocationOnIcon />
+                        <p>{userData.address}</p>
+                      </li>
+                    )}
+                    {userData.bio && userData.bio.length !== 0 && (
+                      <p>{userData.bio}</p>
+                    )}
+                  </React.Fragment>
+                ) : (
+                  <p>
+                    Aún no se han añadido datos en tu perfil,{" "}
+                    <Link
+                      to={`/users/${userData.username}/update`}
+                      className="underline font-semibold"
+                    >
+                      haz click aquí
+                    </Link>
+                    .
+                  </p>
+                )
+              ) : null}
               {/* {language.length !== 0 ? (
                 <li className="flex flex-row">
                   <LocationOnIcon />
                   <p>{userData?.address}</p>
                 </li>
               ) : null} */}
-              {userData?.address?.length !== 0 ? (
-                <li className="flex flex-row gap-2">
-                  <LocationOnIcon />
-                  <p>{userData?.address}</p>
-                </li>
-              ) : null}
-              {userData?.bio?.length !== 0 ? <p>{userData?.bio}</p> : null}
             </ul>
           </section>
         </section>
