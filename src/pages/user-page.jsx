@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, useCallback, useContext } from "react";
 import { Rating } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import IconButton from "@mui/material/IconButton";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 /* import { modifyUserPic } from "../api/put-modify-user-profile-pic"; */
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Main } from "../components/main";
 import { useCurrentUser } from "../hooks/use-current-user";
 import { toast } from "sonner";
@@ -27,8 +28,8 @@ export function UserPage() {
   const currentUser = useCurrentUser();
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
   const shortDate = dayjs(userData?.createdAt).format("DD/MM/YYYY");
+  console.log(userData);
 
-  /*  console.log(userData); */
   useEffect(() => {
     const handleResize = () => {
       setIsMobileView(window.innerWidth <= 768);
@@ -122,7 +123,13 @@ export function UserPage() {
   return (
     <Main>
       <article className="flex w-full max-w-screen-2xl">
-        <section className="flex flex-col w-full md:flex-row">
+        <section className="flex flex-col w-full pb-10 md:flex-row border-b">
+          <Link
+            to={`/users/${userData?.username}/update`}
+            className="flex flex-col justify-center items-end mb-5 font-semibold underline md:hidden"
+          >
+            Editar perfil
+          </Link>
           <span
             className="flex flex-col md:w-2/5 md:min-w-72 bg-white rounded-lg shadow-md p-5"
             onMouseEnter={handleMouseEnter}
@@ -183,21 +190,31 @@ export function UserPage() {
             </span>
           </span>
 
-          <section className="flex flex-col px-10 w-full">
-            <h2 className="text-3xl font-bold">{`Información de ${userData?.username}`}</h2>
+          <section className="flex flex-col px-10 w-full pt-4">
+            <h2 className="text-3xl font-bold text-center mt-5 md:text-start">{`Información de ${userData?.username}`}</h2>
             {accountOwnership ? (
               <button
-                onClick={() => navigate("/users/update")}
-                className="flex flex-col items-center text-xs mt-5 font-semibold justify-center w-full border border-black p-2 rounded-lg min-w-28 max-w-28 md:w-2/5 "
+                onClick={() => navigate(`/users/${userData?.username}/update`)}
+                className="hidden md:flex md:flex-col md:items-center md:text-xs md:mt-5 md:font-semibold md:justify-center md:w-full md:border md:border-black md:p-2 md:rounded-lg md:min-w-28 md:max-w-28 md:w-2/5"
               >
                 {isMobileView ? <EditIcon /> : "Editar tu perfil"}
               </button>
-            ) : (
-              ""
-            )}
-            <span className="mt-5">
-              <p className="mt-2">{userData?.bio}</p>
-            </span>
+            ) : null}
+            <ul className="flex flex-col mt-5 gap-5">
+              {/* {language.length !== 0 ? (
+                <li className="flex flex-row">
+                  <LocationOnIcon />
+                  <p>{userData?.address}</p>
+                </li>
+              ) : null} */}
+              {userData?.address?.length !== 0 ? (
+                <li className="flex flex-row gap-2">
+                  <LocationOnIcon />
+                  <p>{userData?.address}</p>
+                </li>
+              ) : null}
+              {userData?.bio?.length !== 0 ? <p>{userData?.bio}</p> : null}
+            </ul>
           </section>
         </section>
       </article>
@@ -209,7 +226,9 @@ export function UserPage() {
       )}
 
       <section className="mb-3 mt-3">
-        <h2 className="text-2xl text-center mb-3">Mis Posts</h2>
+        <h2 className="text-3xl font-bold text-center pt-3 pb-5 md:pt-0">
+          Mis Posts
+        </h2>
         <ul className="flex flex-row flex-wrap basis-20 w-full justify-around gap-3 max-w-screen-2xl md:flex-nowrap">
           {rents?.map((image) => {
             const rentImages = images.find(
