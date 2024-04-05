@@ -1,0 +1,272 @@
+[
+  {
+    "rating_id": 1,
+    "owner_id": 1,
+    "tenant_id": 2,
+    "renting_id": 1,
+    "rating": 5,
+    "comments": "Excelente experiencia. El propietario fue muy amable y servicial.",
+    "createdAt": "2024-03-28 12:00:00"
+  },
+  {
+    "rating_id": 2,
+    "owner_id": 1,
+    "tenant_id": 3,
+    "renting_id": 1,
+    "rating": 4,
+    "comments": "Buena comunicación y alojamiento cómodo. Recomendado.",
+    "createdAt": "2024-03-28 12:00:01"
+  },
+  {
+    "rating_id": 3,
+    "owner_id": 1,
+    "tenant_id": 4,
+    "renting_id": 1,
+    "rating": 3,
+    "comments": "La propiedad estaba bien, pero podría mejorar la limpieza.",
+    "createdAt": "2024-03-28 12:00:02"
+  },
+  {
+    "rating_id": 4,
+    "owner_id": 2,
+    "tenant_id": 7,
+    "renting_id": 2,
+    "rating": 5,
+    "comments": "Increíble propiedad y excelente atención del propietario.",
+    "createdAt": "2024-03-28 12:00:03"
+  },
+  {
+    "rating_id": 5,
+    "owner_id": 2,
+    "tenant_id": 8,
+    "renting_id": 2,
+    "rating": 4,
+    "comments": "Buena ubicación y comodidades. Nos encantó nuestra estancia.",
+    "createdAt": "2024-03-28 12:00:04"
+  },
+  {
+    "rating_id": 6,
+    "owner_id": 2,
+    "tenant_id": 9,
+    "renting_id": 2,
+    "rating": 5,
+    "comments": "Una estancia perfecta. La casa era aún mejor de lo esperado.",
+    "createdAt": "2024-03-28 12:00:05"
+  },
+  {
+    "rating_id": 7,
+    "owner_id": 3,
+    "tenant_id": 10,
+    "renting_id": 3,
+    "rating": 4,
+    "comments": "Buen alojamiento con hermosas vistas. Disfrutamos mucho nuestra estancia.",
+    "createdAt": "2024-03-28 12:00:06"
+  },
+  {
+    "rating_id": 8,
+    "owner_id": 3,
+    "tenant_id": 1,
+    "renting_id": 3,
+    "rating": 3,
+    "comments": "La propiedad estaba bien, pero la comunicación con el propietario podría mejorar.",
+    "createdAt": "2024-03-28 12:00:07"
+  },
+  {
+    "rating_id": 9,
+    "owner_id": 3,
+    "tenant_id": 2,
+    "renting_id": 3,
+    "rating": 5,
+    "comments": "Gran experiencia en general. Nos encantaría volver.",
+    "createdAt": "2024-03-28 12:00:08"
+  },
+  {
+    "rating_id": 10,
+    "owner_id": 4,
+    "tenant_id": 3,
+    "renting_id": 4,
+    "rating": 4,
+    "comments": "Propiedad cómoda y bien ubicada. Tuvimos una estancia agradable.",
+    "createdAt": "2024-03-28 12:00:09"
+  },
+  {
+    "rating_id": 11,
+    "owner_id": 4,
+    "tenant_id": 4,
+    "renting_id": 4,
+    "rating": 3,
+    "comments": "Algunos problemas menores, pero en general fue una buena estancia.",
+    "createdAt": "2024-03-28 12:00:10"
+  },
+  {
+    "rating_id": 12,
+    "owner_id": 4,
+    "tenant_id": 5,
+    "renting_id": 4,
+    "rating": 5,
+    "comments": "Todo perfecto. La propiedad superó nuestras expectativas.",
+    "createdAt": "2024-03-28 12:00:11"
+  },
+  {
+    "rating_id": 13,
+    "owner_id": 5,
+    "tenant_id": 6,
+    "renting_id": 5,
+    "rating": 5,
+    "comments": "Encantadora casa rural en un entorno tranquilo. Perfecta para desconectar.",
+    "createdAt": "2024-03-28 12:00:12"
+  },
+  {
+    "rating_id": 14,
+    "owner_id": 5,
+    "tenant_id": 7,
+    "renting_id": 5,
+    "rating": 4,
+    "comments": "Alojamiento acogedor y bien equipado. Nos sentimos como en casa.",
+    "createdAt": "2024-03-28 12:00:13"
+  },
+  {
+    "rating_id": 15,
+    "owner_id": 5,
+    "tenant_id": 8,
+    "renting_id": 5,
+    "rating": 5,
+    "comments": "Una estancia maravillosa. La casa tenía todo lo que necesitábamos.",
+    "createdAt": "2024-03-28 12:00:14"
+  },
+  {
+    "rating_id": 16,
+    "owner_id": 6,
+    "tenant_id": 9,
+    "renting_id": 6,
+    "rating": 4,
+    "comments": "Bonitas vistas desde el apartamento. Cómodo y bien mantenido.",
+    "createdAt": "2024-03-28 12:00:15"
+  },
+  {
+    "rating_id": 17,
+    "owner_id": 6,
+    "tenant_id": 10,
+    "renting_id": 6,
+    "rating": 5,
+    "comments": "Nos encantó el apartamento. Muy limpio y bien ubicado.",
+    "createdAt": "2024-03-28 12:00:16"
+  },
+  {
+    "rating_id": 18,
+    "owner_id": 6,
+    "tenant_id": 1,
+    "renting_id": 6,
+    "rating": 4,
+    "comments": "Buena experiencia en general. El propietario fue muy amable.",
+    "createdAt": "2024-03-28 12:00:17"
+  },
+  {
+    "rating_id": 19,
+    "owner_id": 7,
+    "tenant_id": 2,
+    "renting_id": 7,
+    "rating": 3,
+    "comments": "La propiedad estaba bien, pero esperábamos más por el precio.",
+    "createdAt": "2024-03-28 12:00:18"
+  },
+  {
+    "rating_id": 20,
+    "owner_id": 7,
+    "tenant_id": 3,
+    "renting_id": 7,
+    "rating": 4,
+    "comments": "Buen alojamiento y ubicación conveniente. Tuvimos una estancia agradable.",
+    "createdAt": "2024-03-28 12:00:19"
+  },
+  {
+    "rating_id": 21,
+    "owner_id": 7,
+    "tenant_id": 4,
+    "renting_id": 7,
+    "rating": 5,
+    "comments": "Fantástica propiedad con todas las comodidades necesarias.",
+    "createdAt": "2024-03-28 12:00:20"
+  },
+  {
+    "rating_id": 22,
+    "owner_id": 8,
+    "tenant_id": 5,
+    "renting_id": 8,
+    "rating": 5,
+    "comments": "Muy contentos con el alojamiento. Todo estaba perfecto.",
+    "createdAt": "2024-03-28 12:00:21"
+  },
+  {
+    "rating_id": 23,
+    "owner_id": 8,
+    "tenant_id": 6,
+    "renting_id": 8,
+    "rating": 4,
+    "comments": "Buena experiencia en general. Algunas mejoras podrían hacerse.",
+    "createdAt": "2024-03-28 12:00:22"
+  },
+  {
+    "rating_id": 24,
+    "owner_id": 8,
+    "tenant_id": 7,
+    "renting_id": 8,
+    "rating": 5,
+    "comments": "Increíble propiedad con todo lo que necesitas para una estancia cómoda.",
+    "createdAt": "2024-03-28 12:00:23"
+  },
+  {
+    "rating_id": 25,
+    "owner_id": 9,
+    "tenant_id": 8,
+    "renting_id": 9,
+    "rating": 4,
+    "comments": "Alojamiento encantador en un entorno tranquilo. Perfecto para una escapada.",
+    "createdAt": "2024-03-28 12:00:24"
+  },
+  {
+    "rating_id": 26,
+    "owner_id": 9,
+    "tenant_id": 9,
+    "renting_id": 9,
+    "rating": 5,
+    "comments": "Nos encantó la casa y el entorno. Muy relajante.",
+    "createdAt": "2024-03-28 12:00:25"
+  },
+  {
+    "rating_id": 27,
+    "owner_id": 9,
+    "tenant_id": 10,
+    "renting_id": 9,
+    "rating": 4,
+    "comments": "Gran experiencia en general. La casa era cómoda y bien equipada.",
+    "createdAt": "2024-03-28 12:00:26"
+  },
+  {
+    "rating_id": 28,
+    "owner_id": 10,
+    "tenant_id": 1,
+    "renting_id": 10,
+    "rating": 5,
+    "comments": "Estancia perfecta en un lugar conveniente. Recomendado.",
+    "createdAt": "2024-03-28 12:00:27"
+  },
+  {
+    "rating_id": 29,
+    "owner_id": 10,
+    "tenant_id": 2,
+    "renting_id": 10,
+    "rating": 4,
+    "comments": "Buena relación calidad-precio. Disfrutamos nuestra estancia.",
+    "createdAt": "2024-03-28 12:00:28"
+  },
+  {
+    "rating_id": 30,
+    "owner_id": 10,
+    "tenant_id": 3,
+    "renting_id": 10,
+    "rating": 5,
+    "comments": "Fantástico alojamiento y ubicación. Tuvimos unas vacaciones maravillosas.",
+    "createdAt": "2024-03-28 12:00:29"
+  }
+]
