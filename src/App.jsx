@@ -10,6 +10,7 @@ import { useState } from "react";
 
 function App() {
   const [filteredPosts, setFilteredPosts] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleFilteredPosts = (posts) => {
     setFilteredPosts(posts);
@@ -17,9 +18,22 @@ function App() {
 
   return (
     <>
-      <Header handleFilteredPosts={handleFilteredPosts} />
+      <Header
+        handleFilteredPosts={handleFilteredPosts}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
       <Routes>
-        <Route index element={<Home filteredPosts={filteredPosts} />} />
+        <Route
+          index
+          element={
+            <Home
+              filteredPosts={filteredPosts}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+            />
+          }
+        />
         <Route path="/register" element={<NewUserPage />} />
         <Route path="/login" element={<LoginUserPage />} />
         <Route path="/users/">

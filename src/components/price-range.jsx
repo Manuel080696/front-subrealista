@@ -6,8 +6,6 @@ export function PriceRange({ setPrice, price, activePrice }) {
     setPrice(newValue);
   }
 
-  /*className="absolute top-16 bg-white w-max min-w-60 p-16"*/
-
   const handleInputChange = (index, newValue) => {
     const updatedPrice = [...price];
     updatedPrice[index] = newValue;
@@ -18,7 +16,7 @@ export function PriceRange({ setPrice, price, activePrice }) {
     <section
       className={`${
         activePrice ? "flex" : "hidden"
-      } flex flex-col w-max min-w-60 bg-white p-12 top-24 -right-40 absolute shadow-lg rounded-xl`}
+      } flex flex-col w-full bg-white p-12 md:shadow-lg md:rounded-xl md:top-24 md:-right-20 md:absolute md:min-w-60 md:w-max`}
     >
       <Slider
         value={price}
@@ -28,11 +26,11 @@ export function PriceRange({ setPrice, price, activePrice }) {
         max={2000}
         sx={{ color: "gray" }}
       />
-      <section className="flex flex-row items-center justify-center gap-5">
-        <label>
+      <section className="flex flex-row w-full items-center justify-center gap-5">
+        <label className="flex flex-row items-center gap-2 mt-5 ">
           €
           <input
-            className="border text-xs p-2 ml-1 mt-5 rounded-md font-normal"
+            className="w-[5rem] border text-xs p-2 rounded-md font-normal"
             placeholder="Mínimo €"
             name="min_price"
             id="precioMin"
@@ -46,10 +44,10 @@ export function PriceRange({ setPrice, price, activePrice }) {
             value={price[0]}
           />
         </label>
-        <label>
+        <label className="flex flex-row items-center gap-2 mt-5">
           €
           <input
-            className="border text-xs p-2 ml-1 mt-5 rounded-md font-normal"
+            className="w-[5rem] border text-xs p-2 rounded-md font-normal"
             placeholder="Mínimo €"
             name="min_price"
             id="precioMin"

@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "./search.css";
 import { Fecha } from "./date-calendar";
@@ -94,7 +88,7 @@ export default function Search({ handleFilteredPosts }) {
         <label className="flex flex-col w-6/12 bg-transparent font-medium text-sm py-4 px-5 rounded-md hover:bg-zinc-200 relative height-full">
           Fecha
           <p
-            className="w-full font-normal text-xs hover:bg-zinc-200 mt-[0.43rem] focus:outline-none"
+            className="w-full font-normal text-xs hover:bg-zinc-200 mt-[0.43rem]"
             onClick={() => setActiveDate(!activeDate)}
           >
             {dateValue[0] !== undefined
@@ -117,13 +111,13 @@ export default function Search({ handleFilteredPosts }) {
             setDateValue={setDateValue}
           />
         </label>
-        <label className="flex flex-col w-5/12 bg-transparent font-medium text-sm py-4 px-5 rounded-md hover:bg-zinc-200 min-h-full max-h-max relative height-full">
+        <label className="flex flex-col w-5/12 bg-transparent font-medium text-sm py-4 px-5 rounded-md hover:bg-zinc-200 relative height-full">
           Precio
           <p
-            className="w-full font-normal text-xs hover:bg-zinc-200 mt-[0.43rem] focus:outline-none"
+            className="w-full min-w-[5.2rem] font-normal text-xs hover:bg-zinc-200 mt-[0.43rem]"
             onClick={() => setActivePrice(!activePrice)}
           >
-            {price[0]}€, {price[1]}€
+            {`${price[0]}€, ${price[1]}€`}
           </p>
           <PriceRange
             setPrice={setPrice}
@@ -137,7 +131,7 @@ export default function Search({ handleFilteredPosts }) {
             className="w-full font-normal text-xs hover:bg-zinc-200 mt-[0.43rem] focus:outline-none"
             type="text"
             pattern="[0-9]*"
-            inputmode="numeric"
+            inputMode="numeric"
             value={tenants}
             id="tenants"
             onInput={(e) => {
