@@ -131,7 +131,7 @@ export function Header({ handleFilteredPosts }) {
             <AccountMenu active={active} user={user} />
           </button>
         </section>
-        <section className="flex flex-col justify-center items-center min-w-min w-6/12 z-10">
+        <section className="flex flex-col justify-center items-center min-w-[42rem] w-6/12 z-10 pt-5">
           <Search handleFilteredPosts={handleFilteredPosts} />
         </section>
       </nav>

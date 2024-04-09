@@ -1,11 +1,23 @@
 import { useState } from "react";
-import { FormControl, MenuItem, Select, TextField } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import "./search.css";
+import { Fecha } from "./date-calendar";
+import { PriceRange } from "./price-range";
 
 export default function Search({ handleFilteredPosts }) {
-  const [searchTerm, setSearchTerm] = useState();
   const [location, setLocation] = useState("");
+  const [price, setPrice] = useState([0, 500]);
+  const [dateValue, setDateValue] = useState(new Date());
+  const [tenants, setTenants] = useState(0);
+  const [activeDate, setActiveDate] = useState(false);
+  const [activePrice, setActivePrice] = useState(false);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -14,38 +26,33 @@ export default function Search({ handleFilteredPosts }) {
       "rent_location=" +
         location +
         "&min_date=" +
-        searchTerm?.min_date +
+        dateValue[0] +
         "&max_date=" +
-        searchTerm?.max_date +
+        dateValue[1] +
         "&min_price=" +
-        searchTerm?.min_price +
+        price[0] +
         "&max_price=" +
-        searchTerm?.max_price +
+        price[1] +
         "&tenants=" +
-        searchTerm?.tenants
+        tenants
     );
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setSearchTerm((prevSearchTerm) => ({
-      ...prevSearchTerm,
-      [name]: value,
-    }));
-  };
-
   return (
-    <aside className="flex flex-col w-full border-solid border-2 rounded-full min-w-min px-2 drop-shadow-md bg-white text-black">
+    <aside className="flex flex-col w-full border-solid border-2 rounded-full drop-shadow-md bg-white text-black">
       <form
-        className="flex flex-row justify-center items-center px-4"
+        className="flex flex-row justify-center items-center height-full"
         onSubmit={(e) => handleSearch(e)}
       >
-        <label className="flex flex-col w-4/12 bg-transparent font-medium text-sm py-4 px-5 rounded-full hover:bg-zinc-200">
+        <label className="flex flex-col w-10/12 bg-transparent font-medium text-sm py-4 px-5 rounded-l-full rounded-r-md hover:bg-zinc-200 height-full">
           Destino
           <FormControl fullWidth size="small">
+            <InputLabel id="location-label">
+              {location.length !== 0 ? "" : "Destino..."}
+            </InputLabel>
             <Select
-              label="¿Dónde lo buscas?"
               id="location"
+              sx={{ minWidth: "100%", width: "100%" }}
               value={location}
               name="rent_location"
               onChange={(e) => setLocation(e.target.value)}
@@ -84,70 +91,66 @@ export default function Search({ handleFilteredPosts }) {
             </Select>
           </FormControl>
         </label>
-        <label className="flex flex-col w-4/12 bg-transparent font-medium text-sm py-4 px-5 rounded-full hover:bg-zinc-200">
+        <label className="flex flex-col w-6/12 bg-transparent font-medium text-sm py-4 px-5 rounded-md hover:bg-zinc-200 relative height-full">
           Fecha
-          <input
-            className="w-full font-normal text-xs hover:bg-zinc-200 focus:outline-none"
-            type="date"
-            placeholder="Fecha..."
-            name="min_date"
-            onChange={handleInputChange}
-          />
-          <input
-            className="w-full font-normal text-xs hover:bg-zinc-200 focus:outline-none"
-            type="date"
-            placeholder="Fecha..."
-            name="max_date"
-            onChange={handleInputChange}
+          <p
+            className="w-full font-normal text-xs hover:bg-zinc-200 mt-[0.43rem] focus:outline-none"
+            onClick={() => setActiveDate(!activeDate)}
+          >
+            {dateValue[0] !== undefined
+              ? `${dateValue[0].getDate()} ${dateValue[0].toLocaleString(
+                  "default",
+                  { month: "short" }
+                )}`
+              : "Salida"}
+            ,{" "}
+            {dateValue[1] !== undefined
+              ? `${dateValue[1].getDate()} ${dateValue[1].toLocaleString(
+                  "default",
+                  { month: "short" }
+                )}`
+              : "Llegada"}
+          </p>
+          <Fecha
+            active={activeDate}
+            dateValue={dateValue}
+            setDateValue={setDateValue}
           />
         </label>
-        <section className="flex gap-4">
-          <TextField
-            size="small"
-            label="Mínimo €"
-            className="w-1/2"
-            name="min_price"
-            onChange={handleInputChange}
+        <label className="flex flex-col w-5/12 bg-transparent font-medium text-sm py-4 px-5 rounded-md hover:bg-zinc-200 min-h-full max-h-max relative height-full">
+          Precio
+          <p
+            className="w-full font-normal text-xs hover:bg-zinc-200 mt-[0.43rem] focus:outline-none"
+            onClick={() => setActivePrice(!activePrice)}
+          >
+            {price[0]}€, {price[1]}€
+          </p>
+          <PriceRange
+            setPrice={setPrice}
+            price={price}
+            activePrice={activePrice}
           />
-          <TextField
-            size="small"
-            label="Máximo €"
-            className="w-1/2"
-            name="max_price"
-            onChange={handleInputChange}
-          />
-        </section>
-        <label className="flex flex-col w-4/12 bg-transparent font-medium text-sm py-4 px-5 rounded-full hover:bg-zinc-200">
+        </label>
+        <label className="flex flex-col w-4/12 bg-transparent font-medium text-sm py-4 px-5 rounded-md hover:bg-zinc-200 height-full">
           Inquilinos
           <input
-            className="w-full font-normal text-xs hover:bg-zinc-200 focus:outline-none"
-            type="tenants"
-            name="tenants"
+            className="w-full font-normal text-xs hover:bg-zinc-200 mt-[0.43rem] focus:outline-none"
+            type="text"
+            pattern="[0-9]*"
+            inputmode="numeric"
+            value={tenants}
             id="tenants"
+            onInput={(e) => {
+              e.target.value = e.target.value.replace(/[^0-9]/g, "");
+            }}
             placeholder="Num.inquilinos..."
-            onChange={handleInputChange}
+            onChange={(e) => setTenants(e.target.value)}
           />
         </label>
-        <button className="flex align-center justify-center bg-[var(--quaternary-color)] p-4 rounded-full">
+        <button className="flex align-center justify-center bg-gradient-to-b from-quaternary-inicio to-quaternary-fin p-4 rounded-full mx-4">
           <SearchIcon className="w-5 h-5 text-white" />
         </button>
       </form>
-      {/* <section className="">
-        <ul className="">
-          {rents &&
-            rents?.map((rent) => (
-              <li key={rent.rentID}>
-                <img
-                  onClick={() => navigate(`/rents/${rent.rentID}`)}
-                  src={`${import.meta.env.VITE_APP_BACKEND}/uploads/rents/${
-                    rent.rentName
-                  }`}
-                  alt="Rent"
-                ></img>
-              </li>
-            ))}
-        </ul>
-      </section> */}
     </aside>
   );
 }
