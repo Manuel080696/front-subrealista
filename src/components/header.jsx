@@ -9,14 +9,11 @@ import AccountMenu from "./account-menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useContext, useState } from "react";
 import { CurrentUserContext } from "../context/auth-context";
-import { getUserDataService } from "../services/get_user";
-import { useEffect } from "react";
+import { SearchMobile } from "./search-mobile";
 
-export function Header() {
+export function Header({ handleFilteredPosts, isOpen, setIsOpen }) {
   const [active, setActive] = useState(false);
   const { user, userData } = useContext(CurrentUserContext);
-
-  //Recoger info del usuario
 
   return userData === null ? (
     <header className="min-h-min w-full h-min fixed bottom-0 z-50 bg-[var(--primary-color)] md:top-0 md:sticky md:pt-2 md:pb-5 md:border-solid md:border-b-2 md:drop-shadow-sm">
@@ -25,6 +22,7 @@ export function Header() {
         <li className="w-24 active:text-[var(--quaternary-color)]   ">
           <Link
             to="/"
+            onClick={() => handleFilteredPosts("")}
             className="flex flex-col justify-center items-center h-3/5"
           >
             <SearchIcon className="text-gray" />
@@ -50,12 +48,20 @@ export function Header() {
           </Link>
         </li>
       </ul>
+      <section className="absolute">
+        <SearchMobile
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          handleFilteredPosts={handleFilteredPosts}
+        />
+      </section>
 
       {/*Header de PC*/}
       <nav className="hidden md:flex md:flex-col md:w-screen md:px-20 md:items-center md:h-min md:text-[var(--quintanary-color)] md:text-xs md:gap-y-1">
         <section className="flex flex-row justify-between items-center w-full">
           <Link
             to="/"
+            onClick={() => handleFilteredPosts("")}
             className="flex flex-col justify-center items-center h-3/5"
           >
             <img src="/logo/logo.webp" alt="search" className="w-24" />
@@ -72,7 +78,7 @@ export function Header() {
           </button>
         </section>
         <section className="flex flex-col justify-center items-center min-w-min w-6/12 z-10">
-          <Search />
+          <Search handleFilteredPosts={handleFilteredPosts} />
         </section>
       </nav>
     </header>
@@ -103,17 +109,27 @@ export function Header() {
             to={`/users/${user?.username}`}
             className="w-24 h-full flex flex-col justify-center items-center"
           >
-            <AccountCircleOutlinedIcon className="text-gray" />
+            <Avatar
+              alt="Foto de perfil"
+              src={userData?.profilePic}
+              sx={{ width: 24, height: 24 }}
+            />
             <p className="my-1 font-light">Iniciar Sesión</p>
           </Link>
         </li>
       </ul>
+      <SearchMobile
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        handleFilteredPosts={handleFilteredPosts}
+      />
 
       {/*Header de PC*/}
       <nav className="hidden md:flex md:flex-col md:w-screen md:px-20 md:items-center md:h-min md:text-[var(--quintanary-color)] md:text-xs md:gap-y-1">
         <section className="flex flex-row justify-between items-center w-full">
           <Link
             to="/"
+            onClick={() => handleFilteredPosts("")}
             className="flex flex-col justify-center items-center h-3/5"
           >
             <img src="/logo/logo.webp" alt="search" className="w-24" />
@@ -129,8 +145,8 @@ export function Header() {
             <AccountMenu active={active} user={user} />
           </button>
         </section>
-        <section className="flex flex-col justify-center items-center min-w-min w-6/12 z-10">
-          <Search />
+        <section className="flex flex-col justify-center items-center min-w-[42rem] w-6/12 z-10 pt-5">
+          <Search handleFilteredPosts={handleFilteredPosts} />
         </section>
       </nav>
     </header>

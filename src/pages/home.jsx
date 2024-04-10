@@ -1,63 +1,49 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import HouseCard from "../components/house-card";
 import { Main } from "../components/main";
-import { getAllPosts } from "../services/get-all-posts";
-import { getAllImages } from "../services/get-all-images";
-
-export default function Home() {
+import { fetchPosts } from "../hooks/fetch-posts";
+import { fetchImages } from "../hooks/fetch-images";
+import SearchIcon from "@mui/icons-material/Search";
+export default function Home({ filteredPosts, setIsOpen, isOpen }) {
   const [posts, setPosts] = useState([]);
-  const [postsID, setPostsID] = useState([]);
   const [images, setImages] = useState([]);
 
-  const fetchAllPosts = useCallback(async () => {
-    const result = await getAllPosts();
-    if (result?.status === "ok") {
-      setPosts(result?.data);
-
-      // Obtener todas las imágenes para cada publicación de forma concurrente
-      const promises = result.data.map(async (rent) => {
-        const imagesResult = await getAllImages(rent?.rent_id);
-
-        if (imagesResult?.status === "ok") {
-          return {
-            rentId: rent?.rent_id,
-            images: imagesResult?.data[1],
-          };
-        }
-        return null;
-      });
-
-      // Esperar a que todas las promesas se resuelvan
-      const imagesData = await Promise.all(promises);
-
-      // Filtrar y eliminar elementos nulos o duplicados
-      const uniqueImagesData = imagesData.filter(
-        (item, index, self) =>
-          item && index === self.findIndex((t) => t?.rentId === item?.rentId)
-      );
-
-      // Establecer el estado de imágenes con los datos únicos
-      setImages(uniqueImagesData);
-    }
-  }, []);
-
-  if (posts && postsID <= posts.length) {
-    posts?.map((rent) => {
-      postsID.push(rent.rent_id);
-    });
-  }
-
   useEffect(() => {
-    fetchAllPosts();
-  }, []);
+    const fetchData = async () => {
+      const postsData = await fetchPosts(filteredPosts);
+      setPosts(postsData);
+
+      if (postsData.length > 0) {
+        const imagesData = await fetchImages(postsData);
+        setImages(imagesData);
+      }
+    };
+
+    fetchData();
+  }, [filteredPosts]);
 
   return posts?.length ? (
     <Main>
-      <section className="grid grid-cols-1 gap-5 md:grid-cols-3 xl:grid-cols-5">
+      <section
+        className="flex flex-col bg-white fixed top-0 items-center justify-center w-screen mb-5 p-5 border-solid border-b-2 drop-shadow-sm z-10 md:hidden"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <aside className="flex flex-row w-[90%] border-solid border-2 p-2 rounded-full drop-shadow-md bg-white text-black">
+          <button className="flex align-center justify-center p-2 rounded-full">
+            <SearchIcon className="w-5 h-5 text-black" />
+          </button>
+          <span className="flex flex-col">
+            <h3 className="text-md font-semibold">Cualquier lugar</h3>
+            <p className="text-xs">Cualquier semana - añade inquilinos</p>
+          </span>
+        </aside>
+      </section>
+      <section className="grid grid-cols-1 gap-5 md:grid-cols-3 xl:grid-cols-5 mt-24 md:mt-0">
         {posts?.map((rent) => {
           const rentImages = images.find(
             (item) => item.rentId === rent.rent_id
           );
+    
           return (
             <HouseCard
               key={rent.rent_id}
@@ -69,6 +55,7 @@ export default function Home() {
       </section>
     </Main>
   ) : (
+
     <p>There are no posts yet...</p>
   );
 }

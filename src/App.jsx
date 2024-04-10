@@ -6,13 +6,34 @@ import { NewUserPage } from "./pages/new-user";
 import { NotFound } from "./pages/not-found";
 import { LoginUserPage } from "./pages/login-page";
 import { UserPage } from "./pages/user-page";
+import { useState } from "react";
 
 function App() {
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleFilteredPosts = (posts) => {
+    setFilteredPosts(posts);
+  };
+
   return (
     <>
-      <Header />
+      <Header
+        handleFilteredPosts={handleFilteredPosts}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
       <Routes>
-        <Route index element={<Home />} />
+        <Route
+          index
+          element={
+            <Home
+              filteredPosts={filteredPosts}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+            />
+          }
+        />
         <Route path="/register" element={<NewUserPage />} />
         <Route path="/login" element={<LoginUserPage />} />
         <Route path="/users/">
