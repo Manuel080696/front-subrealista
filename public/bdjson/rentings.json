@@ -1,0 +1,112 @@
+[
+  {
+    "rent_id": 1,
+    "rent_owner": 1,
+    "rent_tenant": 2,
+    "rent_title": "Apartamento en el centro de la ciudad",
+    "rent_type": "Apartamento",
+    "rent_description": "Acogedor apartamento ubicado en el corazón de la ciudad, cerca de todas las comodidades.",
+    "rent_price": 800,
+    "rent_location": "Madrid",
+    "createdAt": "2024-03-28 12:00:00"
+  },
+  {
+    "rent_id": 2,
+    "rent_owner": 1,
+    "rent_tenant": 3,
+    "rent_title": "Casa con jardín en las afueras",
+    "rent_type": "Casa",
+    "rent_description": "Espaciosa casa con amplio jardín, ideal para familias que buscan tranquilidad.",
+    "rent_price": 1200,
+    "rent_location": "Catalunya",
+    "createdAt": "2024-03-28 12:00:00"
+  },
+  {
+    "rent_id": 3,
+    "rent_owner": 1,
+    "rent_tenant": 4,
+    "rent_title": "Chalet con piscina privada",
+    "rent_type": "Chalet",
+    "rent_description": "Impresionante chalet con piscina privada y vistas panorámicas a la montaña.",
+    "rent_price": 2000,
+    "rent_location": "Andalucía",
+    "createdAt": "2024-03-28 12:00:00"
+  },
+  {
+    "rent_id": 4,
+    "rent_owner": 1,
+    "rent_tenant": 5,
+    "rent_title": "Piso moderno cerca del mar",
+    "rent_type": "Piso",
+    "rent_description": "Moderno piso cerca de la playa, completamente amueblado y equipado.",
+    "rent_price": 1000,
+    "rent_location": "Valencia",
+    "createdAt": "2024-03-28 12:00:00"
+  },
+  {
+    "rent_id": 5,
+    "rent_owner": 1,
+    "rent_tenant": 6,
+    "rent_title": "Casa rural con encanto",
+    "rent_type": "Casa",
+    "rent_description": "Encantadora casa rural en un entorno natural, perfecta para escapadas de fin de semana.",
+    "rent_price": 600,
+    "rent_location": "Aragón",
+    "createdAt": "2024-03-28 12:00:00"
+  },
+  {
+    "rent_id": 6,
+    "rent_owner": 2,
+    "rent_tenant": 7,
+    "rent_title": "Apartamento con vistas al mar",
+    "rent_type": "Apartamento",
+    "rent_description": "Luminoso apartamento con impresionantes vistas al mar Mediterráneo.",
+    "rent_price": 900,
+    "rent_location": "Catalunya",
+    "createdAt": "2024-03-28 12:00:00"
+  },
+  {
+    "rent_id": 7,
+    "rent_owner": 2,
+    "rent_tenant": 8,
+    "rent_title": "Chalet de lujo en urbanización privada",
+    "rent_type": "Chalet",
+    "rent_description": "Espectacular chalet de lujo con todas las comodidades en una exclusiva urbanización.",
+    "rent_price": 3000,
+    "rent_location": "Madrid",
+    "createdAt": "2024-03-28 12:00:00"
+  },
+  {
+    "rent_id": 8,
+    "rent_owner": 2,
+    "rent_tenant": 9,
+    "rent_title": "Piso céntrico recién renovado",
+    "rent_type": "Piso",
+    "rent_description": "Recién renovado piso en el corazón de la ciudad, con acceso a todas las atracciones principales.",
+    "rent_price": 1100,
+    "rent_location": "Valencia",
+    "createdAt": "2024-03-28 12:00:00"
+  },
+  {
+    "rent_id": 9,
+    "rent_owner": 2,
+    "rent_tenant": 10,
+    "rent_title": "Casa adosada con patio",
+    "rent_type": "Casa",
+    "rent_description": "Acogedora casa adosada con un bonito patio trasero, perfecta para familias.",
+    "rent_price": 800,
+    "rent_location": "Andalucía",
+    "createdAt": "2024-03-28 12:00:00"
+  },
+  {
+    "rent_id": 10,
+    "rent_owner": 2,
+    "rent_tenant": null,
+    "rent_title": "Piso en alquiler temporal",
+    "rent_type": "Piso",
+    "rent_description": "Piso completamente amueblado disponible para alquiler temporal, cerca de todas las comodidades.",
+    "rent_price": 950,
+    "rent_location": "Barcelona",
+    "createdAt": "2024-03-28 12:00:00"
+  }
+]

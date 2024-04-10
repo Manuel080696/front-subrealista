@@ -4,34 +4,67 @@ import Divider from "@mui/material/Divider";
 import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
+import { useNavigate } from "react-router-dom";
+import { useLogout } from "../hooks/use-logout";
 
-export default function DenseMenu({ active }) {
+export default function DenseMenu({ active, user }) {
+  const navigate = useNavigate();
+  const logout = useLogout();
+
   return active ? (
-    <Paper
-      sx={{ width: "15rem", borderRadius: "20px" }}
-      className="absolute top-14 right-10 z-0 drop-shadow-lg"
-    >
-      <MenuList dense>
-        <MenuItem>
-          <ListItemText>
-            <strong>Registrate</strong>
-          </ListItemText>
-        </MenuItem>
-        <MenuItem>
-          <ListItemText>Iniciar Sesión</ListItemText>
-        </MenuItem>
+    user === null ? (
+      <Paper
+        sx={{ width: "15rem", borderRadius: "20px" }}
+        className="absolute top-14 right-10 z-0 drop-shadow-lg"
+      >
+        <MenuList dense>
+          <MenuItem onClick={() => navigate("/register")}>
+            <ListItemText>
+              <strong>Registrate</strong>
+            </ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => navigate("/login")}>
+            <ListItemText>Iniciar Sesión</ListItemText>
+          </MenuItem>
 
-        <Divider />
-        <MenuItem>
-          <ListItemText>Favoritos</ListItemText>
-        </MenuItem>
-        <MenuItem>
-          <ListItemText>Pon tu casa en Subrealista</ListItemText>
-        </MenuItem>
-        <MenuItem>
-          <ListItemText>Cerrar Sesión</ListItemText>
-        </MenuItem>
-      </MenuList>
-    </Paper>
+          <Divider />
+          <MenuItem onClick={() => navigate("/favorites")}>
+            <ListItemText>Favoritos</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => navigate("/register")}>
+            <ListItemText>Pon tu casa en Subrealista</ListItemText>
+          </MenuItem>
+        </MenuList>
+      </Paper>
+    ) : (
+      <Paper
+        sx={{ width: "15rem", borderRadius: "20px" }}
+        className="absolute top-14 right-10 z-0 drop-shadow-lg"
+      >
+        <MenuList dense>
+          <MenuItem onClick={() => navigate(`/users/${user?.id}`)}>
+            <ListItemText>
+              <strong>User Profile</strong>
+            </ListItemText>
+          </MenuItem>
+
+          <Divider />
+          <MenuItem onClick={() => navigate("/favorites")}>
+            <ListItemText>Favoritos</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => navigate(`/posts/${user.id}`)}>
+            <ListItemText>Pon tu casa en Subrealista</ListItemText>
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              logout();
+              navigate("/");
+            }}
+          >
+            <ListItemText>Cerrar Sesión</ListItemText>
+          </MenuItem>
+        </MenuList>
+      </Paper>
+    )
   ) : null;
 }
