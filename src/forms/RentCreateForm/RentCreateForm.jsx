@@ -1,62 +1,59 @@
 import { useRef, useState } from 'react';
 
-//import {useRent } from '../../hooks/useRent';
-
 // importamos funciones utilitarias que permite previsualizar y eliminar una imagen.
 import { handleAddFilePreview } from '../../utils/handleAddFilePreview.js';
 
-// Definición del componente RentCreateForm
+// Importamos componentes de Material UI
+import { Stepper, Step, StepLabel, Button } from '@mui/material';
+
 const RentCreateForm = () => {
   const fileInputRef = useRef(null);
 
-  // Utilización de useState para definir varios estados del componente
-  const [category, setCategory] = useState(''); // Estado para almacenar la categoría del inmueble
-  const [rent_type, setTypeRent] = useState(''); // Estado para almacenar el tipo de renta
-  const [location, setLocation] = useState(''); // Estado para almacenar la locación del inmueble
-  const [address, setAddress] = useState({
-    // Estado para almacenar la dirección del inmueble, con subcampos de puerta, piso y escalera
-    street: '',
-    door: '',
-    floor: '',
-    staircase: '',
+  // Estados para controlar el paso actual y la información de cada paso
+  const [activeStep, setActiveStep] = useState(0);
+  const [stepData, setStepData] = useState({
+    typeRent: '',
+    location: '',
+    address: {
+      street: '',
+      door: '',
+      floor: '',
+      staircase: '',
+    },
+    postalCode: '',
+    city: '',
+    province: '',
+    basicInfo: {
+      guests: 0,
+      bedrooms: 0,
+      beds: 0,
+      bathrooms: 0,
+    },
+    services: [],
+    images: [],
+    previewUrl: '',
+    title: '',
+    description: '',
+    basePrice: '',
+    commission: '',
+    totalPrice: '',
   });
-  const [postalCode, setPostalCode] = useState(''); // Estado para almacenar el código postal del inmueble
-  const [city, setCity] = useState(''); // Estado para almacenar la ciudad o población del inmueble
-  const [province, setProvince] = useState(''); // Estado para almacenar la provincia del inmueble
-  const [basicInfo, setBasicInfo] = useState({
-    // Estado para almacenar la información básica del espacio
-    guests: 0,
-    bedrooms: 0,
-    beds: 0,
-    bathrooms: 0,
-  });
-  const [amenities, setAmenities] = useState(''); // Estado para almacenar las comodidades del espacio
 
-  const [images, setImages] = useState([]); // Estado para almacenar las imágenes del espacio
-  const [previewUrl, setPreviewUrl] = useState(''); // Almacena la url de la previsualización de la imagen
-  const [loading, setLoading] = useState(false); // Estado para indicar si el formulario se está enviando
-
-  const [rent_title, setTitle] = useState(''); // Estado para almacenar el título del apartamento
-  const [description, setDescription] = useState(''); // Estado para almacenar la descripción del apartamento
-
-  const [basePrice, setBasePrice] = useState(''); // Estado para almacenar el precio base
-  const [commission, setCommission] = useState(''); // Estado para almacenar la comisión por servicio de anfitrión
-  const [totalPrice, setTotalPrice] = useState(''); // Estado para almacenar el precio total
-
-  // Función para manejar el cambio de imágenes
+  // Función para manejar el cambio de imagen
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    setImages(files);
-    handleAddFilePreview(e, setImages, setPreviewUrl); // Llamada a handleAddFilePreview
+    setStepData({ ...stepData, images: files });
+    handleAddFilePreview(e, setStepData, setPreviewUrl);
   };
 
   // Función para calcular el precio total
   const calculateTotalPrice = () => {
-    const basePriceFloat = parseFloat(basePrice);
-    const commissionFloat = parseFloat(commission);
+    const basePriceFloat = parseFloat(stepData.basePrice);
+    const commissionFloat = parseFloat(stepData.commission);
     const total = basePriceFloat + commissionFloat;
-    setTotalPrice(total.toFixed(2)); // Redondeamos el resultado a 2 decimales
+    setStepData({ ...stepData, totalPrice: total.toFixed(2) });
   };
+
   // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,31 +61,30 @@ const RentCreateForm = () => {
     // Calculamos el precio total antes de enviar el formulario
     calculateTotalPrice();
 
-    // Aquí tendría que  realizar la lógica para enviar los datos al backend
-    setLoading(true);
+    // Aquí tendría que  realizar la lógica para enviar los datos al backend
+
     // Por ejemplo, tendría que crear un objeto formData y enviarlo mediante una función addRent
     // const formData = new FormData();
     // Llenar formData con los datos del formulario
     try {
       const formData = new FormData();
-      formData.append('category', category);
-      formData.append('type_rent', rent_type);
-      formData.append('location', location);
-      formData.append('street', address.street);
-      formData.append('door', address.door);
-      formData.append('floor', address.floor);
-      formData.append('staircase', address.staircase);
-      formData.append('postal_code', postalCode);
-      formData.append('city', city);
-      formData.append('province', province);
-      formData.append('guests', basicInfo.guests);
-      formData.append('bedrooms', basicInfo.bedrooms);
-      formData.append('beds', basicInfo.beds);
-      formData.append('bathrooms', basicInfo.bathrooms);
-      formData.append('amenities', amenities);
-      formData.append('title', rent_title);
-      formData.append('description');
-      images.forEach((image, index) => {
+      formData.append('typeRent', stepData.typeRent);
+      formData.append('location', stepData.location);
+      formData.append('street', stepData.address.street);
+      formData.append('door', stepData.address.door);
+      formData.append('floor', stepData.address.floor);
+      formData.append('staircase', stepData.address.staircase);
+      formData.append('postalCode', stepData.postalCode);
+      formData.append('city', stepData.city);
+      formData.append('province', stepData.province);
+      formData.append('guests', stepData.basicInfo.guests);
+      formData.append('bedrooms', stepData.basicInfo.bedrooms);
+      formData.append('beds', stepData.basicInfo.beds);
+      formData.append('bathrooms', stepData.basicInfo.bathrooms);
+      formData.append('services', stepData.services);
+      formData.append('title', stepData.title);
+      formData.append('description', stepData.description);
+      stepData.images.forEach((image, index) => {
         formData.append(`image${index}`, image);
       });
 
@@ -103,269 +99,114 @@ const RentCreateForm = () => {
         // Lógica adicional si la solicitud fue exitosa
         console.log('Formulario enviado con éxito');
       } else {
-        // Lógica para manejar errores si la solicitud falla
-        console.error('Error al enviar el formulario');
+        // Lógica si la solicitud falló
       }
     } catch (error) {
-      // Manejar errores de red u otros errores
-      console.error('Error:', error);
+      console.error('Error al enviar el formulario:', error);
     }
-    // await addRent(formData);
-    setLoading(false);
   };
+  const steps = [
+    {
+      key: 'typeRent',
+      // Contenido del paso 1
+      content: (
+        <div>
+          <h2>Selecciona el tipo de renta</h2>
+          {/* Componentes para seleccionar el tipo de renta */}
+        </div>
+      ),
+    },
+    {
+      key: 'location',
+      // Contenido del paso 2
+      content: (
+        <div>
+          <h2>Indica la ubicación</h2>
+          {/* Componentes para ingresar la ubicación */}
+        </div>
+      ),
+    },
+    {
+      key: 'basicInfo',
+      // Contenido del paso 3
+      content: (
+        <div>
+          <h2>Información básica</h2>
+          {/* Componentes para ingresar la información básica */}
+        </div>
+      ),
+    },
+    {
+      key: 'services',
+      // Contenido del paso 4
+      content: (
+        <div>
+          <h2>Selecciona los servicios</h2>
+          {/* Componentes para seleccionar los servicios */}
+        </div>
+      ),
+    },
+    {
+      key: 'images',
+      // Contenido del paso 5
+      content: (
+        <div>
+          <h2>Sube imágenes de la propiedad</h2>
+          {/* Componentes para subir las imágenes */}
+        </div>
+      ),
+    },
+    {
+      key: 'details',
+      // Contenido del paso 6
+      content: (
+        <div>
+          <h2>Agrega detalles adicionales</h2>
+          {/* Componentes para ingresar detalles adicionales */}
+        </div>
+      ),
+    },
+    {
+      key: 'price',
+      // Contenido del paso 7
+      content: (
+        <div>
+          <h2>Precio y disponibilidad</h2>
+          {/* Componentes para ingresar el precio y la disponibilidad */}
+        </div>
+      ),
+    },
+  ];
+
+  // ... (rest of the code from previous responses)
 
   return (
     <div className='rent-create-form-container'>
-      <form className='rent-create-form' onSubmit={handleSubmit}>
-        <h2>Registra tu renta</h2>
-        {/* Campos del formulario con etiquetas label e inputs */}
-        <label>
-          Categoría del inmueble:
-          <input
-            type='text'
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Tipo de alojamiento:
-          <select
-            value={rent_type}
-            onChange={(e) => setTypeRent(e.target.value)}
-            required
-          >
-            <option value='' disabled>
-              Selecciona el tipo de alojamiento
-            </option>
-            <option value='Chalet'>Chalet</option>
-            <option value='Piso'>Piso</option>
-            <option value='Casa'>Casa</option>
-            <option value='Apartamento'>Apartamento</option>
-          </select>
-        </label>
-        <label>
-          Dirección:
-          <input
-            type='text'
-            value={address.street}
-            onChange={(e) => setAddress({ ...address, street: e.target.value })}
-            placeholder='Calle'
-            required
-          />
-          <input
-            type='text'
-            value={address.door}
-            onChange={(e) => setAddress({ ...address, door: e.target.value })}
-            placeholder='Puerta'
-          />
-          <input
-            type='text'
-            value={address.floor}
-            onChange={(e) => setAddress({ ...address, floor: e.target.value })}
-            placeholder='Piso'
-          />
-          <input
-            type='text'
-            value={address.staircase}
-            onChange={(e) =>
-              setAddress({ ...address, staircase: e.target.value })
-            }
-            placeholder='Escalera'
-          />
-        </label>
-        <label>
-          Código Postal:
-          <input
-            type='text'
-            value={postalCode}
-            onChange={(e) => setPostalCode(e.target.value)}
-            required
-          />
-        </label>
-
-        <label>
-          Country:
-          <input
-            type='text'
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder='Localidad'
-            required
-          />
-        </label>
-        <label>
-          Ciudad o población:
-          <input
-            type='text'
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            placeholder='Ciudad o población'
-            required
-          />
-        </label>
-
-        <label>
-          Provincia:
-          <input
-            type='text'
-            value={province}
-            onChange={(e) => setProvince(e.target.value)}
-            placeholder='Provincia'
-            required
-          />
-        </label>
-        <label>
-          Huéspedes:
-          <input
-            type='number'
-            value={basicInfo.guests}
-            onChange={(e) =>
-              setBasicInfo({ ...basicInfo, guests: e.target.value })
-            }
-            required
-          />
-        </label>
-        <label>
-          Dormitorios:
-          <input
-            type='number'
-            value={basicInfo.bedrooms}
-            onChange={(e) =>
-              setBasicInfo({ ...basicInfo, bedrooms: e.target.value })
-            }
-            required
-          />
-        </label>
-        <label>
-          Camas:
-          <input
-            type='number'
-            value={basicInfo.beds}
-            onChange={(e) =>
-              setBasicInfo({ ...basicInfo, beds: e.target.value })
-            }
-            required
-          />
-        </label>
-        <label>
-          Baños:
-          <input
-            type='number'
-            value={basicInfo.bathrooms}
-            onChange={(e) =>
-              setBasicInfo({ ...basicInfo, bathrooms: e.target.value })
-            }
-            required
-          />
-        </label>
-
-        <label>
-          Comodidades:
-          <select
-            multiple
-            value={amenities}
-            onChange={(e) =>
-              setAmenities(
-                Array.from(e.target.selectedOptions, (option) => option.value)
-              )
-            }
-            required
-          >
-            <option value='elevator'>Ascensor</option>
-            <option value='near_beach'>Cerca de la playa</option>
-            <option value='near_mountain'>Cerca de la montaña</option>
-            <option value='hairdryer'>Secador de pelo</option>
-            <option value='washing_machine'>Lavadora</option>
-            <option value='ac'>Aire acondicionado</option>
-            <option value='smoke_detector'>Detector de humo</option>
-            <option value='first_aid_kit'>Botiquín de primeros auxilios</option>
-            <option value='wifi'>Wifi</option>
-            <option value='refrigerator'>Refrigerador</option>
-            <option value='freezer'>Congelador</option>
-            <option value='toaster'>Tostadora</option>
-            <option value='fully_equipped'>Totalmente equipado</option>
-          </select>
-        </label>
-
-        <div className='img-prev-container-create'>
-          {previewUrl && (
-            <img
-              className='img-product'
-              src={previewUrl}
-              alt='Previsualización'
-              title='Eliminar imagen'
-            />
-          )}
-          {!images ? (
-            <div className='conditional-img'>
-              <label htmlFor='file-input' className='custom-file-label'>
-                <span className='span-img'>
-                  <img
-                    className='img-upload'
-                    src='/icons/folder.png'
-                    alt='upload'
-                    width='150'
-                    style={{ cursor: 'pointer' }}
-                  />
-                </span>
-                <span className='span-text-img'>Subir imagen</span>
-              </label>
-              <input
-                className='custom-file-input'
-                type='file'
-                id='file-input'
-                accept='image/*'
-                ref={fileInputRef}
-                onChange={handleImageChange}
-              />{' '}
-            </div>
-          ) : null}
-        </div>
-        <label>
-          Título del apartamento:
-          <input
-            type='text'
-            value={rent_title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Escribe una descripción:
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Precio base:
-          <input
-            type='number'
-            value={basePrice}
-            onChange={(e) => setBasePrice(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Comisión por servicio de anfitrión:
-          <input
-            type='number'
-            value={commission}
-            onChange={(e) => setCommission(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Precio total:
-          <input type='number' value={totalPrice} disabled />
-        </label>
-        {/* Otros campos del formulario con etiquetas label e inputs */}
-        <button type='submit' disabled={loading}>
-          Enviar formulario
-        </button>
-      </form>
+      <h2>Registra tu renta</h2>
+      <Stepper activeStep={activeStep}>
+        {steps.map((step) => (
+          <Step key={step.key}>
+            <StepLabel>{step.label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+      {steps[activeStep].content}
+      <div className='buttons-container'>
+        {activeStep !== 0 && (
+          <Button variant='outlined' onClick={handleBack}>
+            Atrás
+          </Button>
+        )}
+        {activeStep === steps.length - 1 ? (
+          <Button variant='contained' type='submit'>
+            Enviar formulario
+          </Button>
+        ) : (
+          <Button variant='contained' onClick={handleNext}>
+            Siguiente
+          </Button>
+        )}
+      </div>
     </div>
   );
 };
