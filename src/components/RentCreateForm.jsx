@@ -1,10 +1,20 @@
-import {useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { ImageUpload } from './ImageUpload.jsx';
 
-//import {useRent } from '../../hooks/useRent';
 
+const [images, setImages] = useState([]); // Para almacenar los archivos de imagen.
+const [previewUrl, setPreviewUrl] = useState(''); // Para almacenar la URL de la imagen de previsualización.
 
-// importamos funciones utilitarias que permite previsualizar y eliminar una imagen.
-import { handleAddFilePreview } from '../../utils/handleAddFilePreview.js';
+const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('rentTitle', rentTitle);
+    formData.append('rentType', rentType);
+    images.forEach((image, index) => {
+        formData.append(`image${index}`, image);
+    });
+};
 
 
 
@@ -279,89 +289,53 @@ const RentCreateForm = () => {
                     </select>
                 </label>
 
-
-                 <div className="img-prev-container-create">
-                    {previewUrl && (
-                        <img
-                            className="img-product"
-                            src={previewUrl}
-                            alt="Previsualización"
-                            title="Eliminar imagen"
-                        />
-                    )}
-                    {!images ? (
-                        <div className="conditional-img">
-                            <label
-                                htmlFor="file-input"
-                                className="custom-file-label"
-                            >
-                                <span className="span-img">
-                                    <img
-                                        className="img-upload"
-                                        src="/icons/folder.png"
-                                        alt="upload"
-                                        width="150"
-                                        style={{ cursor: 'pointer' }}
-                                    />
-                                </span>
-                                <span className="span-text-img">
-                                    Subir imagen
-                                </span>
-                            </label>
-                            <input
-                                className="custom-file-input"
-                                type="file"
-                                id="file-input"
-                                accept="image/*"
-                                ref={fileInputRef}
-                                onChange={handleImageChange}
-                            />{' '}
-                        </div>
-                    ) : null}
+                <div className="div-fotos">
+                    <ImageUpload label={"Fotos del alojamiento"} name="foto" />
                 </div>
-                    <label>
-                        Título del apartamento:
-                        <input
-                            type="text"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            required
-                        />
-                    </label>
-                    <label>
-                        Escribe una descripción:
-                        <textarea
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            required
-                        />
-                    </label>
-                    <label>
-                        Precio base:
-                        <input
-                            type="number"
-                            value={basePrice}
-                            onChange={(e) => setBasePrice(e.target.value)}
-                            required
-                        />
-                    </label>
-                    <label>
-                        Comisión por servicio de anfitrión:
-                        <input
-                            type="number"
-                            value={commission}
-                            onChange={(e) => setCommission(e.target.value)}
-                            required
-                        />
-                    </label>
-                    <label>
-                        Precio total:
-                        <input
-                            type="number"
-                            value={totalPrice}
-                            disabled
-                        />
-                    </label>
+
+                <label>
+                    Título del apartamento:
+                    <input
+                        type="text"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Escribe una descripción:
+                    <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                     Precio base:
+                    <input
+                        type="number"
+                        value={basePrice}
+                        onChange={(e) => setBasePrice(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Comisión por servicio de anfitrión:
+                    <input
+                        type="number"
+                        value={commission}
+                        onChange={(e) => setCommission(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Precio total:
+                    <input
+                        type="number"
+                        value={totalPrice}
+                        disabled
+                    />
+                </label>
                 {/* Otros campos del formulario con etiquetas label e inputs */}
                 <button type="submit" disabled={loading}>
                     Enviar formulario
