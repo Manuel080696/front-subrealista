@@ -14,7 +14,7 @@ export default function HomeCard({ rent, images }) {
               {rent.rent_title}, {rent.rent_location}
             </h4>
             <p className="font-normal text-sm text-[var(--quintanary-color)]">
-              Anfitrión
+              {rent.rent_owner}
             </p>
             <p className="font-normal text-sm text-[var(--quintanary-color)]">
               {new Date(rent.createdAt).toLocaleDateString()}

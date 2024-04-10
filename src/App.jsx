@@ -5,6 +5,7 @@ import Home from "./pages/home";
 import { NewUserPage } from "./pages/new-user";
 import { NotFound } from "./pages/not-found";
 import { LoginUserPage } from "./pages/login-page";
+import { UserPage } from "./pages/user-page";
 
 function App() {
   return (
@@ -12,8 +13,11 @@ function App() {
       <Header />
       <Routes>
         <Route index element={<Home />} />
-        <Route path="register" element={<NewUserPage />} />
-        <Route path="login" element={<LoginUserPage />} />
+        <Route path="/register" element={<NewUserPage />} />
+        <Route path="/login" element={<LoginUserPage />} />
+        <Route path="/users/">
+          <Route path=":username" element={<UserPage />} />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

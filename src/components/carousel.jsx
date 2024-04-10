@@ -58,13 +58,13 @@ export default function Carousel({ images }) {
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === images.images.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? images.images.length - 1 : prevIndex - 1
     );
   };
 
@@ -85,7 +85,7 @@ export default function Carousel({ images }) {
         className="carousel-inner"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {images?.map((image, index) => (
+        {images?.images?.map((image, index) => (
           <div className="carousel-item" key={index}>
             <img
               className="carousel-img"
@@ -96,7 +96,7 @@ export default function Carousel({ images }) {
         ))}
       </div>
       <div className="carousel-dots">
-        {images?.map((_, index) => (
+        {images?.images?.map((_, index) => (
           <div
             key={index}
             className={`dot ${index === currentIndex ? "active-dot" : ""}`}

@@ -100,7 +100,7 @@ export function Header() {
         </li>
         <li className="w-24 active:text-[var(--quaternary-color)] ">
           <Link
-            to={`/user${user?.id}`}
+            to={`/users/${user?.username}`}
             className="w-24 h-full flex flex-col justify-center items-center"
           >
             <AccountCircleOutlinedIcon className="text-gray" />

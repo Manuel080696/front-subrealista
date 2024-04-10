@@ -1,6 +1,8 @@
-export const getAllImages = async () => {
+export const getAllImages = async (id) => {
   try {
-    const response = await fetch("/bdjson/images.json");
+    const response = await fetch(
+      `${import.meta.env.VITE_APP_BACKEND}/rentings/${id}`
+    );
     if (!response.ok) {
       throw new Error("Failed to fetch data");
     }

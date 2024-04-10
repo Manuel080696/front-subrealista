@@ -8,13 +8,12 @@ export const CurrentUserUpdateContext = createContext(() => {});
 export function AuthContextProvider({ children }) {
   const [user, setUser] = useState(null);
   const [userData, setUserData] = useState();
-  console.log(user);
 
   useEffect(() => {
     const handleUser = async () => {
       if (user) {
-        const currentUser = await getUserDataService(user?.id);
-        setUserData(currentUser?.userData[0]);
+        const currentUser = await getUserDataService(user?.username);
+        setUserData(currentUser);
       } else if (!user) {
         setUserData(null);
       }
