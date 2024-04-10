@@ -17,11 +17,6 @@ const handleSubmit = async (e) => {
 };
 
 
-//import {useRent } from '../../hooks/useRent';
-
-
-// importamos funciones utilitarias que permite previsualizar y eliminar una imagen.
-import { handleAddFilePreview } from '../../utils/handleAddFilePreview.js';
 
 
 
