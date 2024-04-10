@@ -18,8 +18,6 @@ const handleSubmit = async (e) => {
 
 
 
-
-
 // Definición del componente RentCreateForm
 const RentCreateForm = () => {
     const fileInputRef = useRef(null);
