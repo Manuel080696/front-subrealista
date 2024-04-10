@@ -110,50 +110,50 @@ const RentCreateForm = () => {
       key: 'typeRent',
       // Contenido del paso 1
       content: (
-        <div>
+        <section>
           <h2>Selecciona el tipo de renta</h2>
           {/* Componentes para seleccionar el tipo de renta */}
-        </div>
+        </section>
       ),
     },
     {
       key: 'location',
       // Contenido del paso 2
       content: (
-        <div>
+        <section>
           <h2>Indica la ubicación</h2>
           {/* Componentes para ingresar la ubicación */}
-        </div>
+        </section>
       ),
     },
     {
       key: 'basicInfo',
       // Contenido del paso 3
       content: (
-        <div>
+        <section>
           <h2>Información básica</h2>
           {/* Componentes para ingresar la información básica */}
-        </div>
+        </section>
       ),
     },
     {
       key: 'services',
       // Contenido del paso 4
       content: (
-        <div>
+        <section>
           <h2>Selecciona los servicios</h2>
           {/* Componentes para seleccionar los servicios */}
-        </div>
+        </section>
       ),
     },
     {
       key: 'images',
       content: (
-        <div className='images-container'>
+        <section className='images-container'>
           {/* Code to handle image previews, assuming it's implemented in handleAddFilePreview */}
           {previewUrl && <img src={previewUrl} alt='Image preview' />}
           {!images ? (
-            <div className='conditional-img'>
+            <section className='conditional-img'>
               <label htmlFor='file-input' className='custom-file-label'>
                 <span className='span-img'>
                   <img
@@ -174,29 +174,29 @@ const RentCreateForm = () => {
                 ref={fileInputRef}
                 onChange={handleImageChange}
               />{' '}
-            </div>
+            </section>
           ) : null}
-        </div>
+        </section>
       ),
     },
     {
       key: 'details',
       // Contenido del paso 6
       content: (
-        <div>
+        <section>
           <h2>Agrega detalles adicionales</h2>
           {/* Componentes para ingresar detalles adicionales */}
-        </div>
+        </section>
       ),
     },
     {
       key: 'price',
       // Contenido del paso 7
       content: (
-        <div>
+        <section>
           <h2>Precio y disponibilidad</h2>
           {/* Componentes para ingresar el precio y la disponibilidad */}
-        </div>
+        </section>
       ),
     },
   ];
@@ -204,7 +204,7 @@ const RentCreateForm = () => {
   // ... (resto del codigos)
 
   return (
-    <div className='rent-create-form-container'>
+    <section className='rent-create-form-container'>
       <h2>Registra tu renta</h2>
       <Stepper activeStep={activeStep}>
         {steps.map((step) => (
@@ -214,7 +214,7 @@ const RentCreateForm = () => {
         ))}
       </Stepper>
       {steps[activeStep].content}
-      <div className='buttons-container'>
+      <section className='buttons-container'>
         {activeStep !== 0 && (
           <Button variant='outlined' onClick={handleBack}>
             Atrás
@@ -229,8 +229,8 @@ const RentCreateForm = () => {
             Siguiente
           </Button>
         )}
-      </div>
-    </div>
+      </section>
+    </section>
   );
 }; // Closing the RentCreateForm function
 
