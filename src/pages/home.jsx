@@ -43,7 +43,7 @@ export default function Home({ filteredPosts, setIsOpen, isOpen }) {
           const rentImages = images.find(
             (item) => item.rentId === rent.rent_id
           );
-
+    
           return (
             <HouseCard
               key={rent.rent_id}
@@ -55,6 +55,7 @@ export default function Home({ filteredPosts, setIsOpen, isOpen }) {
       </section>
     </Main>
   ) : (
-    <p>Tehre are no posts yet...</p>
+
+    <p>There are no posts yet...</p>
   );
 }
