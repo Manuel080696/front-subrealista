@@ -148,11 +148,34 @@ const RentCreateForm = () => {
     },
     {
       key: 'images',
-      // Contenido del paso 5
       content: (
-        <div>
-          <h2>Sube imágenes de la propiedad</h2>
-          {/* Componentes para subir las imágenes */}
+        <div className='images-container'>
+          {/* Code to handle image previews, assuming it's implemented in handleAddFilePreview */}
+          {previewUrl && <img src={previewUrl} alt='Image preview' />}
+          {!images ? (
+            <div className='conditional-img'>
+              <label htmlFor='file-input' className='custom-file-label'>
+                <span className='span-img'>
+                  <img
+                    className='img-upload'
+                    src='/icons/folder.png'
+                    alt='upload'
+                    width='150'
+                    style={{ cursor: 'pointer' }}
+                  />
+                </span>
+                <span className='span-text-img'>Subir imagen</span>
+              </label>
+              <input
+                className='custom-file-input'
+                type='file'
+                id='file-input'
+                accept='image/*'
+                ref={fileInputRef}
+                onChange={handleImageChange}
+              />{' '}
+            </div>
+          ) : null}
         </div>
       ),
     },
@@ -178,7 +201,7 @@ const RentCreateForm = () => {
     },
   ];
 
-  // ... (rest of the code from previous responses)
+  // ... (resto del codigos)
 
   return (
     <div className='rent-create-form-container'>
@@ -209,6 +232,6 @@ const RentCreateForm = () => {
       </div>
     </div>
   );
-};
+}; // Closing the RentCreateForm function
 
-export default RentCreateForm;
+export default RentCreateForm; // Exporting the component
