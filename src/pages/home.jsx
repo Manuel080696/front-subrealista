@@ -1,38 +1,61 @@
-import HouseArticle from "../components/house-article";
+import { useEffect, useState } from "react";
+import HouseCard from "../components/house-card";
+import { Main } from "../components/main";
+import { fetchPosts } from "../hooks/fetch-posts";
+import { fetchImages } from "../hooks/fetch-images";
+import SearchIcon from "@mui/icons-material/Search";
+export default function Home({ filteredPosts, setIsOpen, isOpen }) {
+  const [posts, setPosts] = useState([]);
+  const [images, setImages] = useState([]);
 
-export default function Home() {
-  const images = [
-    {
-      imgPath:
-        "https://arquitecturaviva.com/assets/uploads/articulos/71318/av_182045.webp?h=00ebdec0",
-    },
-    {
-      imgPath:
-        "https://s3.eu-west-1.amazonaws.com/blog.zazume.com/wp-content/uploads/2022/09/06111525/house-g6112fc1a3_640.jpg",
-    },
-    {
-      imgPath:
-        "https://hips.hearstapps.com/hmg-prod/images/casa-de-madera-de-diseno-moderno21-645b7b443ba61.jpg",
-    },
-    {
-      imgPath:
-        "https://st2.depositphotos.com/1041088/11595/i/450/depositphotos_115954550-stock-photo-home-exterior-with-garage-and.jpg",
-    },
-  ];
-  return (
-    <main className="w-full justify-center items-center overflow-hidden">
-      <section className="grid grid-cols-1 gap-5 p-10 md:grid-cols-3 xl:grid-cols-5">
-        <HouseArticle images={images} />
-        <HouseArticle images={images} />
-        <HouseArticle images={images} />
-        <HouseArticle images={images} />
-        <HouseArticle images={images} />
-        <HouseArticle images={images} />
-        <HouseArticle images={images} />
-        <HouseArticle images={images} /> <HouseArticle images={images} />
-        <HouseArticle images={images} /> <HouseArticle images={images} />
-        <HouseArticle images={images} />
+  useEffect(() => {
+    const fetchData = async () => {
+      const postsData = await fetchPosts(filteredPosts);
+      setPosts(postsData);
+
+      if (postsData.length > 0) {
+        const imagesData = await fetchImages(postsData);
+        setImages(imagesData);
+      }
+    };
+
+    fetchData();
+  }, [filteredPosts]);
+
+  return posts?.length ? (
+    <Main>
+      <section
+        className="flex flex-col bg-white fixed top-0 items-center justify-center w-screen mb-5 p-5 border-solid border-b-2 drop-shadow-sm z-10 md:hidden"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <aside className="flex flex-row w-[90%] border-solid border-2 p-2 rounded-full drop-shadow-md bg-white text-black">
+          <button className="flex align-center justify-center p-2 rounded-full">
+            <SearchIcon className="w-5 h-5 text-black" />
+          </button>
+          <span className="flex flex-col">
+            <h3 className="text-md font-semibold">Cualquier lugar</h3>
+            <p className="text-xs">Cualquier semana - añade inquilinos</p>
+          </span>
+        </aside>
       </section>
-    </main>
+      <section className="grid grid-cols-1 gap-5 md:grid-cols-3 xl:grid-cols-5 mt-24 md:mt-0">
+        {posts?.map((rent) => {
+          const rentImages = images.find(
+            (item) => item.rentId === rent.rent_id
+          );
+    
+          return (
+            <HouseCard
+              key={rent.rent_id}
+              rent={rent}
+              images={rentImages?.length !== 0 ? rentImages : null}
+            />
+          );
+        })}
+      </section>
+    </Main>
+  ) : (
+
+    <p>There are no posts yet...</p>
   );
 }
