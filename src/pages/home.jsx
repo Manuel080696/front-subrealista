@@ -58,7 +58,6 @@ export default function Home() {
           const rentImages = images.find(
             (item) => item.rentId === rent.rent_id
           );
-
           return (
             <HouseCard
               key={rent.rent_id}
@@ -70,6 +69,6 @@ export default function Home() {
       </section>
     </Main>
   ) : (
-    <p>Tehre are no posts yet...</p>
+    <p>There are no posts yet...</p>
   );
 }
