@@ -8,7 +8,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AccountMenu from "./account-menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useContext, useState } from "react";
-import { CurrentUserContext } from "../context/auth-context";
+import { AuthContextProvider } from "../Context/auth-context";
 import { SearchMobile } from "./search-mobile";
 
 export function Header({ handleFilteredPosts, isOpen, setIsOpen }) {
