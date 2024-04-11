@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { CurrentUserUpdateContext } from "../context/auth-context";
+import { CurrentUserUpdateContext } from "../Context/auth-context";
 
 export function useLogout() {
   const setCurrentUser = useContext(CurrentUserUpdateContext);

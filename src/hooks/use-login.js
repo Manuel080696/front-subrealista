@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import jwt_decode from "jwt-decode";
-import { CurrentUserUpdateContext } from "../context/auth-context.jsx";
+import { CurrentUserUpdateContext } from "../Context/auth-context";
 
 export function useLogin() {
   const setCurrentUser = useContext(CurrentUserUpdateContext);
