@@ -9,26 +9,35 @@ export const SearchMobile = ({ isOpen, setIsOpen, handleFilteredPosts }) => {
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState([0, 500]);
   const [dateValue, setDateValue] = useState(new Date());
-  const [tenants, setTenants] = useState(0);
+  const [rooms, setRooms] = useState(0);
   const [activeDate, setActiveDate] = useState(false);
   const [activePrice, setActivePrice] = useState(false);
 
   const handleSearch = (e) => {
     e.preventDefault();
 
+    let fechaMinSQL;
+    let fechaMaxSQL;
+    if (dateValue !== new Date()) {
+      const fechaMin = new Date(dateValue[0]);
+      const fechaMax = new Date(dateValue[1]);
+      fechaMinSQL = fechaMin.toISOString().slice(0, 19).replace("T", " ");
+      fechaMaxSQL = fechaMax.toISOString().slice(0, 19).replace("T", " ");
+    }
+
     handleFilteredPosts(
       "rent_location=" +
         location +
         "&min_date=" +
-        dateValue[0] +
+        fechaMinSQL +
         "&max_date=" +
-        dateValue[1] +
+        fechaMaxSQL +
         "&min_price=" +
         price[0] +
         "&max_price=" +
         price[1] +
-        "&tenants=" +
-        tenants
+        "&rent_rooms=" +
+        rooms
     );
     setIsOpen(!isOpen);
   };
@@ -86,19 +95,19 @@ export const SearchMobile = ({ isOpen, setIsOpen, handleFilteredPosts }) => {
                           },
                         }}
                       >
-                        <MenuItem value={"Andalucía"}>Andalucía</MenuItem>
-                        <MenuItem value={"Aragón"}>Aragón</MenuItem>
+                        <MenuItem value={"Andalucia"}>Andalucia</MenuItem>
+                        <MenuItem value={"Aragon"}>Aragon</MenuItem>
                         <MenuItem value={"Asturias"}>Asturias</MenuItem>
                         <MenuItem value={"Balears"}>Balears</MenuItem>
                         <MenuItem value={"Canarias"}>Canarias</MenuItem>
                         <MenuItem value={"Cantabria"}>Cantabria</MenuItem>
-                        <MenuItem value={"Castilla y León"}>
-                          Castilla y León
+                        <MenuItem value={"Castilla y Leon"}>
+                          Castilla y Leon
                         </MenuItem>
                         <MenuItem value={"Castilla - La Mancha"}>
                           Castilla - La Mancha
                         </MenuItem>
-                        <MenuItem value={"Catalunya"}>Catalunya</MenuItem>
+                        <MenuItem value={"Cataluña"}>Cataluña</MenuItem>
                         <MenuItem value={"Comunitat Valenciana"}>
                           Comunitat Valenciana
                         </MenuItem>
@@ -107,7 +116,7 @@ export const SearchMobile = ({ isOpen, setIsOpen, handleFilteredPosts }) => {
                         <MenuItem value={"Madrid"}>Madrid</MenuItem>
                         <MenuItem value={"Murcia"}>Murcia</MenuItem>
                         <MenuItem value={"Navarra"}>Navarra</MenuItem>
-                        <MenuItem value={"País Vasco"}>País Vasco</MenuItem>
+                        <MenuItem value={"Pais Vasco"}>Pais Vasco</MenuItem>
                         <MenuItem value={"Rioja"}>Rioja</MenuItem>
                         <MenuItem value={"Ceuta"}>Ceuta</MenuItem>
                         <MenuItem value={"Melilla"}>Melilla</MenuItem>
@@ -163,19 +172,19 @@ export const SearchMobile = ({ isOpen, setIsOpen, handleFilteredPosts }) => {
                     />
                   </label>
                   <label className="flex flex-col w-full bg-transparent border-2 rounded-full font-medium text-sm py-1 px-5 hover:bg-zinc-200">
-                    Inquilinos
+                    Habitaciones
                     <input
                       className="w-full font-normal text-xs hover:bg-zinc-200 mt-[0.43rem] focus:outline-none"
                       type="text"
                       pattern="[0-9]*"
                       inputMode="numeric"
-                      value={tenants}
+                      value={rooms}
                       id="tenants"
                       onInput={(e) => {
                         e.target.value = e.target.value.replace(/[^0-9]/g, "");
                       }}
                       placeholder="Num.inquilinos..."
-                      onChange={(e) => setTenants(e.target.value)}
+                      onChange={(e) => setRooms(e.target.value)}
                     />
                   </label>
                   <button className=" mt-16 flex items-center justify-center bg-gradient-to-b from-quaternary-inicio to-quaternary-fin px-4 py-3 gap-2 rounded-lg">

@@ -7,7 +7,7 @@ import "./date-calendar.css";
 export function Fecha({ active: activeDate, setDateValue, dateValue }) {
   //Función adicional, creada para dar formato a la fecha.
   const formatDate = (date) => {
-    return dayjs(date).format("DD/MM/YYYY");
+    return dayjs(date).format("YYYY-MM-DD");
   };
 
   //Estado donde se guarda la fecha, pongo como inicial fecha actual.
@@ -19,7 +19,7 @@ export function Fecha({ active: activeDate, setDateValue, dateValue }) {
       } flex flex-col w-full bg-white gap-5 mt-5 md:top-24 md:-right-20 md:mt-0 md:absolute md:p-6 md:shadow-lg md:rounded-xl md:12 md:w-fit`}
     >
       <span className="flex flex-row items-center justify-center p-2 gap-2 border rounded-full shadow-lg">
-        {dateValue[0] > 1 ? (
+        {dateValue && dateValue[0] > 1 ? (
           <p className="bg-gray-200 text-xs text-center w-full rounded-full p-2 md: text-normal">
             Ida: {formatDate(dateValue[0])}
           </p>
@@ -28,7 +28,7 @@ export function Fecha({ active: activeDate, setDateValue, dateValue }) {
             Ida: ...
           </p>
         )}
-        {dateValue[1] > 1 ? (
+        {dateValue && dateValue[1] > 1 ? (
           <p className="bg-gray-200 text-xs text-center w-full rounded-full p-2 md: text-normal">
             Vuelta: {formatDate(dateValue[1])}
           </p>

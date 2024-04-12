@@ -17,7 +17,7 @@ import { useCurrentUser } from "../hooks/use-current-user";
 import { toast } from "sonner";
 import { getUserRents } from "../services/get-all-rents-by-username";
 import EditIcon from "@mui/icons-material/Edit";
-import { AuthContextProvider } from "../Context/auth-context";
+import { CurrentUserContext } from "../context/auth-context";
 import Carousel from "../components/carousel";
 import { getRentData } from "../services/get-rent-data";
 import { getAllImages } from "../services/get-all-images";
