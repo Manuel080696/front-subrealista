@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 //import { CurrentUserContext } from '../../context/auth-context.jsx';
 
 // importamos funciones utilitarias que permite previsualizar y eliminar una imagen.
-//import { handleAddFilePreview } from '../../utils/handleAddFilePreview.js';VERRRRRRR
+///import { handleAddFilePreview } from '../../utils/handleAddFilePreview.js';VERRRRRRR
 import { useAddRentForm } from '../../hooks/use-rent';
 
 // Importamos componentes de Material UI
