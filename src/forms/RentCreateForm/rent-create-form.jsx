@@ -1,16 +1,32 @@
 import { useRef, useState } from 'react';
+//import { useContext, useState } from 'react'; pasar useContext aariba
+//import { CurrentUserContext } from '../../context/auth-context.jsx';
 
 // importamos funciones utilitarias que permite previsualizar y eliminar una imagen.
-import { handleAddFilePreview } from '../../utils/handleAddFilePreview.js';
+//import { handleAddFilePreview } from '../../utils/handleAddFilePreview.js';VERRRRRRR
+import { useAddRentForm } from '../../hooks/use-rent';
 
 // Importamos componentes de Material UI
-import { Stepper, Step, StepLabel, Button } from '@mui/material';
+import {
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  FormControl,
+  Select,
+  MenuItem,
+  /* Typography,
+  Grid,
+  TextField,*/
+} from '@mui/material';
 
 const RentCreateForm = () => {
+  //const [previewUrl, setPreviewUrl] = useState('');
   const fileInputRef = useRef(null);
-
+  const { handleSubmit, loading } = useAddRentForm();
   // Estados para controlar el paso actual y la información de cada paso
   const [activeStep, setActiveStep] = useState(0);
+  ///const { user, userData } = useContext(CurrentUserContext);
   const [stepData, setStepData] = useState({
     typeRent: '',
     location: '',
@@ -20,9 +36,7 @@ const RentCreateForm = () => {
       floor: '',
       staircase: '',
     },
-    postalCode: '',
-    city: '',
-    province: '',
+
     basicInfo: {
       guests: 0,
       bedrooms: 0,
@@ -43,7 +57,7 @@ const RentCreateForm = () => {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setStepData({ ...stepData, images: files });
-    handleAddFilePreview(e, setStepData, setPreviewUrl);
+    // handleAddFilePreview(e, setStepData, setPreviewUrl);
   };
 
   // Función para calcular el precio total
@@ -61,7 +75,7 @@ const RentCreateForm = () => {
     // Calculamos el precio total antes de enviar el formulario
     calculateTotalPrice();
 
-    // Aquí tendría que  realizar la lógica para enviar los datos al backend
+    // Aquí tendría que realizar la lógica para enviar los datos al backend
 
     // Por ejemplo, tendría que crear un objeto formData y enviarlo mediante una función addRent
     // const formData = new FormData();
@@ -74,9 +88,6 @@ const RentCreateForm = () => {
       formData.append('door', stepData.address.door);
       formData.append('floor', stepData.address.floor);
       formData.append('staircase', stepData.address.staircase);
-      formData.append('postalCode', stepData.postalCode);
-      formData.append('city', stepData.city);
-      formData.append('province', stepData.province);
       formData.append('guests', stepData.basicInfo.guests);
       formData.append('bedrooms', stepData.basicInfo.bedrooms);
       formData.append('beds', stepData.basicInfo.beds);
@@ -89,10 +100,10 @@ const RentCreateForm = () => {
       });
 
       // Enviar la solicitud al backend
-      const response = await fetch('URL_DEL_BACKEND', {
-        method: 'POST',
-        body: formData,
-      });
+      // const response = await fetch('URL_DEL_BACKEND', {
+      //   method: 'POST',
+      //   body: formData,
+      // });
 
       // Comprobar si la solicitud fue exitosa
       if (response.ok) {
@@ -105,15 +116,39 @@ const RentCreateForm = () => {
       console.error('Error al enviar el formulario:', error);
     }
   };
+  const handleBack = () => {
+    setActiveStep((prevStep) => prevStep - 1);
+  };
+
+  const handleNext = () => {
+    setActiveStep((prevStep) => prevStep + 1);
+  };
+
   const steps = [
     {
       key: 'typeRent',
       // Contenido del paso 1
       content: (
-        <section>
+        <FormControl fullWidth>
           <h2>Selecciona el tipo de renta</h2>
-          {/* Componentes para seleccionar el tipo de renta */}
-        </section>
+          <Select
+            value={stepData.typeRent}
+            onChange={(e) =>
+              setStepData({ ...stepData, typeRent: e.target.value })
+            }
+            required
+          >
+            <MenuItem value='' disabled>
+              Selecciona el tipo de alojamiento
+            </MenuItem>
+            <MenuItem value='Casa'>Casa</MenuItem>
+            <MenuItem value='Apartamento'>Apartamento</MenuItem>
+            <MenuItem value='Habitación'>Habitación</MenuItem>
+            <MenuItem value='Chalet'>Chalet</MenuItem>
+            <MenuItem value='Cabaña'>Cabaña</MenuItem>
+            <MenuItem value='Otro'>Otro</MenuItem>
+          </Select>
+        </FormControl>
       ),
     },
     {
@@ -150,7 +185,7 @@ const RentCreateForm = () => {
       key: 'images',
       content: (
         <section className='images-container'>
-          {/* Code to handle image previews, assuming it's implemented in handleAddFilePreview */}
+          {/* codigo handle image previews,se asume que esta definida em handleAddFilePreview */}
           {previewUrl && <img src={previewUrl} alt='Image preview' />}
           {!images ? (
             <section className='conditional-img'>
@@ -232,6 +267,6 @@ const RentCreateForm = () => {
       </section>
     </section>
   );
-}; // Closing the RentCreateForm function
+};
 
-export default RentCreateForm; // Exporting the component
+export default RentCreateForm;
