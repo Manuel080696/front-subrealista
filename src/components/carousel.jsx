@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import "./carousel.css";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function Carousel({ images }) {
+export default function Carousel({ images, rent }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dragStartX, setDragStartX] = useState(null);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const handleSetActiveClass = (e) => {
     e.preventDefault();
@@ -57,15 +60,23 @@ export default function Carousel({ images }) {
   };
 
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === images.images.length - 1 ? 0 : prevIndex + 1
-    );
+    setCurrentIndex((prevIndex) => {
+      if (id !== undefined) {
+        return prevIndex === images.length - 1 ? 0 : prevIndex + 1;
+      } else {
+        return prevIndex === images.images.length - 1 ? 0 : prevIndex + 1;
+      }
+    });
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.images.length - 1 : prevIndex - 1
-    );
+    setCurrentIndex((prevIndex) => {
+      if (id !== undefined) {
+        return prevIndex === 0 ? images.length - 1 : prevIndex - 1;
+      } else {
+        return prevIndex === 0 ? images.images.length - 1 : prevIndex - 1;
+      }
+    });
   };
 
   const goToSlide = (index) => {
@@ -82,32 +93,62 @@ export default function Carousel({ images }) {
       onTouchEnd={(e) => handleDragEnd(e)}
     >
       <div
-        className="carousel-inner"
+        className="carousel-inner z-0"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {images?.images?.map((image, index) => (
-          <div className="carousel-item" key={index}>
-            <img
-              className="carousel-img"
-              src={image.rent_image}
-              alt={`Slide ${index + 1}`}
-            />
-          </div>
-        ))}
+        {id !== undefined && images
+          ? images?.map((image, index) => (
+              <div
+                className="carousel-item"
+                key={index}
+                onClick={() => {
+                  if (id === undefined) navigate(`/rent/${rent.rent_id}`);
+                }}
+              >
+                <img
+                  className="carousel-img"
+                  src={image?.rent_image}
+                  alt={`Slide ${index + 1}`}
+                />
+              </div>
+            ))
+          : images.images?.map((image, index) => (
+              <div
+                className="carousel-item"
+                key={index}
+                onClick={() => {
+                  if (id === undefined) navigate(`/rent/${rent.rent_id}`);
+                }}
+              >
+                <img
+                  className="carousel-img"
+                  src={image?.rent_image}
+                  alt={`Slide ${index + 1}`}
+                />
+              </div>
+            ))}
       </div>
       <div className="carousel-dots">
-        {images?.images?.map((_, index) => (
-          <div
-            key={index}
-            className={`dot ${index === currentIndex ? "active-dot" : ""}`}
-            onClick={() => goToSlide(index)}
-          />
-        ))}
+        {id !== undefined && images
+          ? images?.map((_, index) => (
+              <div
+                key={index}
+                className={`dot ${index === currentIndex ? "active-dot" : ""}`}
+                onClick={() => goToSlide(index)}
+              />
+            ))
+          : images.images?.map((_, index) => (
+              <div
+                key={index}
+                className={`dot ${index === currentIndex ? "active-dot" : ""}`}
+                onClick={() => goToSlide(index)}
+              />
+            ))}
       </div>
-      <div className="carousel-btn prev-btn" onClick={prevSlide}>
+      <div className="carousel-btn prev-btn z-10" onClick={prevSlide}>
         &#10094;
       </div>
-      <div className="carousel-btn next-btn" onClick={nextSlide}>
+      <div className="carousel-btn next-btn z-10" onClick={nextSlide}>
         &#10095;
       </div>
     </div>

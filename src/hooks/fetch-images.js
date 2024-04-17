@@ -1,8 +1,9 @@
 import { getAllImages } from "../services/get-all-images";
 
 export async function fetchImages(posts) {
+  const postsArray = Array.isArray(posts) ? posts : [posts];
   // Obtener imágenes para cada publicación
-  const promises = posts.map(async (rent) => {
+  const promises = postsArray.map(async (rent) => {
     const imagesResult = await getAllImages(rent.rent_id);
     if (imagesResult?.status === "ok") {
       return {

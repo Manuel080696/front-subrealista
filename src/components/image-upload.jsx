@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { FormContext } from "../Context/FormContext";
+import { FormContext } from "../context/form-context";
 import { API_HOST } from "../../utils/constants";
 import { servicioBorrarFoto } from "../API/servicioBorrarFoto";
 
@@ -10,33 +10,29 @@ export function ImageUpload({ name, label, initialValue }) {
   const [imageUrls, setImageUrls] = useState([]);
   const fileInputRef = useRef(null);
   const formContext = useContext(FormContext);
-  
-  
+
   useEffect(() => {
-    if(!initialValue) {
+    if (!initialValue) {
       if (formContext.resetImage) {
         setSelectFiles([]);
-    }
+      }
     }
   }, [formContext.resetImage]);
-  
+
   useEffect(() => {
     let urls;
-    
-    if(selectFiles.some((file) => file instanceof File)) {
-      urls = selectFiles.map((file) => {
 
+    if (selectFiles.some((file) => file instanceof File)) {
+      urls = selectFiles.map((file) => {
         if (file instanceof File) {
           return URL.createObjectURL(file);
-
         } else if (file.id) {
-
           return API_HOST + "/" + file.foto;
-        } 
+        }
       });
-      
+
       setImageUrls(urls);
-    
+
       return () => {
         urls.forEach((url) => {
           URL.revokeObjectURL(url);
@@ -46,57 +42,52 @@ export function ImageUpload({ name, label, initialValue }) {
   }, [selectFiles]);
 
   useEffect(() => {
-    if(initialValue) {
+    if (initialValue) {
       const urls = initialValue.map((foto) => {
         return API_HOST + "/" + foto.foto;
-      })
-      setImageUrls(urls)
-      setSelectFiles(initialValue)
+      });
+      setImageUrls(urls);
+      setSelectFiles(initialValue);
     }
-  }, [initialValue])
+  }, [initialValue]);
 
   function updateRequest(newFiles) {
     if (!isTouched) setIsTouched(true);
     const newFilesArray = [...selectFiles, ...newFiles];
-    
-    setSelectFiles(newFilesArray);
-    
 
-      //se actualizaa el estado del formulario
-      formContext.updateFormValue({
-        [name]: newFilesArray,
-      });
-    
-  }
-  function onFileRemove(e, file) {
-    e.preventDefault()
-    let newFilesArray;
-    if(!(file instanceof File) && selectFiles.length > 1) {
-      async function borrarFoto() {
-        const resultado = await servicioBorrarFoto(file.id, file)
-      }
-      borrarFoto()
-      newFilesArray = selectFiles.filter((sF) => {
-        return sF.id !== file.id;
-      })
-      setSelectFiles(newFilesArray);
-      const urls = newFilesArray.map((foto) => {
-        return API_HOST + "/" + foto.foto;
-      })
-      setImageUrls(urls)
-    } else if(selectFiles.length > 1 ){
-    
-      newFilesArray = selectFiles.filter((sF) => {
-        return sF !== file;
-      })
-      setSelectFiles(newFilesArray);
-      
-    } 
+    setSelectFiles(newFilesArray);
+
+    //se actualizaa el estado del formulario
     formContext.updateFormValue({
       [name]: newFilesArray,
     });
   }
-  
+  function onFileRemove(e, file) {
+    e.preventDefault();
+    let newFilesArray;
+    if (!(file instanceof File) && selectFiles.length > 1) {
+      async function borrarFoto() {
+        const resultado = await servicioBorrarFoto(file.id, file);
+      }
+      borrarFoto();
+      newFilesArray = selectFiles.filter((sF) => {
+        return sF.id !== file.id;
+      });
+      setSelectFiles(newFilesArray);
+      const urls = newFilesArray.map((foto) => {
+        return API_HOST + "/" + foto.foto;
+      });
+      setImageUrls(urls);
+    } else if (selectFiles.length > 1) {
+      newFilesArray = selectFiles.filter((sF) => {
+        return sF !== file;
+      });
+      setSelectFiles(newFilesArray);
+    }
+    formContext.updateFormValue({
+      [name]: newFilesArray,
+    });
+  }
 
   function onAddFile(e) {
     e.preventDefault();
@@ -106,16 +97,24 @@ export function ImageUpload({ name, label, initialValue }) {
     <div>
       <label>{label}</label>
       <ul className="image-list">
-      {selectFiles.map((file,i) => (
-        <li key={i}>
-          <div className="div-image-upload">
-            <button type="button" className="delete" onClick={(e) => onFileRemove(e, file)}>
-              X
-            </button>
-            <img className="image-upload" src={imageUrls[i]} alt="Alojamiento" />
-          </div>
-        </li>
-      ))}
+        {selectFiles.map((file, i) => (
+          <li key={i}>
+            <div className="div-image-upload">
+              <button
+                type="button"
+                className="delete"
+                onClick={(e) => onFileRemove(e, file)}
+              >
+                X
+              </button>
+              <img
+                className="image-upload"
+                src={imageUrls[i]}
+                alt="Alojamiento"
+              />
+            </div>
+          </li>
+        ))}
       </ul>
       <div className="input-fotos">
         <input
@@ -128,27 +127,27 @@ export function ImageUpload({ name, label, initialValue }) {
           disabled={formContext.isLoading}
           multiple={true}
         />
-        <button className="boton-simple" onClick={onAddFile}> 
+        <button className="boton-simple" onClick={onAddFile}>
           Seleccionar Archivo
         </button>
 
-        {!initialValue ? (formContext.isTouched || isTouched) &&
-          formContext.errors &&
-          formContext.errors[name] &&
-          !formContext.isLoading && (
-            <div className="div-error">
-              <p className="error-form">{formContext.errors[name]}</p>
-            </div>
-          ) : formContext.errors &&
-          formContext.errors[name] &&
-          !formContext.isLoading && (
-            <div className="div-error">
-              <p className="error-form">{formContext.errors[name]}</p>
-            </div>)}
+        {!initialValue
+          ? (formContext.isTouched || isTouched) &&
+            formContext.errors &&
+            formContext.errors[name] &&
+            !formContext.isLoading && (
+              <div className="div-error">
+                <p className="error-form">{formContext.errors[name]}</p>
+              </div>
+            )
+          : formContext.errors &&
+            formContext.errors[name] &&
+            !formContext.isLoading && (
+              <div className="div-error">
+                <p className="error-form">{formContext.errors[name]}</p>
+              </div>
+            )}
       </div>
-      
-      
     </div>
-    
   );
 }
