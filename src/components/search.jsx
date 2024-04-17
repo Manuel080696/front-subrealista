@@ -4,31 +4,39 @@ import SearchIcon from "@mui/icons-material/Search";
 import "./search.css";
 import { Fecha } from "./date-calendar";
 import { PriceRange } from "./price-range";
+import dayjs from "dayjs";
 
 export default function Search({ handleFilteredPosts }) {
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState([0, 500]);
-  const [dateValue, setDateValue] = useState(new Date());
-  const [tenants, setTenants] = useState(0);
+  const [dateValue, setDateValue] = useState();
+  const [rooms, setRooms] = useState(0);
   const [activeDate, setActiveDate] = useState(false);
   const [activePrice, setActivePrice] = useState(false);
 
   const handleSearch = (e) => {
     e.preventDefault();
 
+    let fechaMinSQL;
+    let fechaMaxSQL;
+    if (dateValue && dateValue.length !== 0) {
+      fechaMinSQL = dayjs(dateValue[0]).format("YYYY-MM-DD");
+      fechaMaxSQL = dayjs(dateValue[1]).format("YYYY-MM-DD");
+    }
+
     handleFilteredPosts(
       "rent_location=" +
         location +
-        "&min_date=" +
-        dateValue[0] +
-        "&max_date=" +
-        dateValue[1] +
         "&min_price=" +
         price[0] +
         "&max_price=" +
         price[1] +
-        "&tenants=" +
-        tenants
+        "&rent_rooms=" +
+        rooms +
+        "&min_date=" +
+        fechaMinSQL +
+        "&max_date=" +
+        fechaMaxSQL
     );
   };
 
@@ -59,17 +67,17 @@ export default function Search({ handleFilteredPosts }) {
                 },
               }}
             >
-              <MenuItem value={"Andalucía"}>Andalucía</MenuItem>
-              <MenuItem value={"Aragón"}>Aragón</MenuItem>
+              <MenuItem value={"Andalucia"}>Andalucia</MenuItem>
+              <MenuItem value={"Aragon"}>Aragon</MenuItem>
               <MenuItem value={"Asturias"}>Asturias</MenuItem>
               <MenuItem value={"Balears"}>Balears</MenuItem>
               <MenuItem value={"Canarias"}>Canarias</MenuItem>
               <MenuItem value={"Cantabria"}>Cantabria</MenuItem>
-              <MenuItem value={"Castilla y León"}>Castilla y León</MenuItem>
+              <MenuItem value={"Castilla y Leon"}>Castilla y Leon</MenuItem>
               <MenuItem value={"Castilla - La Mancha"}>
                 Castilla - La Mancha
               </MenuItem>
-              <MenuItem value={"Catalunya"}>Catalunya</MenuItem>
+              <MenuItem value={"Cataluña"}>Cataluña</MenuItem>
               <MenuItem value={"Comunitat Valenciana"}>
                 Comunitat Valenciana
               </MenuItem>
@@ -78,7 +86,7 @@ export default function Search({ handleFilteredPosts }) {
               <MenuItem value={"Madrid"}>Madrid</MenuItem>
               <MenuItem value={"Murcia"}>Murcia</MenuItem>
               <MenuItem value={"Navarra"}>Navarra</MenuItem>
-              <MenuItem value={"País Vasco"}>País Vasco</MenuItem>
+              <MenuItem value={"Pais Vasco"}>Pais Vasco</MenuItem>
               <MenuItem value={"Rioja"}>Rioja</MenuItem>
               <MenuItem value={"Ceuta"}>Ceuta</MenuItem>
               <MenuItem value={"Melilla"}>Melilla</MenuItem>
@@ -91,19 +99,27 @@ export default function Search({ handleFilteredPosts }) {
             className="w-full font-normal text-xs hover:bg-zinc-200 mt-[0.43rem]"
             onClick={() => setActiveDate(!activeDate)}
           >
-            {dateValue[0] !== undefined
-              ? `${dateValue[0].getDate()} ${dateValue[0].toLocaleString(
+            {dateValue && dateValue[0].length !== 0 ? (
+              <>
+                {`${dateValue[0]?.getDate()} ${dateValue[0]?.toLocaleString(
                   "default",
                   { month: "short" }
-                )}`
-              : "Salida"}
+                )}`}
+              </>
+            ) : (
+              "Salida"
+            )}
             ,{" "}
-            {dateValue[1] !== undefined
-              ? `${dateValue[1].getDate()} ${dateValue[1].toLocaleString(
+            {dateValue && dateValue[1].length !== 0 ? (
+              <>
+                {`${dateValue[1]?.getDate()} ${dateValue[1]?.toLocaleString(
                   "default",
                   { month: "short" }
-                )}`
-              : "Llegada"}
+                )}`}
+              </>
+            ) : (
+              "Llegada"
+            )}
           </p>
           <Fecha
             active={activeDate}
@@ -126,19 +142,19 @@ export default function Search({ handleFilteredPosts }) {
           />
         </label>
         <label className="flex flex-col w-4/12 bg-transparent font-medium text-sm py-4 px-5 rounded-md hover:bg-zinc-200 height-full">
-          Inquilinos
+          Habitaciones
           <input
             className="w-full font-normal text-xs hover:bg-zinc-200 mt-[0.43rem] focus:outline-none"
             type="text"
             pattern="[0-9]*"
             inputMode="numeric"
-            value={tenants}
+            value={rooms}
             id="tenants"
             onInput={(e) => {
               e.target.value = e.target.value.replace(/[^0-9]/g, "");
             }}
             placeholder="Num.inquilinos..."
-            onChange={(e) => setTenants(e.target.value)}
+            onChange={(e) => setRooms(e.target.value)}
           />
         </label>
         <button className="flex align-center justify-center bg-gradient-to-b from-quaternary-inicio to-quaternary-fin p-4 rounded-full mx-4">
