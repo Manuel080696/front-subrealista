@@ -106,7 +106,7 @@ export default function Carousel({ images, rent }) {
                 }}
               >
                 <img
-                  className="carousel-img"
+                  className="carousel-img-mobile"
                   src={image?.rent_image}
                   alt={`Slide ${index + 1}`}
                 />

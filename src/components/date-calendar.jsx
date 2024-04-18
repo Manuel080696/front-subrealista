@@ -1,8 +1,11 @@
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import dayjs from "dayjs"; // ES 2015
+import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
 import "./date-calendar.css";
 import { useParams } from "react-router-dom";
+
+dayjs.extend(isBetween);
 
 export function Fecha({ active, setDateValue, dateValue, dateDisable }) {
   const { id } = useParams();
@@ -13,15 +16,44 @@ export function Fecha({ active, setDateValue, dateValue, dateDisable }) {
 
   // Función para deshabilitar las fechas seleccionadas
   const tileDisabled = ({ date }) => {
-    if (!dateDisable) return false; // Si dateDisable es null, no deshabilitar ninguna fecha
-    const [startDate, endDate] = dateDisable;
+    if (!dateDisable) return false;
 
-    const adjustedEndDate = dayjs(endDate).add(1, "day");
+    for (const { dateStart, dateEnd } of dateDisable) {
+      const startDate = dayjs(dateStart).subtract(1, "day");
+      const endDate = dayjs(dateEnd).add(1, "day"); // Incrementamos en un día para incluir la fecha final
 
-    return (
-      dayjs(date).isAfter(startDate, "day") &&
-      dayjs(date).isBefore(adjustedEndDate, "day")
-    );
+      if (
+        dayjs(date).isAfter(startDate, "day") &&
+        dayjs(date).isBefore(endDate, "day")
+      ) {
+        return true; // Si la fecha está dentro del rango de deshabilitación, retorna true
+      }
+    }
+    return false;
+  };
+
+  const selectDateValue = (date) => {
+    if (date) {
+      setDateValue(date);
+      if (dateValue >= 2) {
+        const fechaFormateada = [dayjs(dateValue[0]), dayjs(dateValue[1])];
+
+        if (fechaFormateada.length >= 2 && dateDisable) {
+          for (const { dateStart, dateEnd } of dateDisable) {
+            const startDate = dayjs(dateStart);
+            const endDate = dayjs(dateEnd);
+
+            if (
+              dayjs(startDate).isBetween(fechaFormateada, "day", "[]") ||
+              dayjs(endDate).isBetween(fechaFormateada, "day", "[]")
+            ) {
+              console.error("Error al seleccionar la fecha");
+              break; // Si la fecha está dentro de algún rango de deshabilitación, establecemos disableSelected a true y salimos del bucle
+            }
+          }
+        }
+      }
+    }
   };
 
   return id === undefined ? (
@@ -85,7 +117,7 @@ export function Fecha({ active, setDateValue, dateValue, dateDisable }) {
         minDate={new Date()}
         className="border-0 w-full"
         selectRange={true}
-        onChange={(value) => setDateValue(value)}
+        onChange={(value) => selectDateValue(value)}
         value={dateValue}
         tileDisabled={tileDisabled}
       />

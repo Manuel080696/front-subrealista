@@ -13,6 +13,7 @@ import { PostPage } from "./pages/post-page";
 function App() {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [success, setSuccess] = useState();
 
   const handleFilteredPosts = (posts) => {
     setFilteredPosts(posts);
@@ -33,6 +34,8 @@ function App() {
               filteredPosts={filteredPosts}
               isOpen={isOpen}
               setIsOpen={setIsOpen}
+              success={success}
+              setSuccess={setSuccess}
             />
           }
         />
@@ -42,7 +45,10 @@ function App() {
         <Route path="/users/">
           <Route path=":username" element={<UserPage />} />
         </Route>
-        <Route path="/rent/:id" element={<PostPage />} />
+        <Route
+          path="/rent/:id"
+          element={<PostPage setSuccess={setSuccess} success={success} />}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

@@ -4,7 +4,13 @@ import { Main } from "../components/main";
 import { fetchPosts } from "../hooks/fetch-posts";
 import { fetchImages } from "../hooks/fetch-images";
 import SearchIcon from "@mui/icons-material/Search";
-export default function Home({ filteredPosts, setIsOpen, isOpen }) {
+export default function Home({
+  filteredPosts,
+  setIsOpen,
+  isOpen,
+  success,
+  setSuccess,
+}) {
   const [posts, setPosts] = useState([]);
   const [images, setImages] = useState([]);
 
@@ -67,6 +73,20 @@ export default function Home({ filteredPosts, setIsOpen, isOpen }) {
         </aside>
       </section>
       <p className="mt-24">There are no posts yet...</p>
+      {success ? (
+        <Stack
+          sx={{ width: "100%", position: "absolute", bottom: "0" }}
+          spacing={2}
+        >
+          <Alert
+            variant="outlined"
+            severity="warning"
+            onClose={() => setSuccess("")}
+          >
+            {success}
+          </Alert>
+        </Stack>
+      ) : null}
     </Main>
   );
 }
