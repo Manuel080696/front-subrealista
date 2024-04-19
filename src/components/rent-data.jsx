@@ -3,6 +3,7 @@ import { Mapa } from "../components/map";
 import { Fecha } from "../components/date-calendar";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function RentData({
   user,
@@ -13,6 +14,7 @@ export function RentData({
   setDateValue,
 }) {
   const hostSectionRef = useRef(null);
+  const navigate = useNavigate();
 
   return (
     <section className="md:w-7/12">
