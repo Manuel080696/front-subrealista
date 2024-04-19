@@ -1,4 +1,3 @@
-import StarIcon from "@mui/icons-material/Star";
 import Carousel from "./carousel";
 import dayjs from "dayjs";
 
@@ -27,10 +26,6 @@ export default function HomeCard({ rent, images }) {
               </p>
             </aside>
             <p className="font-semibold text-sm">{rent.rent_price} €</p>
-          </section>
-          <section className="flex flex-row">
-            <StarIcon />
-            <p className="font-normal text-sm">4.5</p>
           </section>
         </figcaption>
       </article>
