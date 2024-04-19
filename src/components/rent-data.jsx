@@ -4,6 +4,7 @@ import { Fecha } from "../components/date-calendar";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { Rating } from "@mui/material";
 
 export function RentData({
   user,
@@ -15,6 +16,8 @@ export function RentData({
 }) {
   const hostSectionRef = useRef(null);
   const navigate = useNavigate();
+
+  console.log(user);
 
   return (
     <section className="md:w-7/12">
@@ -78,7 +81,11 @@ export function RentData({
         <section className="flex flex-col items-center w-full">
           <span className="flex flex-col items-center bg-white w-6/12 p-6 rounded-lg shadow-xl">
             <img
-              src={user?.profilePic}
+              src={
+                user && user.profilePic !== (undefined || null)
+                  ? user?.profilePic
+                  : "/users/default_avatar.png"
+              }
               alt={`${user?.username}`}
               onClick={() => navigate(`/users/${user?.username}`)}
               className="rounded-full w-24 aspect-square object-cover"
@@ -87,12 +94,22 @@ export function RentData({
               {user?.username}
             </p>
 
-            <span className="flex flex-row items-center justify-center gap-2 py-5 border-b">
-              <LanguageOutlinedIcon />
-              <p className="text-md font-semibold text-center">
-                {user?.address}
-              </p>
-            </span>
+            {user?.avg_rating ? (
+              <span className="flex align-middle justify-center">
+                <Rating value={user?.avg_rating} name="size-medium" readOnly />
+              </span>
+            ) : (
+              "Sin valoraciones"
+            )}
+
+            {user?.address && (
+              <span className="flex flex-row items-center justify-center gap-2 py-5 border-b">
+                <LanguageOutlinedIcon />
+                <p className="text-md font-semibold text-center">
+                  {user?.address}
+                </p>
+              </span>
+            )}
 
             <p className="text-md mt-5">{user?.bio}</p>
           </span>

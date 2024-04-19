@@ -126,8 +126,8 @@ export function UserPage() {
               <h3 className="text-center text-gray-600 mt-1">
                 {user?.avg_rating ? (
                   <span className="flex align-middle justify-center">
-                    <Rating value={user?.avg_rating} readOnly /> (
-                    {user?.avg_rating})
+                    <Rating value={user?.avg_rating} readOnly />
+                    <p>({user?.avg_rating})</p>
                   </span>
                 ) : (
                   "Sin valoraciones"
