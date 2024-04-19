@@ -8,6 +8,7 @@ export function CostsMobile({
   handlePassToPayForm,
   setError,
   error,
+  isMobileView,
 }) {
   function formatDate(date) {
     return dayjs(date).format("MMM-DD");
@@ -37,7 +38,7 @@ export function CostsMobile({
       >
         Reservar
       </button>
-      {error ? (
+      {isMobileView && error ? (
         <Stack
           sx={{
             width: "100%",

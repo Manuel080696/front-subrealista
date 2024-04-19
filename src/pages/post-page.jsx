@@ -21,11 +21,26 @@ export function PostPage({ setSuccess, success }) {
   const [daysDiff, setDaysDiff] = useState(1);
   const [user, setUser] = useState();
   const [payActive, setPayActive] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
   const [active, setActive] = useState(false);
   const [error, setError] = useState();
 
   const navigate = useNavigate();
   const { id } = useParams();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  console.log(isMobileView);
 
   function formatDate(date) {
     return dayjs(date).format("YYYY-MM-DD");
@@ -131,9 +146,10 @@ export function PostPage({ setSuccess, success }) {
             handlePassToPayForm={handlePassToPayForm}
             error={error}
             setError={setError}
+            isMobileView={isMobileView}
           />
         </section>
-        {error ? (
+        {isMobileView && error ? (
           <Stack
             sx={{
               width: "60%",

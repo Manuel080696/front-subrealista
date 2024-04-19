@@ -97,17 +97,6 @@ export function PaymentGateway({
           Reservar
         </button>
       </section>
-      {error ? (
-        <Stack sx={{ width: "100%" }} spacing={2}>
-          <Alert
-            variant="outlined"
-            severity="warning"
-            onClose={() => setError("")}
-          >
-            {error}
-          </Alert>
-        </Stack>
-      ) : null}
     </section>
   ) : null;
 }
