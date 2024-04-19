@@ -52,7 +52,7 @@ export default function Home({
           </span>
         </aside>
       </section>
-      <section className="grid grid-cols-1 gap-5 md:grid-cols-3 xl:grid-cols-5 mt-24 md:mt-0">
+      <section className="grid grid-cols-1 gap-5 md:grid-cols-3 xl:grid-cols-5 mt-24 md:mt-0 md:min-h-screen">
         {images &&
           posts?.map((rent, index) => {
             const rentImages = images[index];
