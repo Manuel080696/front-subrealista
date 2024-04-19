@@ -13,7 +13,7 @@ export const HeaderMobile = ({
   user,
 }) => {
   return userData === null ? (
-    <header className="min-h-min w-full h-min fixed bottom-0 z-50 bg-[var(--primary-color)] md:hidden md:top-0 md:sticky md:pt-2 md:pb-5 md:border-solid md:border-b-2 md:drop-shadow-sm">
+    <header className="min-h-min w-full h-min fixed bottom-0 z-50 border-t bg-[var(--primary-color)] md:hidden md:top-0 md:sticky md:pt-2 md:pb-5 md:border-solid md:border-b-2 md:drop-shadow-sm">
       <ul className="flex flex-row w-screen justify-center items-center h-16 text-[var(--quintanary-color)] text-xs md:hidden">
         <li className="w-24 active:text-[var(--quaternary-color)]   ">
           <Link
@@ -53,7 +53,7 @@ export const HeaderMobile = ({
       </section>
     </header>
   ) : (
-    <header className="min-h-min w-full h-min fixed bottom-0 z-50 bg-[var(--primary-color)] md:top-0 md:sticky md:pt-2 md:pb-5 md:border-solid md:border-b-2 md:drop-shadow-sm">
+    <header className="min-h-min w-full h-min fixed border-t bottom-0 z-50 bg-[var(--primary-color)] md:top-0 md:sticky md:pt-2 md:pb-5 md:border-solid md:border-b-2 md:drop-shadow-sm">
       <ul className="flex flex-row w-screen justify-center items-center h-16 text-[var(--quintanary-color)] text-xs md:hidden">
         <li className="w-24 active:text-[var(--quaternary-color)]   ">
           <Link

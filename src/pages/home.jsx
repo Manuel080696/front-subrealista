@@ -4,6 +4,9 @@ import { Main } from "../components/main";
 import { fetchPosts } from "../hooks/fetch-posts";
 import { fetchImages } from "../hooks/fetch-images";
 import SearchIcon from "@mui/icons-material/Search";
+import { Alert, Stack } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 export default function Home({
   filteredPosts,
   setIsOpen,
@@ -30,6 +33,9 @@ export default function Home({
     fetchData();
   }, [filteredPosts]);
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down(768));
+
   return posts?.length ? (
     <Main>
       <section
@@ -55,6 +61,27 @@ export default function Home({
             );
           })}
       </section>
+      {success && success?.length !== 0 ? (
+        <Stack
+          sx={{
+            width: isSmallScreen ? "100%" : "60%",
+            position: "fixed",
+            zIndex: "60",
+            bottom: "0",
+            right: "0",
+            backgroundColor: "white",
+          }}
+          spacing={2}
+        >
+          <Alert
+            variant="outlined"
+            severity="success"
+            onClose={() => setSuccess("")}
+          >
+            {success}
+          </Alert>
+        </Stack>
+      ) : null}
     </Main>
   ) : (
     <Main>
@@ -73,14 +100,21 @@ export default function Home({
         </aside>
       </section>
       <p className="mt-24">There are no posts yet...</p>
-      {success ? (
+      {success && success?.length !== 0 ? (
         <Stack
-          sx={{ width: "100%", position: "absolute", bottom: "0" }}
+          sx={{
+            width: isSmallScreen ? "100%" : "60%",
+            position: "fixed",
+            zIndex: "60",
+            bottom: "0",
+            right: "0",
+            backgroundColor: "white",
+          }}
           spacing={2}
         >
           <Alert
             variant="outlined"
-            severity="warning"
+            severity="success"
             onClose={() => setSuccess("")}
           >
             {success}

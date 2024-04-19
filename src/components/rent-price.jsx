@@ -10,19 +10,10 @@ export function RentPrice({
   rooms,
   setRooms,
   daysDiff,
-  setPayActive,
-  payActive,
   error,
   setError,
+  handlePassToPayForm,
 }) {
-  const handlePassToPayForm = () => {
-    if (rooms !== 0 && dateValue.length !== 0) {
-      setPayActive(!payActive);
-    } else {
-      setError("Selecciona al menos una fecha de ida y vuelta");
-    }
-  };
-
   return (
     <aside className="w-5/12 hidden p-6 gap-2 md:flex">
       <section className="flex flex-col items-center w-full">
@@ -89,7 +80,6 @@ export function RentPrice({
             Reservar
           </button>
           <CostsPc post={post} daysDiff={daysDiff} />
-          {/* <CostsMobile post={post} daysDiff={daysDiff} /> */}
           {error ? (
             <Stack sx={{ width: "100%" }} spacing={2}>
               <Alert

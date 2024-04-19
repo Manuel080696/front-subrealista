@@ -9,6 +9,7 @@ import { RentData } from "../components/rent-data";
 import { RentPrice } from "../components/rent-price";
 import { PaymentGateway } from "../components/payment-gateway";
 import { Alert, Stack } from "@mui/material";
+import { CostsMobile } from "../components/costs-mobile";
 
 export function PostPage({ setSuccess, success }) {
   const [post, setPost] = useState();
@@ -51,6 +52,14 @@ export function PostPage({ setSuccess, success }) {
     };
     fetchData();
   }, [id, dateValue]);
+
+  const handlePassToPayForm = () => {
+    if (rooms !== 0 && dateValue.length !== 0) {
+      setPayActive(!payActive);
+    } else {
+      setError("Selecciona al menos una fecha de ida y vuelta");
+    }
+  };
 
   /* console.log("Te falta seleccionar las fechas de ida y vuelta"); */
   /*  if (disableDate) console.log(dateValue); */
@@ -111,14 +120,31 @@ export function PostPage({ setSuccess, success }) {
             setRooms={setRooms}
             daysDiff={daysDiff}
             images={images}
-            payActive={payActive}
             error={error}
             setError={setError}
-            setPayActive={setPayActive}
+            handlePassToPayForm={handlePassToPayForm}
+          />
+          <CostsMobile
+            post={post}
+            daysDiff={daysDiff}
+            dateValue={dateValue}
+            handlePassToPayForm={handlePassToPayForm}
+            error={error}
+            setError={setError}
           />
         </section>
         {error ? (
-          <Stack sx={{ width: "100%" }} spacing={2}>
+          <Stack
+            sx={{
+              width: "60%",
+              position: "fixed",
+              zIndex: "20",
+              bottom: "0",
+              right: "0",
+              backgroundColor: "white",
+            }}
+            spacing={2}
+          >
             <Alert
               variant="outlined"
               severity="warning"

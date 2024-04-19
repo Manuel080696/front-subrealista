@@ -1,12 +1,11 @@
 import { METHODS, sendApiRequest } from "./send-api-request.js";
 
-export async function postReserve(id, formData) {
+export async function postReserve(id, jsonData) {
   const response = await sendApiRequest(
     METHODS.POST,
     `/rentings/${id}`,
-    formData
+    jsonData
   );
   const data = await response.data;
-  console.log(data);
   return data;
 }
