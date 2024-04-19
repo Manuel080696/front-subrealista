@@ -1,7 +1,12 @@
 import StarIcon from "@mui/icons-material/Star";
 import Carousel from "./carousel";
+import dayjs from "dayjs";
 
 export default function HomeCard({ rent, images }) {
+  function formatDate(date) {
+    return dayjs(date).format("YYYY-MM-DD");
+  }
+
   return (
     images && (
       <article className="flex flex-col">
@@ -18,7 +23,7 @@ export default function HomeCard({ rent, images }) {
                 {rent.rent_owner}
               </p>
               <p className="font-normal text-sm text-[var(--quintanary-color)]">
-                {new Date(rent.createdAt).toLocaleDateString()}
+                {formatDate(rent.createdAt)}
               </p>
             </aside>
             <p className="font-semibold text-sm">{rent.rent_price} €</p>
