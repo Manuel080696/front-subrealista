@@ -60,7 +60,11 @@ export function RentPrice({
                 />
               </label>
               <button
-                onClick={() => setRooms(rooms >= 15 ? 15 : rooms + 1)}
+                onClick={() =>
+                  setRooms(
+                    rooms >= post.rent_rooms ? post.rent_rooms : rooms + 1
+                  )
+                }
                 className="rounded-full p-1 h-fit bg-white border"
               >
                 <AddIcon sx={{ height: "1rem" }} />

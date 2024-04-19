@@ -25,16 +25,8 @@ export const HeaderMobile = ({
             <p className="my-1 font-light">Explorar</p>
           </Link>
         </li>
+        <li className="w-24 active:text-[var(--quaternary-color)]" />
         <li className="w-24 active:text-[var(--quaternary-color)]">
-          <Link
-            to="/login"
-            className="flex flex-col justify-center items-center h-3/5"
-          >
-            <FavoriteBorderIcon className="text-gray" />
-            <p className="my-1 font-light">Favoritos</p>
-          </Link>
-        </li>
-        <li className="w-24 active:text-[var(--quaternary-color)] ">
           <Link
             to="/register"
             className="w-24 h-full flex flex-col justify-center items-center"
@@ -64,18 +56,14 @@ export const HeaderMobile = ({
             <p className="my-1 font-light">Explorar</p>
           </Link>
         </li>
-        <li className="w-24 active:text-[var(--quaternary-color)]">
-          <Link
-            to="/favorites"
-            className="flex flex-col justify-center items-center h-3/5"
-          >
-            <FavoriteBorderIcon className="text-gray" />
-            <p className="my-1 font-light">Favoritos</p>
-          </Link>
-        </li>
+        <li className="w-24 active:text-[var(--quaternary-color)]" />
         <li className="w-24 active:text-[var(--quaternary-color)] ">
           <Link
-            to={`/users/${user?.username}`}
+            to={
+              user !== (undefined || null)
+                ? `/users/${user?.username}`
+                : "/login"
+            }
             className="w-24 h-full flex flex-col justify-center items-center"
           >
             <Avatar

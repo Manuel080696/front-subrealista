@@ -40,8 +40,6 @@ export function PostPage({ setSuccess, success }) {
     };
   }, []);
 
-  console.log(isMobileView);
-
   function formatDate(date) {
     return dayjs(date).format("YYYY-MM-DD");
   }
@@ -75,9 +73,6 @@ export function PostPage({ setSuccess, success }) {
       setError("Selecciona al menos una fecha de ida y vuelta");
     }
   };
-
-  /* console.log("Te falta seleccionar las fechas de ida y vuelta"); */
-  /*  if (disableDate) console.log(dateValue); */
 
   useEffect(() => {
     if (post) {

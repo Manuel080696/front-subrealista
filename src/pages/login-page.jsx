@@ -56,27 +56,21 @@ export function LoginUserPage() {
 
   return (
     <Main>
-      <h1 className="text-4xl block self-center">Inicia sesión</h1>
-      <LoginForm
-        formData={formData}
-        handleInputChange={handleInputChange}
-        validationErrors={validationErrors}
-        handleSubmit={handleSubmit}
-      />
-      <p className="flex justify-center gap-2">
-        ¿No tienes cuenta?
-        <Link to="/register" style={{ color: "var(--quaternary-color)" }}>
-          ¡Regístrate!
-        </Link>
-      </p>
-      <p className="flex justify-center gap-2">
-        <Link
-          to="/users/recovery-password"
-          style={{ color: "var(--quaternary-color)" }}
-        >
-          ¿Olvidaste tu contraseña?
-        </Link>
-      </p>
+      <section className="flex flex-col h-screen w-full items-center justify-center">
+        <h1 className="text-4xl block self-center mb-5">Inicia sesión</h1>
+        <LoginForm
+          formData={formData}
+          handleInputChange={handleInputChange}
+          validationErrors={validationErrors}
+          handleSubmit={handleSubmit}
+        />
+        <p className="flex justify-center gap-2 mt-5">
+          ¿No tienes cuenta?
+          <Link to="/register" style={{ color: "var(--quaternary-color)" }}>
+            ¡Regístrate!
+          </Link>
+        </p>
+      </section>
     </Main>
   );
 }

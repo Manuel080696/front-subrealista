@@ -17,8 +17,6 @@ export function RentData({
   const hostSectionRef = useRef(null);
   const navigate = useNavigate();
 
-  console.log(user);
-
   return (
     <section className="md:w-7/12">
       {/*Datos vivienda*/}
@@ -30,7 +28,11 @@ export function RentData({
       {/*Datos anfitrión*/}
       <aside className="flex flex-row mx-8 py-6 items-center gap-2 border-t">
         <img
-          src={user?.profilePic}
+          src={
+            user && user.profilePic !== (undefined || null)
+              ? user?.profilePic
+              : "/users/default_avatar.png"
+          }
           alt={`${user?.username}`}
           className="rounded-full w-12 aspect-square object-cover"
           onClick={() =>
@@ -96,7 +98,11 @@ export function RentData({
 
             {user?.avg_rating ? (
               <span className="flex align-middle justify-center">
-                <Rating value={user?.avg_rating} name="size-medium" readOnly />
+                <Rating
+                  value={parseFloat(user?.avg_rating)}
+                  name="size-medium"
+                  readOnly
+                />
               </span>
             ) : (
               "Sin valoraciones"
