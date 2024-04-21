@@ -26,6 +26,7 @@ export function Header({ handleFilteredPosts, isOpen, setIsOpen }) {
   return isMobile ? (
     <HeaderMobile
       handleFilteredPosts={handleFilteredPosts}
+      userData={userData}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
       user={user}

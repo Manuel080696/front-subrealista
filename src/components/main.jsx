@@ -1,6 +1,13 @@
+import { useParams } from "react-router-dom";
+
 export function Main({ children }) {
+  const { username } = useParams();
   return (
-    <main className={"flex flex-col flex-grow p-8 justify-center items-center"}>
+    <main
+      className={`flex flex-col flex-grow p-8 ${
+        username !== undefined ? "justify-start md:h-screen" : "justify-center"
+      } items-center`}
+    >
       {children}
     </main>
   );

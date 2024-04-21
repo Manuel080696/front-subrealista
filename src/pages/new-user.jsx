@@ -59,19 +59,21 @@ export function NewUserPage() {
 
   return (
     <Main>
-      <h1 className="text-4xl block self-center">Crea tu cuenta</h1>
-      <RegistrationForm
-        formData={formData}
-        handleInputChange={handleInputChange}
-        validationErrors={validationErrors}
-        handleSubmit={handleSubmit}
-      />
-      <p className="flex justify-center gap-2">
-        ¿Ya tienes una cuenta?
-        <Link to="/login" style={{ color: "var(--quaternary-color)" }}>
-          ¡Inicia sesión!
-        </Link>
-      </p>
+      <section className="flex flex-col h-screen w-full items-center justify-center">
+        <h1 className="text-4xl block self-center mb-5">Crea tu cuenta</h1>
+        <RegistrationForm
+          formData={formData}
+          handleInputChange={handleInputChange}
+          validationErrors={validationErrors}
+          handleSubmit={handleSubmit}
+        />
+        <p className="flex justify-center gap-2 mt-5">
+          ¿Ya tienes una cuenta?
+          <Link to="/login" style={{ color: "var(--quaternary-color)" }}>
+            ¡Inicia sesión!
+          </Link>
+        </p>
+      </section>
     </Main>
   );
 }

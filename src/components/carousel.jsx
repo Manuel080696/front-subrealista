@@ -106,13 +106,13 @@ export default function Carousel({ images, rent }) {
                 }}
               >
                 <img
-                  className="carousel-img"
+                  className="carousel-img-mobile"
                   src={image?.rent_image}
                   alt={`Slide ${index + 1}`}
                 />
               </div>
             ))
-          : images.images?.map((image, index) => (
+          : images?.images?.map((image, index) => (
               <div
                 className="carousel-item"
                 key={index}
@@ -137,7 +137,7 @@ export default function Carousel({ images, rent }) {
                 onClick={() => goToSlide(index)}
               />
             ))
-          : images.images?.map((_, index) => (
+          : images?.images?.map((_, index) => (
               <div
                 key={index}
                 className={`dot ${index === currentIndex ? "active-dot" : ""}`}

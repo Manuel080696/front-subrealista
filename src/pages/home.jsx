@@ -4,7 +4,16 @@ import { Main } from "../components/main";
 import { fetchPosts } from "../hooks/fetch-posts";
 import { fetchImages } from "../hooks/fetch-images";
 import SearchIcon from "@mui/icons-material/Search";
-export default function Home({ filteredPosts, setIsOpen, isOpen }) {
+import { Alert, Stack } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+export default function Home({
+  filteredPosts,
+  setIsOpen,
+  isOpen,
+  success,
+  setSuccess,
+}) {
   const [posts, setPosts] = useState([]);
   const [images, setImages] = useState([]);
 
@@ -24,6 +33,9 @@ export default function Home({ filteredPosts, setIsOpen, isOpen }) {
     fetchData();
   }, [filteredPosts]);
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down(768));
+
   return posts?.length ? (
     <Main>
       <section
@@ -40,15 +52,37 @@ export default function Home({ filteredPosts, setIsOpen, isOpen }) {
           </span>
         </aside>
       </section>
-      <section className="grid grid-cols-1 gap-5 md:grid-cols-3 xl:grid-cols-5 mt-24 md:mt-0">
+      <section className="grid grid-cols-1 gap-5 md:grid-cols-3 xl:grid-cols-5 mt-24 md:mt-0 md:min-h-screen">
         {images &&
           posts?.map((rent, index) => {
             const rentImages = images[index];
+
             return (
               <HouseCard key={rent.rent_id} rent={rent} images={rentImages} />
             );
           })}
       </section>
+      {success && success?.length !== 0 ? (
+        <Stack
+          sx={{
+            width: isSmallScreen ? "100%" : "60%",
+            position: "fixed",
+            zIndex: "60",
+            bottom: "0",
+            right: "0",
+            backgroundColor: "white",
+          }}
+          spacing={2}
+        >
+          <Alert
+            variant="outlined"
+            severity="success"
+            onClose={() => setSuccess("")}
+          >
+            {success}
+          </Alert>
+        </Stack>
+      ) : null}
     </Main>
   ) : (
     <Main>
@@ -67,6 +101,27 @@ export default function Home({ filteredPosts, setIsOpen, isOpen }) {
         </aside>
       </section>
       <p className="mt-24">There are no posts yet...</p>
+      {success && success?.length !== 0 ? (
+        <Stack
+          sx={{
+            width: isSmallScreen ? "100%" : "60%",
+            position: "fixed",
+            zIndex: "60",
+            bottom: "0",
+            right: "0",
+            backgroundColor: "white",
+          }}
+          spacing={2}
+        >
+          <Alert
+            variant="outlined"
+            severity="success"
+            onClose={() => setSuccess("")}
+          >
+            {success}
+          </Alert>
+        </Stack>
+      ) : null}
     </Main>
   );
 }
