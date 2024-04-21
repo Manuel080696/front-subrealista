@@ -56,6 +56,7 @@ export default function Home({
         {images &&
           posts?.map((rent, index) => {
             const rentImages = images[index];
+
             return (
               <HouseCard key={rent.rent_id} rent={rent} images={rentImages} />
             );

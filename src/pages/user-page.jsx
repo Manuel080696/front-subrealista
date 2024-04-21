@@ -16,6 +16,7 @@ import { CurrentUserContext } from "../context/auth-context";
 import Carousel from "../components/carousel";
 import { getAllImages } from "../services/get-all-images";
 import { getUserDataService } from "../services/get_user";
+import { useLogout } from "../hooks/use-logout";
 export function UserPage() {
   const navigate = useNavigate();
   const { username } = useParams();
@@ -89,19 +90,32 @@ export function UserPage() {
     }
   }, [userToken, user]);
 
+  const logout = useLogout();
+
   return (
     user && (
       <Main>
         <article className="flex w-full max-w-screen-2xl">
           <section className="flex flex-col w-full pb-10 md:flex-row border-b">
-            {userToken?.username !== user?.username ? null : (
-              <Link
-                to={`/users/${userToken?.username}/update`}
-                className="flex flex-col justify-center items-end mb-5 font-semibold underline md:hidden"
-              >
-                Editar perfil
-              </Link>
-            )}
+            <span className="flex flex-row w-full justify-between md:hidden">
+              {userToken?.username !== user?.username ? null : (
+                <Link
+                  to={`/`}
+                  className="flex flex-col justify-center items-end mb-5 font-semibold underline"
+                  onClick={() => logout()}
+                >
+                  Cerrar sesión
+                </Link>
+              )}
+              {userToken?.username !== user?.username ? null : (
+                <Link
+                  to={`/users/${userToken?.username}/update`}
+                  className="flex flex-col justify-center items-end mb-5 font-semibold underline"
+                >
+                  Editar perfil
+                </Link>
+              )}
+            </span>
             <span
               className="flex flex-col bg-white rounded-lg shadow-md p-5 md:w-2/5 md:min-w-72 md: max-h-96"
               style={{

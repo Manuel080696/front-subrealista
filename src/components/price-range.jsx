@@ -49,8 +49,8 @@ export function PriceRange({ setPrice, price, activePrice }) {
           <input
             className="w-[5rem] border text-xs p-2 rounded-md font-normal"
             placeholder="Mínimo €"
-            name="min_price"
-            id="precioMin"
+            name="max_price"
+            id="precioMax"
             onChange={(e) => {
               if (e.target.value > 0) {
                 handleInputChange(1, parseInt(e.target.value));

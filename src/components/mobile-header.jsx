@@ -12,7 +12,7 @@ export const HeaderMobile = ({
   userData,
   user,
 }) => {
-  return userData === null ? (
+  return (userData === null) | (userData === undefined) ? (
     <header className="min-h-min w-full h-min fixed bottom-0 z-50 border-t bg-[var(--primary-color)] md:hidden md:top-0 md:sticky md:pt-2 md:pb-5 md:border-solid md:border-b-2 md:drop-shadow-sm">
       <ul className="flex flex-row w-screen justify-center items-center h-16 text-[var(--quintanary-color)] text-xs md:hidden">
         <li className="w-24 active:text-[var(--quaternary-color)]   ">
@@ -28,7 +28,7 @@ export const HeaderMobile = ({
         <li className="w-24 active:text-[var(--quaternary-color)]" />
         <li className="w-24 active:text-[var(--quaternary-color)]">
           <Link
-            to="/register"
+            to="/login"
             className="w-24 h-full flex flex-col justify-center items-center"
           >
             <AccountCircleOutlinedIcon className="text-gray" />
@@ -59,11 +59,7 @@ export const HeaderMobile = ({
         <li className="w-24 active:text-[var(--quaternary-color)]" />
         <li className="w-24 active:text-[var(--quaternary-color)] ">
           <Link
-            to={
-              user !== (undefined || null)
-                ? `/users/${user?.username}`
-                : "/login"
-            }
+            to={`/users/${user?.username}`}
             className="w-24 h-full flex flex-col justify-center items-center"
           >
             <Avatar
@@ -71,7 +67,7 @@ export const HeaderMobile = ({
               src={userData?.profilePic}
               sx={{ width: 24, height: 24 }}
             />
-            <p className="my-1 font-light">Iniciar Sesión</p>
+            <p className="my-1 font-light">Perfil</p>
           </Link>
         </li>
       </ul>
