@@ -84,7 +84,7 @@ export default function Carousel({ images, rent }) {
   };
 
   return (
-    <div
+    <section
       className="carousel-container"
       onMouseMove={(e) => handleSetActiveClass(e)}
       onMouseLeave={(e) => handleSetInactiveClass(e)}
@@ -92,13 +92,13 @@ export default function Carousel({ images, rent }) {
       onTouchMove={(e) => handleDragMove(e)}
       onTouchEnd={(e) => handleDragEnd(e)}
     >
-      <div
+      <ul
         className="carousel-inner z-0"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {id !== undefined && images
           ? images?.map((image, index) => (
-              <div
+              <li
                 className="carousel-item"
                 key={index}
                 onClick={() => {
@@ -110,10 +110,10 @@ export default function Carousel({ images, rent }) {
                   src={image?.rent_image}
                   alt={`Slide ${index + 1}`}
                 />
-              </div>
+              </li>
             ))
           : images?.images?.map((image, index) => (
-              <div
+              <li
                 className="carousel-item"
                 key={index}
                 onClick={() => {
@@ -125,32 +125,32 @@ export default function Carousel({ images, rent }) {
                   src={image?.rent_image}
                   alt={`Slide ${index + 1}`}
                 />
-              </div>
+              </li>
             ))}
-      </div>
-      <div className="carousel-dots">
+      </ul>
+      <aside className="carousel-dots bottom-2">
         {id !== undefined && images
           ? images?.map((_, index) => (
-              <div
+              <span
                 key={index}
                 className={`dot ${index === currentIndex ? "active-dot" : ""}`}
                 onClick={() => goToSlide(index)}
               />
             ))
           : images?.images?.map((_, index) => (
-              <div
+              <span
                 key={index}
                 className={`dot ${index === currentIndex ? "active-dot" : ""}`}
                 onClick={() => goToSlide(index)}
               />
             ))}
-      </div>
-      <div className="carousel-btn prev-btn z-10" onClick={prevSlide}>
+      </aside>
+      <span className="z-10 carousel-btn prev-btn " onClick={prevSlide}>
         &#10094;
-      </div>
-      <div className="carousel-btn next-btn z-10" onClick={nextSlide}>
+      </span>
+      <span className="z-10 carousel-btn next-btn" onClick={nextSlide}>
         &#10095;
-      </div>
-    </div>
+      </span>
+    </section>
   );
 }

@@ -3,7 +3,6 @@ import { CostsPc } from "./costs-pc";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useNavigate, useParams } from "react-router-dom";
 import { postReserve } from "../services/post-reserve";
-import { Alert, Stack } from "@mui/material";
 
 export function PaymentGateway({
   payActive,
@@ -13,9 +12,7 @@ export function PaymentGateway({
   rooms,
   daysDiff,
   images,
-  success,
   setSuccess,
-  error,
   setError,
 }) {
   const { id } = useParams();

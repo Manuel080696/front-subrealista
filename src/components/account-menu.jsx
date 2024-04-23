@@ -28,9 +28,6 @@ export default function DenseMenu({ active, user }) {
           </MenuItem>
 
           <Divider />
-          <MenuItem onClick={() => navigate("/favorites")}>
-            <ListItemText>Favoritos</ListItemText>
-          </MenuItem>
           <MenuItem onClick={() => navigate("/register")}>
             <ListItemText>Pon tu casa en Subrealista</ListItemText>
           </MenuItem>
@@ -49,11 +46,11 @@ export default function DenseMenu({ active, user }) {
           </MenuItem>
 
           <Divider />
-          <MenuItem onClick={() => navigate("/favorites")}>
-            <ListItemText>Favoritos</ListItemText>
-          </MenuItem>
           <MenuItem onClick={() => navigate(`/posts/${user.username}`)}>
             <ListItemText>Tus alquileres</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => navigate(`/valoraciones`)}>
+            <ListItemText>Reservas y valoraciones</ListItemText>
           </MenuItem>
           <MenuItem
             onClick={() => {

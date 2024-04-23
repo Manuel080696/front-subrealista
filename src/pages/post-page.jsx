@@ -98,8 +98,6 @@ export function PostPage({ setSuccess, success }) {
             daysDiff={daysDiff}
             images={images}
             setSuccess={setSuccess}
-            success={success}
-            error={error}
             setError={setError}
           />
         )}

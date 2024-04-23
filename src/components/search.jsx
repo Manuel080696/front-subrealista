@@ -56,6 +56,7 @@ export default function Search({ handleFilteredPosts }) {
               id="location"
               sx={{ minWidth: "100%", width: "100%" }}
               value={location}
+              required
               name="rent_location"
               onChange={(e) => setLocation(e.target.value)}
               MenuProps={{

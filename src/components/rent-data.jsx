@@ -5,6 +5,7 @@ import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Rating } from "@mui/material";
+import { Coments } from "./coments";
 
 export function RentData({
   user,
@@ -18,7 +19,7 @@ export function RentData({
   const navigate = useNavigate();
 
   return (
-    <section className="md:w-7/12">
+    <section className="w-screen md:w-7/12">
       {/*Datos vivienda*/}
       <aside className="flex flex-col mx-6 py-6">
         <h1 className="text-2xl font-bold">{`${post.rent_title}, ${post.rent_location}`}</h1>
@@ -77,11 +78,12 @@ export function RentData({
       {/*Anfitrión*/}
       <aside
         ref={hostSectionRef}
-        className="flex flex-col p-6 pb-8 gap-2 bg-[--tertiary-color] rounded-md"
+        className="flex flex-col p-6 pb-8 gap-2 bg-[--tertiary-color] md:rounded-t-md"
       >
+        <Coments post={post} />
         <h3 className="text-2xl font-bold mb-5">Conoce a tu anfitrión</h3>
         <section className="flex flex-col items-center w-full">
-          <span className="flex flex-col items-center bg-white w-6/12 p-6 rounded-lg shadow-xl">
+          <span className="flex flex-col items-center bg-white w-10/12 p-6 rounded-lg shadow-xl">
             <img
               src={
                 user && user.profilePic !== (undefined || null)

@@ -1,51 +1,35 @@
-.carousel-container {
+.carousel-comments-container {
   width: 100%;
-  margin: 0 auto;
-  overflow: hidden; /* Ocultar desplazamiento horizontal */
+  margin: 0 auto; /* Ocultar desplazamiento horizontal */
   position: relative;
+  overflow: hidden;
 }
 
-.carousel-inner {
+.carousel-comments-inner {
   display: flex;
+  width: 100%;
   transition: transform 0.5s ease; /* Transición suave */
 }
 
-.carousel-item {
+.carousel-comments-item {
   flex: 0 0 100%;
 }
 
-.carousel-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 25px;
-  aspect-ratio: 4/4;
-}
-
-.carousel-img-mobile {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  aspect-ratio: 4/4;
-}
-
-.carousel-noBorderImg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.carousel-comments-item-pc {
+  flex: 0 0 33%;
 }
 
 /* Carousel puntos para desplazarse entre imagenes */
-.carousel-dots {
+.carousel-comments-dots {
   position: absolute;
-  bottom: 1rem;
+  bottom: -5px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   z-index: 3;
 }
 
-.dot {
+.comments-dot {
   width: 8px;
   height: 8px;
   background-color: gray; /* Estilo para el punto no activo */
@@ -78,23 +62,23 @@
   background-color: rgba(255, 255, 255, 0.8);
 }
 
-.prev-btn {
-  left: 10px;
-  visibility: hidden;
-}
-
-.next-btn {
-  right: 10px;
-  visibility: hidden;
-}
-
-.prev-btn.active {
-  left: 10px;
+.prev-comment-btn {
+  left: -1rem;
   visibility: visible;
 }
 
-.next-btn.active {
-  right: 10px;
+.prev-comment-user-btn {
+  left: 4rem;
+  visibility: visible;
+}
+
+.next-comment-btn {
+  right: -1rem;
+  visibility: visible;
+}
+
+.next-comment-user-btn {
+  right: 4rem;
   visibility: visible;
 }
 
