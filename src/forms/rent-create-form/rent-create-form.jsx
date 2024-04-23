@@ -18,6 +18,11 @@ import {
   Select,
   MenuItem,
   TextField,
+  InputLabel,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+
   /* Typography,
   Grid,
   TextField,*/
@@ -140,6 +145,8 @@ const RentCreateForm = () => {
       formData.append('beds', stepData.basicInfo.beds);
       formData.append('bathrooms', stepData.basicInfo.bathrooms);
       formData.append('services', stepData.services);
+      formData.append('elevator', stepData.services.elevator);
+      formData.append('near_beach', stepData.services.near_beach);
       formData.append('title', stepData.title);
       formData.append('description', stepData.description);
       stepData.images.forEach((image, index) => {
@@ -187,8 +194,10 @@ const RentCreateForm = () => {
       // Contenido del paso 1
       content: (
         <FormControl fullWidth>
+          <section>
+            <h2 className='section-title'>Selecciona el tipo de renta</h2>
+          </section>
           <section className='rent-type-container'>
-            {/* <h2>Selecciona el tipo de renta</h2> */}
             <div className='rent-type-buttons-arriba'>
               <Button
                 variant='outlined'
@@ -234,13 +243,34 @@ const RentCreateForm = () => {
       // Contenido del paso 2
       content: (
         <section>
-          {/* <h2>Indica la ubicación</h2> */}
+          <section>
+            <h2 className='section-title'>Ingresa tu dirección</h2>
+          </section>
           <FormControl fullWidth>
+            <InputLabel
+              shrink
+              htmlFor='location-label'
+              style={{
+                fontSize: '1rem',
+                fontWeight: 100,
+                color: '#5f6266c4',
+              }}
+            >
+              Indica tu ubicación
+            </InputLabel>
             <Select
               value={stepData.location}
               onChange={(e) =>
                 setStepData({ ...stepData, location: e.target.value })
               }
+              inputProps={{ id: 'location-label' }}
+              style={{
+                fontSize: '0.8rem',
+                fontWeight: 100,
+                border: '1px solid #bdbdbd',
+                borderRadius: '4px',
+                marginTop: '16px',
+              }}
             >
               <MenuItem value=''>Selecciona una ubicación</MenuItem>
               <MenuItem value='Andalucia'>Andalucia</MenuItem>
@@ -267,8 +297,18 @@ const RentCreateForm = () => {
             </Select>
           </FormControl>
           <FormControl fullWidth>
+            <InputLabel
+              shrink
+              htmlFor='direccion-label'
+              style={{
+                fontSize: '1rem',
+                fontWeight: 100,
+                color: '#5f6266c4',
+              }}
+            >
+              l Dirección
+            </InputLabel>
             <TextField
-              label='Dirección'
               value={stepData.address.street}
               onChange={(e) =>
                 setStepData({
@@ -276,6 +316,112 @@ const RentCreateForm = () => {
                   address: { ...stepData.address, street: e.target.value },
                 })
               }
+              inputProps={{
+                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
+              }}
+              style={{
+                fontSize: '1rem',
+                fontWeight: 100,
+                border: '1px solid #bdbdbd',
+                borderRadius: '4px',
+                marginTop: '16px',
+              }}
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel
+              shrink
+              htmlFor='ciudad-label'
+              style={{
+                fontSize: '1rem',
+                fontWeight: 100,
+                color: '#5f6266c4',
+              }}
+            >
+              Ciudad
+            </InputLabel>
+            <TextField
+              value={stepData.address.city}
+              onChange={(e) =>
+                setStepData({
+                  ...stepData,
+                  address: { ...stepData.address, city: e.target.value },
+                })
+              }
+              inputProps={{
+                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
+              }}
+              style={{
+                fontSize: '1rem',
+                fontWeight: 100,
+                border: '1px solid #bdbdbd',
+                borderRadius: '4px',
+                marginTop: '16px',
+              }}
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel
+              shrink
+              htmlFor='estado-label'
+              style={{
+                fontSize: '1rem',
+                fontWeight: 100,
+                color: '#5f6266c4',
+              }}
+            >
+              Estado
+            </InputLabel>
+            <TextField
+              value={stepData.address.state}
+              onChange={(e) =>
+                setStepData({
+                  ...stepData,
+                  address: { ...stepData.address, state: e.target.value },
+                })
+              }
+              inputProps={{
+                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
+              }}
+              style={{
+                fontSize: '0.8rem',
+                fontWeight: 100,
+                border: '1px solid #bdbdbd',
+                borderRadius: '4px',
+                marginTop: '16px',
+              }}
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel
+              shrink
+              htmlFor='codigo-postal-label'
+              style={{
+                fontSize: '1rem',
+                fontWeight: 100,
+                color: '#5f6266c4',
+              }}
+            >
+              Código Postal
+            </InputLabel>
+            <TextField
+              value={stepData.address.postalCode}
+              onChange={(e) =>
+                setStepData({
+                  ...stepData,
+                  address: { ...stepData.address, postalCode: e.target.value },
+                })
+              }
+              inputProps={{
+                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
+              }}
+              style={{
+                fontSize: '0.8rem',
+                fontWeight: 100,
+                border: '1px solid #bdbdbd',
+                borderRadius: '4px',
+                marginTop: '16px',
+              }}
             />
           </FormControl>
         </section>
@@ -286,8 +432,149 @@ const RentCreateForm = () => {
       // Contenido del paso 3
       content: (
         <section>
-          <h2>Información básica</h2>
-          {/* Componentes para ingresar la información básica */}
+          <section>
+            <h2 className='section-title'>
+              Añade información básica sobre tu espacio
+            </h2>
+          </section>
+          <FormControl fullWidth>
+            <InputLabel
+              shrink
+              htmlFor='guests-label'
+              style={{
+                fontSize: '0.8rem',
+                fontWeight: 100,
+                color: '#5f6266c4',
+              }}
+            >
+              Número de huéspedes
+            </InputLabel>
+            <TextField
+              type='number'
+              value={stepData.basicInfo.guests}
+              onChange={(e) =>
+                setStepData({
+                  ...stepData,
+                  basicInfo: { ...stepData.basicInfo, guests: e.target.value },
+                })
+              }
+              inputProps={{
+                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
+              }}
+              style={{
+                fontSize: '0.8rem',
+                fontWeight: 100,
+                border: '1px solid #bdbdbd',
+                borderRadius: '4px',
+                marginTop: '16px',
+              }}
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel
+              shrink
+              htmlFor='bedrooms-label'
+              style={{
+                fontSize: '0.8rem',
+                fontWeight: 100,
+                color: '#5f6266c4',
+              }}
+            >
+              Número de dormitorios
+            </InputLabel>
+            <TextField
+              type='number'
+              value={stepData.basicInfo.bedrooms}
+              onChange={(e) =>
+                setStepData({
+                  ...stepData,
+                  basicInfo: {
+                    ...stepData.basicInfo,
+                    bedrooms: e.target.value,
+                  },
+                })
+              }
+              inputProps={{
+                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
+              }}
+              style={{
+                fontSize: '0.8rem',
+                fontWeight: 100,
+                border: '1px solid #bdbdbd',
+                borderRadius: '4px',
+                marginTop: '16px',
+              }}
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel
+              shrink
+              htmlFor='beds-label'
+              style={{
+                fontSize: '0.8rem',
+                fontWeight: 100,
+                color: '#5f6266c4',
+              }}
+            >
+              Número de camas
+            </InputLabel>
+            <TextField
+              type='number'
+              value={stepData.basicInfo.beds}
+              onChange={(e) =>
+                setStepData({
+                  ...stepData,
+                  basicInfo: { ...stepData.basicInfo, beds: e.target.value },
+                })
+              }
+              inputProps={{
+                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
+              }}
+              style={{
+                fontSize: '0.8rem',
+                fontWeight: 100,
+                border: '1px solid #bdbdbd',
+                borderRadius: '4px',
+                marginTop: '16px',
+              }}
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel
+              shrink
+              htmlFor='bathrooms-label'
+              style={{
+                fontSize: '0.8rem',
+                fontWeight: 100,
+                color: '#5f6266c4',
+              }}
+            >
+              Número de baños
+            </InputLabel>
+            <TextField
+              type='number'
+              value={stepData.basicInfo.bathrooms}
+              onChange={(e) =>
+                setStepData({
+                  ...stepData,
+                  basicInfo: {
+                    ...stepData.basicInfo,
+                    bathrooms: e.target.value,
+                  },
+                })
+              }
+              inputProps={{
+                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
+              }}
+              style={{
+                fontSize: '0.8rem',
+                fontWeight: 100,
+                border: '1px solid #bdbdbd',
+                borderRadius: '4px',
+                marginTop: '16px',
+              }}
+            />
+          </FormControl>
         </section>
       ),
     },
@@ -296,15 +583,110 @@ const RentCreateForm = () => {
       // Contenido del paso 4
       content: (
         <section>
-          <h2>Selecciona los servicios</h2>
-          {/* Componentes para seleccionar los servicios */}
+          <section>
+            <h2 className='section-title'>Selecciona los servicios</h2>
+          </section>
+          <FormControl fullWidth>
+            <FormGroup>
+              <FormControlLabel control={<Checkbox />} label='Ascensor' />
+              <FormControlLabel
+                control={<Checkbox />}
+                label='Cerca de la playa'
+              />
+              <FormControlLabel
+                control={<Checkbox />}
+                label='Cerca de la montaña'
+              />
+              <FormControlLabel
+                control={<Checkbox />}
+                label='Secador de pelo'
+              />
+              <FormControlLabel control={<Checkbox />} label='Lavadora' />
+              <FormControlLabel
+                control={<Checkbox />}
+                label='Aire acondicionado'
+              />
+              <FormControlLabel
+                control={<Checkbox />}
+                label='Detector de humo'
+              />
+              <FormControlLabel
+                control={<Checkbox />}
+                label='Botiquín de primeros auxilios'
+              />
+              <FormControlLabel control={<Checkbox />} label='Wifi' />
+              <FormControlLabel control={<Checkbox />} label='Refrigerador' />
+              <FormControlLabel control={<Checkbox />} label='Congelador' />
+              <FormControlLabel control={<Checkbox />} label='Tostadora' />
+              <FormControlLabel
+                control={<Checkbox />}
+                label='Totalmente equipado'
+              />
+            </FormGroup>
+          </FormControl>
+        </section>
+      ),
+    },
+    {
+      key: 'details',
+      // Contenido del paso 5
+      content: (
+        <section>
+          <section>
+            <h2 className='section-title'>
+              Ponle título y una descripción a tu apartamento
+            </h2>
+          </section>
+          <FormControl fullWidth>
+            <InputLabel shrink htmlFor='title-label'>
+              Título
+            </InputLabel>
+            <TextField
+              value={stepData.title}
+              onChange={(e) =>
+                setStepData({ ...stepData, title: e.target.value })
+              }
+              id='title-label'
+              placeholder='Ingresa un título'
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel shrink htmlFor='description-label'>
+              Descripción
+            </InputLabel>
+            <TextField
+              value={stepData.description}
+              onChange={(e) =>
+                setStepData({ ...stepData, description: e.target.value })
+              }
+              id='description-label'
+              placeholder='Ingresa una descripción'
+              multiline
+              rows={4}
+            />
+          </FormControl>
         </section>
       ),
     },
     {
       key: 'images',
+      // Contenido del paso 6
       content: (
         <section className='images-container'>
+          <section>
+            <h2 className='section-title'>
+              Añade algunas imágenes de tu apartamento
+            </h2>
+          </section>
+          <input
+            className='custom-file-input'
+            type='file'
+            id='file-input'
+            accept='image/*'
+            ref={fileInputRef}
+            onChange={handleImageChange}
+            multiple // Para permitir la selección de múltiples archivos
+          />
           {/* codigo handle image previews,se asume que esta definida em handleAddFilePreview */}
           {previewUrl && <img src={previewUrl} alt='Image preview' />}
           {!images ? (
@@ -334,23 +716,15 @@ const RentCreateForm = () => {
         </section>
       ),
     },
-    {
-      key: 'details',
-      // Contenido del paso 6
-      content: (
-        <section>
-          <h2>Agrega detalles adicionales</h2>
-          {/* Componentes para ingresar detalles adicionales */}
-        </section>
-      ),
-    },
+
     {
       key: 'price',
       // Contenido del paso 7
       content: (
         <section>
-          <h2>Precio y disponibilidad</h2>
-          {/* Componentes para ingresar el precio y la disponibilidad */}
+          <section>
+            <h2 className='section-title'>Precio y disponibilidad</h2>
+          </section>
         </section>
       ),
     },
@@ -359,7 +733,6 @@ const RentCreateForm = () => {
   return (
     <section className='form-container'>
       <section className='rent-create-form-container'>
-        <h2 className='section-title'>Selecciona el tipo de renta</h2>
         <Stepper activeStep={activeStep} className='custom-stepper'>
           {steps.map((step) => (
             <Step key={step.key}>
@@ -368,6 +741,7 @@ const RentCreateForm = () => {
           ))}
         </Stepper>
         {steps[activeStep].content}
+
         <section className='buttons-container'>
           {/* Botón "Atrás", "Limpiar" y "Siguiente" o "Enviar formulario" */}
           {activeStep !== 0 && (
