@@ -1,5 +1,11 @@
 import './rent-create-form.css';
 import { useRef, useState } from 'react';
+import {
+  Elevator as ElevatorIcon,
+  BeachAccess as BeachAccessIcon,
+  AcUnit as AcUnitIcon,
+  Wifi as WifiIcon,
+} from '@mui/icons-material';
 
 //import { useContext, useState } from 'react'; pasar useContext aariba
 //import { CurrentUserContext } from '../../context/auth-context.jsx';
@@ -28,16 +34,19 @@ import {
   TextField,*/
 } from '@mui/material';
 import { House, Apartment, Home, Cottage } from '@mui/icons-material';
+//import { Input } from '@mui/base/Input';
+import { postRent } from '../../services/post-rent';
+//import { addRentService } from '../../services/rent-create';
+import { useNavigate } from 'react-router-dom';
 
 const RentCreateForm = () => {
-  //const [previewUrl, setPreviewUrl] = useState('');
-
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
+
   // const { handleSubmit } = useAddRentForm();ESTE
   const [loading, setLoading] = useState(false);
   //const { handleSubmit, loading } = useAddRentForm();
-  const [images] = useState(null); // almacena la imagen
-  const [previewUrl] = useState('');
+  const [images, setImages] = useState([]); // almacena la imagen
 
   // Estados para controlar el paso actual y la información de cada paso
   const [activeStep, setActiveStep] = useState(0);
@@ -48,9 +57,9 @@ const RentCreateForm = () => {
     location: '',
     address: {
       street: '',
-      door: '',
-      floor: '',
-      staircase: '',
+      city: '',
+      state: '',
+      postalCode: '',
     },
 
     basicInfo: {
@@ -59,9 +68,21 @@ const RentCreateForm = () => {
       beds: 0,
       bathrooms: 0,
     },
-    services: [],
-    images: [],
-    previewUrl: '',
+    services: {
+      elevator: false,
+      near_beach: false,
+      near_mountain: false,
+      hairdryer: false,
+      washing_machine: false,
+      ac: false,
+      smoke_detector: false,
+      first_kit_aid: false,
+      wifi: false,
+      refrigerator: false,
+      freezer: false,
+      toaster: false,
+      fully_equipped: false,
+    },
     title: '',
     description: '',
     basePrice: '',
@@ -69,12 +90,35 @@ const RentCreateForm = () => {
     totalPrice: '',
   });
 
-  // Función para manejar el cambio de imagen
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    setStepData({ ...stepData, images: files });
-    // handleAddFilePreview(e, setStepData, setPreviewUrl);
+  console.log(images);
+  //cambio de la imagenes
+  const handleServiceCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    setStepData((prevStepData) => ({
+      ...prevStepData,
+      services: {
+        ...prevStepData.services,
+        [name]: checked,
+      },
+    }));
   };
+
+  // Función para manejar el cambio de imagen
+  const unSubmitImage = (e) => {
+    e.preventDefault();
+    console.log(e.target[0].files[0]);
+    if (e.target) {
+      const files = e.target[0].files[0];
+      if (files) {
+        const url = URL.createObjectURL(files);
+        setImages([...images, url]);
+      }
+    }
+  };
+  // const handleImageChange = (e) => {
+  //   const files = Array.from(e.target.files);
+  //   setStepData({ ...stepData, images: files });
+  // };
 
   // Función para calcular el precio total
   const calculateTotalPrice = () => {
@@ -83,13 +127,13 @@ const RentCreateForm = () => {
     const total = basePriceFloat + commissionFloat;
     setStepData({ ...stepData, totalPrice: total.toFixed(2) });
   };
-  const validateImages = () => {
-    if (stepData.images.length < 5) {
-      alert('Debe seleccionar al menos 5 imágenes');
-      return false;
-    }
-    return true;
-  };
+  // const validateImages = () => {
+  //   if (images.length < 5) {
+  //     alert('Debe seleccionar al menos 5 imágenes');
+  //     return false;
+  //   }
+  //   return true;
+  // };
   const handleClearFields = (e) => {
     e.preventDefault();
     setStepData({
@@ -97,9 +141,9 @@ const RentCreateForm = () => {
       location: '',
       address: {
         street: '',
-        door: '',
-        floor: '',
-        staircase: '',
+        city: '',
+        state: '',
+        postalCode: '',
       },
       basicInfo: {
         guests: 0,
@@ -107,17 +151,32 @@ const RentCreateForm = () => {
         beds: 0,
         bathrooms: 0,
       },
-      services: [],
+      services: {
+        elevator: false,
+        near_beach: false,
+        near_mountain: false,
+        hairdryer: false,
+        washing_machine: false,
+        ac: false,
+        smoke_detector: false,
+        first_kit_aid: false,
+        wifi: false,
+        refrigerator: false,
+        freezer: false,
+        toaster: false,
+        fully_equipped: false,
+      },
       images: [],
-      previewUrl: '',
       title: '',
       description: '',
       basePrice: '',
       commission: '',
       totalPrice: '',
     });
+    setImages([]);
   };
 
+  /* console.log(images); */
   // Función para manejar el envío del formulario
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -131,46 +190,41 @@ const RentCreateForm = () => {
       setLoading(true); //seteamos el loading a true
       // Calculamos el precio total antes de enviar el formulario
       calculateTotalPrice();
-      if (!validateImages()) return; // Validar las imágenes antes de enviar el formulario
+      // if (!validateImages()) return; // Validar las imágenes antes de enviar el formulario
 
-      const formData = new FormData();
-      formData.append('rent_type', stepData.rent_type);
-      formData.append('location', stepData.location);
-      formData.append('street', stepData.address.street);
-      formData.append('door', stepData.address.door);
-      formData.append('floor', stepData.address.floor);
-      formData.append('staircase', stepData.address.staircase);
-      formData.append('guests', stepData.basicInfo.guests);
-      formData.append('bedrooms', stepData.basicInfo.bedrooms);
-      formData.append('beds', stepData.basicInfo.beds);
-      formData.append('bathrooms', stepData.basicInfo.bathrooms);
-      formData.append('services', stepData.services);
-      formData.append('elevator', stepData.services.elevator);
-      formData.append('near_beach', stepData.services.near_beach);
-      formData.append('title', stepData.title);
-      formData.append('description', stepData.description);
-      stepData.images.forEach((image, index) => {
-        formData.append(`image${index}`, image);
-      });
-      // const token = localStorage.getItem(
-      //   `${import.meta.env.VITE_APP_CURRENT_USER_STORAGE_ID}`
-
-      //handleToken(token)
-      // await handleSubmit(formData);ESTE
-
-      // Enviar la solicitud al backend
-      // const response = await fetch('URL_DEL_BACKEND', {
-      //   method: 'POST',
-      //   body: formData,
-      // });
-      // await handleSubmit(authToken, formData);
-      // Comprobar si la solicitud fue exitosa
-      // if (response.ok) {
-      //   // Lógica adicional si la solicitud fue exitosa
-      //   console.log('Formulario enviado con éxito');
-      // } else {
-      //   // Lógica si la solicitud falló
-      // }
+      const jsonData = {
+        rent_title: stepData.title,
+        rent_type: stepData.rent_type,
+        rent_rooms: stepData.basicInfo.bedrooms,
+        rent_description: stepData.description,
+        rent_price: 0, // Agrega el precio del alquiler si es necesario
+        rent_location: stepData.location,
+        services: {
+          elevator: stepData.services.elevator,
+          near_beach: stepData.services.near_beach,
+          near_mountain: stepData.services.near_mountain,
+          hairdryer: stepData.services.hairdryer,
+          washing_machine: stepData.services.washing_machine,
+          ac: stepData.services.ac,
+          smoke_detector: stepData.services.smoke_detector,
+          first_kit_aid: stepData.services.first_kit_aid,
+          wifi: stepData.services.wifi,
+          refrigerator: stepData.services.refrigerator,
+          freezer: stepData.services.freezer,
+          toaster: stepData.services.toaster,
+          fully_equipped: stepData.services.fully_equipped,
+        },
+        address: {
+          street: stepData.address.street,
+          city: stepData.address.city,
+          state: stepData.address.state,
+          postalCode: stepData.address.postalCode,
+        },
+      };
+      if (jsonData) {
+        await postRent(jsonData);
+      }
+      navigate('/');
     } catch (error) {
       console.error('Error al enviar el formulario:', error);
     } finally {
@@ -199,40 +253,52 @@ const RentCreateForm = () => {
           </section>
           <section className='rent-type-container'>
             <div className='rent-type-buttons-arriba'>
-              <Button
-                variant='outlined'
-                className={stepData.rent_type === 'Casa' ? 'active' : ''}
-                onClick={() => handleSelectRentType('Casa')}
-              >
-                <House style={{ color: '002222' }} />
-                <span className='texto'>Casa</span>
-              </Button>
-              <Button
-                variant='outlined'
-                className={stepData.rent_type === 'Apartamento' ? 'active' : ''}
-                onClick={() => handleSelectRentType('Apartamento')}
-              >
-                <Apartment style={{ color: '002222' }} />
-                <span className='texto'>Apartamento</span>
-              </Button>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.rent_type === 'Casa'}
+                    onChange={() => handleSelectRentType('Casa')}
+                    name='Casa'
+                    icon={<House style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Casa'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.rent_type === 'Apartamento'}
+                    onChange={() => handleSelectRentType('Apartamento')}
+                    name='Apartamento'
+                    icon={<Apartment style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Apartamento'
+              />
             </div>
             <div className='rent-type-buttons-abajo'>
-              <Button
-                variant='outlined'
-                className={stepData.rent_type === 'Piso' ? 'active' : ''}
-                onClick={() => handleSelectRentType('Piso')}
-              >
-                <Home style={{ color: '002222' }} />{' '}
-                <span className='texto'>Piso</span>
-              </Button>
-              <Button
-                variant='outlined'
-                className={stepData.rent_type === 'Chalet' ? 'active' : ''}
-                onClick={() => handleSelectRentType('Chalet')}
-              >
-                <Cottage style={{ color: '002222' }} />
-                <span className='texto'>Chalet</span>
-              </Button>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.rent_type === 'Piso'}
+                    onChange={() => handleSelectRentType('Piso')}
+                    name='Piso'
+                    icon={<Home style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Piso'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.rent_type === 'Chalet'}
+                    onChange={() => handleSelectRentType('Chalet')}
+                    name='Chalet'
+                    icon={<Cottage style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Chalet'
+              />
             </div>
           </section>
         </FormControl>
@@ -246,8 +312,15 @@ const RentCreateForm = () => {
           <section>
             <h2 className='section-title'>Ingresa tu dirección</h2>
           </section>
+
           <FormControl fullWidth>
             <InputLabel
+              id='location-label'
+              sx={{ fontSize: '0.8rem', fontWeight: 100, color: '#bdbdbd' }}
+            >
+              Selecciona ubicación
+            </InputLabel>
+            {/* <InputLabel
               shrink
               htmlFor='location-label'
               style={{
@@ -257,9 +330,21 @@ const RentCreateForm = () => {
               }}
             >
               Indica tu ubicación
-            </InputLabel>
+            </InputLabel> */}
+            {/* <select
+                id='currency'
+                name='currency'
+                className='h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm'
+              >
+                <option>USD</option>
+                <option>CAD</option>
+                <option>EUR</option>
+              </select> */}
             <Select
+              id='location'
+              sx={{ minWidth: '100%', width: '100%' }}
               value={stepData.location}
+              name='rent_location'
               onChange={(e) =>
                 setStepData({ ...stepData, location: e.target.value })
               }
@@ -270,6 +355,14 @@ const RentCreateForm = () => {
                 border: '1px solid #bdbdbd',
                 borderRadius: '4px',
                 marginTop: '16px',
+              }}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 200,
+                    overflowY: 'auto',
+                  },
+                },
               }}
             >
               <MenuItem value=''>Selecciona una ubicación</MenuItem>
@@ -296,19 +389,13 @@ const RentCreateForm = () => {
               <MenuItem value='Melilla'>Melilla</MenuItem>
             </Select>
           </FormControl>
+
           <FormControl fullWidth>
-            <InputLabel
-              shrink
-              htmlFor='direccion-label'
-              style={{
-                fontSize: '1rem',
-                fontWeight: 100,
-                color: '#5f6266c4',
-              }}
-            >
-              l Dirección
-            </InputLabel>
-            <TextField
+            <input
+              type='text'
+              id='direccion'
+              className='block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+              placeholder=' '
               value={stepData.address.street}
               onChange={(e) =>
                 setStepData({
@@ -316,31 +403,20 @@ const RentCreateForm = () => {
                   address: { ...stepData.address, street: e.target.value },
                 })
               }
-              inputProps={{
-                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
-              }}
-              style={{
-                fontSize: '1rem',
-                fontWeight: 100,
-                border: '1px solid #bdbdbd',
-                borderRadius: '4px',
-                marginTop: '16px',
-              }}
             />
+            <label
+              htmlFor='direccion'
+              className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1'
+            >
+              Dirección
+            </label>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel
-              shrink
-              htmlFor='ciudad-label'
-              style={{
-                fontSize: '1rem',
-                fontWeight: 100,
-                color: '#5f6266c4',
-              }}
-            >
-              Ciudad
-            </InputLabel>
-            <TextField
+            <input
+              type='text'
+              id='ciudad'
+              className='block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+              placeholder=' '
               value={stepData.address.city}
               onChange={(e) =>
                 setStepData({
@@ -348,31 +424,20 @@ const RentCreateForm = () => {
                   address: { ...stepData.address, city: e.target.value },
                 })
               }
-              inputProps={{
-                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
-              }}
-              style={{
-                fontSize: '1rem',
-                fontWeight: 100,
-                border: '1px solid #bdbdbd',
-                borderRadius: '4px',
-                marginTop: '16px',
-              }}
             />
+            <label
+              htmlFor='ciudad'
+              className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1'
+            >
+              Ciudad
+            </label>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel
-              shrink
-              htmlFor='estado-label'
-              style={{
-                fontSize: '1rem',
-                fontWeight: 100,
-                color: '#5f6266c4',
-              }}
-            >
-              Estado
-            </InputLabel>
-            <TextField
+            <input
+              type='text'
+              id='estado'
+              className='block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+              placeholder=' '
               value={stepData.address.state}
               onChange={(e) =>
                 setStepData({
@@ -380,31 +445,20 @@ const RentCreateForm = () => {
                   address: { ...stepData.address, state: e.target.value },
                 })
               }
-              inputProps={{
-                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
-              }}
-              style={{
-                fontSize: '0.8rem',
-                fontWeight: 100,
-                border: '1px solid #bdbdbd',
-                borderRadius: '4px',
-                marginTop: '16px',
-              }}
             />
+            <label
+              htmlFor='estado'
+              className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1'
+            >
+              Estado
+            </label>
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel
-              shrink
-              htmlFor='codigo-postal-label'
-              style={{
-                fontSize: '1rem',
-                fontWeight: 100,
-                color: '#5f6266c4',
-              }}
-            >
-              Código Postal
-            </InputLabel>
-            <TextField
+            <input
+              type='text'
+              id='codigo_postal'
+              className='block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+              placeholder=' '
               value={stepData.address.postalCode}
               onChange={(e) =>
                 setStepData({
@@ -412,17 +466,13 @@ const RentCreateForm = () => {
                   address: { ...stepData.address, postalCode: e.target.value },
                 })
               }
-              inputProps={{
-                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
-              }}
-              style={{
-                fontSize: '0.8rem',
-                fontWeight: 100,
-                border: '1px solid #bdbdbd',
-                borderRadius: '4px',
-                marginTop: '16px',
-              }}
             />
+            <label
+              htmlFor='codigo_postal'
+              className='absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1'
+            >
+              Codigo Postal
+            </label>
           </FormControl>
         </section>
       ),
@@ -588,39 +638,49 @@ const RentCreateForm = () => {
           </section>
           <FormControl fullWidth>
             <FormGroup>
-              <FormControlLabel control={<Checkbox />} label='Ascensor' />
               <FormControlLabel
-                control={<Checkbox />}
-                label='Cerca de la playa'
+                control={
+                  <Checkbox
+                    checked={stepData.services.elevator}
+                    onChange={handleServiceCheckboxChange}
+                    name='elevator'
+                    icon={<ElevatorIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Elevator'
               />
               <FormControlLabel
-                control={<Checkbox />}
-                label='Cerca de la montaña'
+                control={
+                  <Checkbox
+                    checked={stepData.services.near_beach}
+                    onChange={handleServiceCheckboxChange}
+                    name='near_beach'
+                    icon={<BeachAccessIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Near the Beach'
               />
               <FormControlLabel
-                control={<Checkbox />}
-                label='Secador de pelo'
-              />
-              <FormControlLabel control={<Checkbox />} label='Lavadora' />
-              <FormControlLabel
-                control={<Checkbox />}
-                label='Aire acondicionado'
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                label='Detector de humo'
+                control={
+                  <Checkbox
+                    checked={stepData.services.ac}
+                    onChange={handleServiceCheckboxChange}
+                    name='ac'
+                    icon={<AcUnitIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Air Conditioning'
               />
               <FormControlLabel
-                control={<Checkbox />}
-                label='Botiquín de primeros auxilios'
-              />
-              <FormControlLabel control={<Checkbox />} label='Wifi' />
-              <FormControlLabel control={<Checkbox />} label='Refrigerador' />
-              <FormControlLabel control={<Checkbox />} label='Congelador' />
-              <FormControlLabel control={<Checkbox />} label='Tostadora' />
-              <FormControlLabel
-                control={<Checkbox />}
-                label='Totalmente equipado'
+                control={
+                  <Checkbox
+                    checked={stepData.services.wifi}
+                    onChange={handleServiceCheckboxChange}
+                    name='wifi'
+                    icon={<WifiIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Wifi'
               />
             </FormGroup>
           </FormControl>
@@ -678,41 +738,43 @@ const RentCreateForm = () => {
               Añade algunas imágenes de tu apartamento
             </h2>
           </section>
-          <input
-            className='custom-file-input'
-            type='file'
-            id='file-input'
-            accept='image/*'
-            ref={fileInputRef}
-            onChange={handleImageChange}
-            multiple // Para permitir la selección de múltiples archivos
-          />
           {/* codigo handle image previews,se asume que esta definida em handleAddFilePreview */}
-          {previewUrl && <img src={previewUrl} alt='Image preview' />}
-          {!images ? (
-            <section className='conditional-img'>
-              <label htmlFor='file-input-label' className='custom-file-label'>
-                <span className='span-img'>
-                  <img
-                    className='img-upload'
-                    src='/icons/folder.png'
-                    alt='upload'
-                    width='150'
-                    style={{ cursor: 'pointer' }}
-                  />
-                </span>
-                <span className='span-text-img'>Subir imagen</span>
-              </label>
+          {images.length !== 0 && (
+            <ul className='flex flex-row gap-2'>
+              {images.map((image, index) => (
+                <li key={index}>
+                  <img src={`${image}`} alt='rentImage' />
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <form className='conditional-img' onSubmit={(e) => unSubmitImage(e)}>
+            {/* <aside htmlFor='file-input-label' className='custom-file-label'> */}
+            {/* <span className='span-img'>
+                <img
+                  className='img-upload'
+                  src='/icons/folder.png'
+                  alt='upload'
+                  width='150'
+                  style={{ cursor: 'pointer' }}
+                />
+              </span> */}
+            {/* <span className='span-text-img'>Subir imagen</span>
+            </aside> */}
+            <label htmlFor=''>
               <input
                 className='custom-file-input'
                 type='file'
                 id='file-input'
                 accept='image/*'
                 ref={fileInputRef}
-                onChange={handleImageChange}
               />{' '}
-            </section>
-          ) : null}
+            </label>
+            <button className='flex flex-col items-center justify-center bg-black text-white p-4 rounded-md'>
+              Añadir imágenes
+            </button>
+          </form>
         </section>
       ),
     },
@@ -725,6 +787,60 @@ const RentCreateForm = () => {
           <section>
             <h2 className='section-title'>Precio y disponibilidad</h2>
           </section>
+          <FormControl fullWidth>
+            <InputLabel
+              shrink
+              htmlFor='base-price-label'
+              className='text-gray-500 dark:text-gray-400 text-sm font-light'
+            >
+              Precio base
+            </InputLabel>
+            <TextField
+              type='number'
+              value={stepData.basePrice}
+              onChange={(e) =>
+                setStepData({ ...stepData, basePrice: e.target.value })
+              }
+              id='base-price-label'
+              placeholder='Ingrese el precio base'
+              className='block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 mt-4'
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel
+              shrink
+              htmlFor='commission-label'
+              className='text-gray-500 dark:text-gray-400 text-sm font-light'
+            >
+              Comisión
+            </InputLabel>
+            <TextField
+              type='number'
+              value={stepData.commission}
+              onChange={(e) =>
+                setStepData({ ...stepData, commission: e.target.value })
+              }
+              id='commission-label'
+              placeholder='Ingrese la comisión'
+              className='block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 mt-4'
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel
+              shrink
+              htmlFor='total-price-label'
+              className='text-gray-500 dark:text-gray-400 text-sm font-light'
+            >
+              Precio total
+            </InputLabel>
+            <TextField
+              type='text'
+              value={stepData.totalPrice}
+              disabled
+              id='total-price-label'
+              className='block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 mt-4'
+            />
+          </FormControl>
         </section>
       ),
     },
