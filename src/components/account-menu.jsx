@@ -46,11 +46,11 @@ export default function DenseMenu({ active, user }) {
           </MenuItem>
 
           <Divider />
-          <MenuItem onClick={() => navigate(`/posts/${user.username}`)}>
-            <ListItemText>Tus alquileres</ListItemText>
-          </MenuItem>
           <MenuItem onClick={() => navigate(`/valoraciones`)}>
             <ListItemText>Reservas y valoraciones</ListItemText>
+          </MenuItem>
+          <MenuItem onClick={() => navigate("/rent-create")}>
+            <ListItemText>Pon tu casa en Subrealista</ListItemText>
           </MenuItem>
           <MenuItem
             onClick={() => {
