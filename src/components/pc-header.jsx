@@ -52,7 +52,7 @@ export const HeaderPc = ({
         <section className="flex flex-row justify-between items-center w-full">
           <Link
             to="/"
-            onClick={() => handleFilteredPosts("")}
+            onClick={() => handleFilteredPosts([])}
             className="flex flex-col justify-center items-center h-3/5"
           >
             <img src="/logo/logo.webp" alt="search" className="w-24" />

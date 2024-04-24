@@ -5,7 +5,7 @@ export function Main({ children }) {
   return (
     <main
       className={`flex flex-col flex-grow p-8 ${
-        username !== undefined ? "justify-start md:h-screen" : "justify-center"
+        username > 0 ? "justify-start md:h-screen" : "justify-center"
       } items-center`}
     >
       {children}

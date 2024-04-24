@@ -9,6 +9,7 @@ import { UserPage } from "./pages/user-page";
 import { useState } from "react";
 import RentCreateForm from "./forms/RentCreateForm/RentCreateForm";
 import { PostPage } from "./pages/post-page";
+import { Valoraciones } from "./pages/valoraciones";
 
 function App() {
   const [filteredPosts, setFilteredPosts] = useState([]);
@@ -49,6 +50,7 @@ function App() {
           path="/rent/:id"
           element={<PostPage setSuccess={setSuccess} success={success} />}
         />
+        <Route path="/valoraciones/" element={<Valoraciones />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

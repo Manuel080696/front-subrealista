@@ -20,12 +20,22 @@ export default function Home({
   useEffect(() => {
     const fetchData = async () => {
       const postsData = await fetchPosts(filteredPosts);
-      setPosts(postsData);
+      if (postsData) {
+        // Filtrar los rent_id únicos
+        const uniqueRentIds = new Set(postsData.map((post) => post.rent_id));
 
-      if (postsData.length > 0) {
-        const imagesData = await fetchImages(postsData);
-        if (imagesData.length !== 0) {
-          setImages(imagesData);
+        // Filtrar los datos de postData para mantener solo una instancia de cada rent_id
+        const uniquePostsData = postsData.filter((post) =>
+          uniqueRentIds.has(post.rent_id)
+        );
+
+        setPosts(uniquePostsData);
+
+        if (uniquePostsData.length > 0) {
+          const imagesData = await fetchImages(uniquePostsData);
+          if (imagesData.length !== 0) {
+            setImages(imagesData);
+          }
         }
       }
     };
@@ -36,7 +46,7 @@ export default function Home({
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down(768));
 
-  return posts?.length ? (
+  return posts?.length !== 0 ? (
     <Main>
       <section
         className="flex flex-col bg-white fixed top-0 items-center justify-center w-screen mb-5 p-5 border-solid border-b-2 drop-shadow-sm z-10 md:hidden"

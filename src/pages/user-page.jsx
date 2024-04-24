@@ -1,22 +1,16 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-  useContext,
-} from "react";
+import React, { useEffect, useState, useCallback, useContext } from "react";
 import { Rating } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Main } from "../components/main";
 import { getUserRents } from "../services/get-all-rents-by-username";
-import EditIcon from "@mui/icons-material/Edit";
 import { CurrentUserContext } from "../context/auth-context";
 import Carousel from "../components/carousel";
 import { getAllImages } from "../services/get-all-images";
 import { getUserDataService } from "../services/get_user";
 import { useLogout } from "../hooks/use-logout";
+import { Coments } from "../components/coments";
 export function UserPage() {
   const navigate = useNavigate();
   const { username } = useParams();
@@ -97,7 +91,7 @@ export function UserPage() {
       <Main>
         <article className="flex w-full max-w-screen-2xl">
           <section className="flex flex-col w-full pb-10 md:flex-row border-b">
-            <span className="flex flex-row w-full justify-between md:hidden">
+            <span className="flex flex-row w-full justify-between items-start md:hidden">
               {userToken?.username !== user?.username ? null : (
                 <Link
                   to={`/`}
@@ -108,12 +102,20 @@ export function UserPage() {
                 </Link>
               )}
               {userToken?.username !== user?.username ? null : (
-                <Link
-                  to={`/users/${userToken?.username}/update`}
-                  className="flex flex-col justify-center items-end mb-5 font-semibold underline"
-                >
-                  Editar perfil
-                </Link>
+                <span className="flex flex-col">
+                  <Link
+                    to={`/users/${userToken?.username}/update`}
+                    className="flex flex-col justify-center items-end mb-5 font-semibold underline"
+                  >
+                    Editar perfil
+                  </Link>
+                  <Link
+                    to={`/valoraciones`}
+                    className="flex flex-col justify-center items-end mb-5 font-semibold underline"
+                  >
+                    Reservas y valoraciones
+                  </Link>
+                </span>
               )}
             </span>
             <span
@@ -156,12 +158,20 @@ export function UserPage() {
             <section className="flex flex-col px-10 w-full pt-4">
               <h2 className="text-3xl font-bold text-center mt-5 md:text-start">{`Información de ${user?.username}`}</h2>
               {userToken?.username !== user?.username ? null : (
-                <button
-                  onClick={() => navigate(`/users/${user?.username}/update`)}
-                  className="hidden md:flex md:flex-col md:items-center md:text-xs md:mt-5 md:font-semibold md:justify-center md:w-full md:border md:border-black md:p-2 md:rounded-lg md:min-w-28 md:max-w-28 md:w-2/5"
-                >
-                  {isMobileView ? <EditIcon /> : "Editar tu perfil"}
-                </button>
+                <span className="flex flex-row gap-5">
+                  <button
+                    onClick={() => navigate(`/users/${user?.username}/update`)}
+                    className="hidden md:flex md:flex-col md:items-center md:text-xs md:mt-5 md:font-semibold md:justify-center md:w-full md:border md:border-black md:p-2 md:rounded-lg md:min-w-28 md:max-w-28 md:w-2/5"
+                  >
+                    Editar tu perfil
+                  </button>
+                  <button
+                    onClick={() => navigate(`/valoraciones`)}
+                    className="hidden md:flex md:flex-col md:items-center md:text-xs md:mt-5 md:font-semibold md:justify-center md:w-full md:border md:border-black md:p-2 md:rounded-lg md:min-w-48 md:max-w-28 md:w-2/5"
+                  >
+                    Reservas y valoraciones
+                  </button>
+                </span>
               )}
               <ul className="flex flex-col mt-5 gap-5">
                 {user ? (
@@ -192,23 +202,25 @@ export function UserPage() {
             </section>
           </section>
         </article>
+        <Coments user={user} />
         <h2 className="text-3xl font-bold text-center pt-3 mt-3 pb-5 md:pt-0">
           Mis Posts
         </h2>
-        <section className="flex flex-col mb-3 w-full justify-center items-center md:w-7/12">
+        <section className="flex flex-col mb-3 w-full justify-center items-center md:w-10/12 lg:w-6/12">
           <ul className="flex flex-row flex-wrap basis-2 w-full justify-center items-center gap-3 max-w-screen-2xl md:flex-nowrap">
             {rents.length !== 0 ? (
-              rents?.map((image) => {
+              rents?.map((rent) => {
                 const rentImages = images.find(
-                  (item) => item.rentId === image.rent_id
+                  (item) => item.rentId === rent.rent_id
                 );
                 return (
                   <li
-                    key={image.rent_id}
+                    key={rent.rent_id}
                     className="flex flex-col items-center w-full"
                   >
                     <Carousel
                       images={rentImages?.length !== 0 ? rentImages : null}
+                      rent={rent}
                     />
                   </li>
                 );

@@ -18,7 +18,7 @@ export const HeaderMobile = ({
         <li className="w-24 active:text-[var(--quaternary-color)]   ">
           <Link
             to="/"
-            onClick={() => handleFilteredPosts("")}
+            onClick={() => handleFilteredPosts([])}
             className="flex flex-col justify-center items-center h-3/5"
           >
             <SearchIcon className="text-gray" />
@@ -50,6 +50,7 @@ export const HeaderMobile = ({
         <li className="w-24 active:text-[var(--quaternary-color)]   ">
           <Link
             to="/"
+            onClick={() => handleFilteredPosts([])}
             className="flex flex-col justify-center items-center h-3/5"
           >
             <SearchIcon className="text-gray" />

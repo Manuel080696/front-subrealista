@@ -27,17 +27,18 @@ export const SearchMobile = ({ isOpen, setIsOpen, handleFilteredPosts }) => {
     handleFilteredPosts(
       "rent_location=" +
         location +
-        "&min_date=" +
-        fechaMinSQL +
-        "&max_date=" +
-        fechaMaxSQL +
         "&min_price=" +
         price[0] +
         "&max_price=" +
         price[1] +
         "&rent_rooms=" +
-        rooms
+        rooms +
+        "&min_date=" +
+        fechaMinSQL +
+        "&max_date=" +
+        fechaMaxSQL
     );
+
     setIsOpen(!isOpen);
   };
 
@@ -83,6 +84,7 @@ export const SearchMobile = ({ isOpen, setIsOpen, handleFilteredPosts }) => {
                         id="location"
                         sx={{ minWidth: "100%", width: "100%" }}
                         value={location}
+                        required
                         name="rent_location"
                         onChange={(e) => setLocation(e.target.value)}
                         MenuProps={{
