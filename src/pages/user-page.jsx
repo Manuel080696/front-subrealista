@@ -110,6 +110,12 @@ export function UserPage() {
                     Editar perfil
                   </Link>
                   <Link
+                    to={`/rent-create`}
+                    className="flex flex-col justify-center items-end mb-5 font-semibold underline"
+                  >
+                    Publica tu vivienda
+                  </Link>
+                  <Link
                     to={`/valoraciones`}
                     className="flex flex-col justify-center items-end mb-5 font-semibold underline"
                   >

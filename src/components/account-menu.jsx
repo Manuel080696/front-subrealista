@@ -52,6 +52,9 @@ export default function DenseMenu({ active, user }) {
           <MenuItem onClick={() => navigate(`/valoraciones`)}>
             <ListItemText>Reservas y valoraciones</ListItemText>
           </MenuItem>
+          <MenuItem onClick={() => navigate("/rent-create")}>
+            <ListItemText>Pon tu casa en Subrealista</ListItemText>
+          </MenuItem>
           <MenuItem
             onClick={() => {
               logout();
