@@ -1,11 +1,24 @@
 import './rent-create-form.css';
 import { useRef, useState } from 'react';
-import {
-  Elevator as ElevatorIcon,
-  BeachAccess as BeachAccessIcon,
-  AcUnit as AcUnitIcon,
-  Wifi as WifiIcon,
-} from '@mui/icons-material';
+// import {
+//   Elevator as ElevatorIcon,
+//   BeachAccess as BeachAccessIcon,
+//   AcUnit as AcUnitIcon,
+//   Wifi as WifiIcon,
+// } from '@mui/icons-material';
+import ElevatorIcon from '@mui/icons-material/Elevator';
+import BeachAccessIcon from '@mui/icons-material/BeachAccess';
+import MountainIcon from '@mui/icons-material/FilterHdr';
+import HairdryerIcon from '@mui/icons-material/LocalHotel';
+import WashingMachineIcon from '@mui/icons-material/WashingMachine';
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+import SmokeDetectorIcon from '@mui/icons-material/SmokeDetector';
+import FirstAidIcon from '@mui/icons-material/FirstAid';
+import WifiIcon from '@mui/icons-material/Wifi';
+import RefrigeratorIcon from '@mui/icons-material/Kitchen';
+import FreezerIcon from '@mui/icons-material/Freezer';
+import ToasterIcon from '@mui/icons-material/Toaster';
+import KitchenIcon from '@mui/icons-material/Kitchen';
 
 //import { useContext, useState } from 'react'; pasar useContext aariba
 //import { CurrentUserContext } from '../../context/auth-context.jsx';
@@ -681,6 +694,160 @@ const RentCreateForm = () => {
                   />
                 }
                 label='Wifi'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.services.wifi}
+                    onChange={handleServiceCheckboxChange}
+                    name='wifi'
+                    icon={<WifiIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Wifi'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.services.elevator}
+                    onChange={handleServiceCheckboxChange}
+                    name='elevator'
+                    icon={<ElevatorIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Elevator'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.services.near_beach}
+                    onChange={handleServiceCheckboxChange}
+                    name='near_beach'
+                    icon={<BeachAccessIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Near the Beach'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.services.near_mountain}
+                    onChange={handleServiceCheckboxChange}
+                    name='near_mountain'
+                    icon={<MountainIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Near the Mountain'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.services.hairdryer}
+                    onChange={handleServiceCheckboxChange}
+                    name='hairdryer'
+                    icon={<HairdryerIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Hairdryer'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.services.washing_machine}
+                    onChange={handleServiceCheckboxChange}
+                    name='washing_machine'
+                    icon={<WashingMachineIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Washing Machine'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.services.ac}
+                    onChange={handleServiceCheckboxChange}
+                    name='ac'
+                    icon={<AcUnitIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Air Conditioning'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.services.smoke_detector}
+                    onChange={handleServiceCheckboxChange}
+                    name='smoke_detector'
+                    icon={<SmokeDetectorIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Smoke Detector'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.services.first_kit_aid}
+                    onChange={handleServiceCheckboxChange}
+                    name='first_kit_aid'
+                    icon={<FirstAidIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='First Aid Kit'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.services.wifi}
+                    onChange={handleServiceCheckboxChange}
+                    name='wifi'
+                    icon={<WifiIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Wifi'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.services.refrigerator}
+                    onChange={handleServiceCheckboxChange}
+                    name='refrigerator'
+                    icon={<RefrigeratorIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Refrigerator'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.services.freezer}
+                    onChange={handleServiceCheckboxChange}
+                    name='freezer'
+                    icon={<FreezerIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Freezer'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.services.toaster}
+                    onChange={handleServiceCheckboxChange}
+                    name='toaster'
+                    icon={<ToasterIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Toaster'
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={stepData.services.fully_equipped}
+                    onChange={handleServiceCheckboxChange}
+                    name='fully_equipped'
+                    icon={<KitchenIcon style={{ color: '#002222' }} />}
+                  />
+                }
+                label='Fully Equipped Kitchen'
               />
             </FormGroup>
           </FormControl>
