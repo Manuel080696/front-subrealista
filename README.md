@@ -1,8 +1,16 @@
-# React + Vite
+# Subrealista
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Subrealista es una página dedicada a ayudarte a encontrar tu hogar o inquilinos ideales, gracias a nuestros filtros y sistemas de valoraciones podrás saber perfectamente con que te encontrarás a la hora de iniciar una conversación con la otra persona.
 
-Currently, two official plugins are available:
+<p align="left">
+  <img src="https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green">
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Instalar
+
+1. Instalar las dependencias mediante el comando `npm install` o `npm i`.
+2. Ejecutar `npm start` para iniciar el cliente.
+
+## Rutas
+
+### Rutas Públicas:

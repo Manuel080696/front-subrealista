@@ -1,3 +1,4 @@
+
 import { Footer } from "./components/footer";
 import { Header } from "./components/header";
 import { Route, Routes } from "react-router-dom";
@@ -42,6 +43,7 @@ function App() {
             />
           }
         />
+
         <Route path="/register" element={<NewUserPage />} />
         <Route path="/rent-create" element={<RentCreateForm />} />
         <Route path="/login" element={<LoginUserPage />} />
@@ -56,6 +58,7 @@ function App() {
         />
         <Route path="/valoraciones/" element={<Valoraciones />} />
         <Route path="*" element={<NotFound />} />
+
       </Routes>
       <Footer />
     </>
