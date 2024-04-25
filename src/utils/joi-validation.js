@@ -99,12 +99,6 @@ export const modifyUserSchema = Joi.object({
       "string.min": "El correo electrónico debe tener más de 4 caracteres.",
       "string.max": "El correo electrónico debe tener menos de 100 caracteres.",
     }),
-  password: Joi.string().required().messages({
-    "string.empty":
-      "Por motivos de seguridad, es obligatorio que coloques tu contraseña.",
-    "any.required":
-      "Por motivos de seguridad, es obligatorio que coloques tu contraseña.",
-  }),
   username: Joi.string().min(4).max(100).optional().allow("").messages({
     "string.min": "El nombre de usuario debe tener más de 4 caracteres.",
     "string.max": "El nombre de usuario debe tener menos de 100 caracteres.",

@@ -1,23 +1,18 @@
 import { useEffect, useState } from "react";
 import { Main } from "../components/main";
-import { Link, useNavigate } from "react-router-dom";
-import { newUserSchema, validateField } from "../utils/joi-validation";
-import { RegistrationForm } from "../forms/registration-form";
-import { registerUser } from "../services/register_user";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Alert, Stack } from "@mui/material";
+import { ValidateForm } from "../forms/validate-form";
+import { userValidate } from "../services/user-validate";
 
-export function NewUserPage() {
+export function Validate() {
   const navigate = useNavigate();
-
-  const [error, setError] = useState("");
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
-    email: "",
-    username: "",
-    password: "",
+    code: "",
   });
-
-  const [validationErrors, setValidationErrors] = useState({});
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,53 +29,28 @@ export function NewUserPage() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
-      ...formData,
       [name]: value,
-    });
-
-    const validationError = validateField(name, value, newUserSchema);
-    setValidationErrors({
-      ...validationErrors,
-      [name]: validationError,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { error } = newUserSchema.validate(formData, {
-      abortEarly: false,
-    });
-
-    if (error) {
-      const errors = {};
-      error.details.forEach((detail) => {
-        errors[detail.path[0]] = detail.message;
-      });
-      setValidationErrors(errors);
-      console.error("Error de validación:", errors.details);
-      return;
-    }
-
-    const registrationSuccessful = await registerUser(
-      formData.email,
-      formData.username,
-      formData.password,
-      setError
-    );
-    if (registrationSuccessful) {
-      navigate("/validate");
+    const validateInfo = await userValidate(formData?.code, setError);
+    if (validateInfo) {
+      navigate("/login");
+    } else {
+      setFormData({ code: "" });
     }
   };
 
   return (
     <Main>
       <section className="flex flex-col h-screen w-full items-center justify-center">
-        <h1 className="text-4xl block self-center mb-5">Crea tu cuenta</h1>
-        <RegistrationForm
+        <h1 className="text-4xl block self-center mb-5">Intoduce tu código</h1>
+        <ValidateForm
           formData={formData}
           handleInputChange={handleInputChange}
-          validationErrors={validationErrors}
           handleSubmit={handleSubmit}
         />
         {error ? (
@@ -106,11 +76,17 @@ export function NewUserPage() {
           </Stack>
         ) : null}
         <p className="flex justify-center gap-2 mt-5">
-          ¿Ya tienes una cuenta?
-          <Link to="/login" style={{ color: "var(--quaternary-color)" }}>
-            ¡Inicia sesión!
+          ¿No tienes cuenta?
+          <Link to="/register" style={{ color: "var(--quaternary-color)" }}>
+            ¡Regístrate!
           </Link>
         </p>
+        <Link
+          to="/restore-password"
+          style={{ color: "var(--quaternary-color)" }}
+        >
+          ¿Has olvidado tu contraseña?
+        </Link>
       </section>
     </Main>
   );

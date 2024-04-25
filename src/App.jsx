@@ -10,6 +10,8 @@ import { useState } from "react";
 import RentCreateForm from "./forms/RentCreateForm/RentCreateForm";
 import { PostPage } from "./pages/post-page";
 import { Valoraciones } from "./pages/valoraciones";
+import { EditUserPage } from "./pages/edit-user-page";
+import { Validate } from "./pages/validate";
 
 function App() {
   const [filteredPosts, setFilteredPosts] = useState([]);
@@ -43,8 +45,10 @@ function App() {
         <Route path="/register" element={<NewUserPage />} />
         <Route path="/rent-create" element={<RentCreateForm />} />
         <Route path="/login" element={<LoginUserPage />} />
+        <Route path="/validate" element={<Validate />} />
         <Route path="/users/">
           <Route path=":username" element={<UserPage />} />
+          <Route path=":username/update" element={<EditUserPage />} />
         </Route>
         <Route
           path="/rent/:id"
