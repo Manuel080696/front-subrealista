@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Main } from "../components/main";
 import { Link, useNavigate } from "react-router-dom";
 import { newUserSchema, validateField } from "../utils/joi-validation";
-import { registerUser } from "../services/register_user";
 import { RegistrationForm } from "../forms/registration-form";
+import { registerUser } from "../services/register_user";
+import { Alert, Stack } from "@mui/material";
 
 export function NewUserPage() {
   const navigate = useNavigate();
 
+  const [error, setError] = useState("");
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -15,6 +18,18 @@ export function NewUserPage() {
   });
 
   const [validationErrors, setValidationErrors] = useState({});
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -50,28 +65,53 @@ export function NewUserPage() {
     const registrationSuccessful = await registerUser(
       formData.email,
       formData.username,
-      formData.password
+      formData.password,
+      setError
     );
     if (registrationSuccessful) {
-      navigate("/users/validate");
+      navigate("/validate");
     }
   };
 
   return (
     <Main>
-      <h1 className="text-4xl block self-center">Crea tu cuenta</h1>
-      <RegistrationForm
-        formData={formData}
-        handleInputChange={handleInputChange}
-        validationErrors={validationErrors}
-        handleSubmit={handleSubmit}
-      />
-      <p className="flex justify-center gap-2">
-        ¿Ya tienes una cuenta?
-        <Link to="/login" style={{ color: "var(--quaternary-color)" }}>
-          ¡Inicia sesión!
-        </Link>
-      </p>
+      <section className="flex flex-col h-screen w-full items-center justify-center">
+        <h1 className="text-4xl block self-center mb-5">Crea tu cuenta</h1>
+        <RegistrationForm
+          formData={formData}
+          handleInputChange={handleInputChange}
+          validationErrors={validationErrors}
+          handleSubmit={handleSubmit}
+        />
+        {error ? (
+          <Stack
+            sx={{
+              width: isMobileView ? "100%" : "50%",
+              position: "static",
+              zIndex: "20",
+              bottom: "0",
+              right: "0",
+              backgroundColor: "white",
+              marginTop: "1rem",
+            }}
+            spacing={2}
+          >
+            <Alert
+              variant="outlined"
+              severity="warning"
+              onClose={() => setError("")}
+            >
+              {error}
+            </Alert>
+          </Stack>
+        ) : null}
+        <p className="flex justify-center gap-2 mt-5">
+          ¿Ya tienes una cuenta?
+          <Link to="/login" style={{ color: "var(--quaternary-color)" }}>
+            ¡Inicia sesión!
+          </Link>
+        </p>
+      </section>
     </Main>
   );
 }
