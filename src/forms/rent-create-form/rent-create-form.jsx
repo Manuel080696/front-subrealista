@@ -1,4 +1,4 @@
-import './rent-create-form.css';
+//import './rent-create-form.css';
 import { useRef, useState } from 'react';
 // import {
 //   Elevator as ElevatorIcon,
@@ -6,20 +6,19 @@ import { useRef, useState } from 'react';
 //   AcUnit as AcUnitIcon,
 //   Wifi as WifiIcon,
 // } from '@mui/icons-material';
-import ElevatorIcon from '@mui/icons-material/Elevator';
-import BeachAccessIcon from '@mui/icons-material/BeachAccess';
-import MountainIcon from '@mui/icons-material/FilterHdr';
-import HairdryerIcon from '@mui/icons-material/LocalHotel';
-import WashingMachineIcon from '@mui/icons-material/WashingMachine';
-import AcUnitIcon from '@mui/icons-material/AcUnit';
-import SmokeDetectorIcon from '@mui/icons-material/SmokeDetector';
-import FirstAidIcon from '@mui/icons-material/FirstAid';
-import WifiIcon from '@mui/icons-material/Wifi';
-import RefrigeratorIcon from '@mui/icons-material/Kitchen';
-import FreezerIcon from '@mui/icons-material/Freezer';
-import ToasterIcon from '@mui/icons-material/Toaster';
-import KitchenIcon from '@mui/icons-material/Kitchen';
-
+import ElevatorOutlinedIcon from '@mui/icons-material/ElevatorOutlined';
+import BeachAccessOutlinedIcon from '@mui/icons-material/BeachAccessOutlined';
+import TerrainOutlinedIcon from '@mui/icons-material/TerrainOutlined';
+import AirOutlinedIcon from '@mui/icons-material/AirOutlined';
+import LocalLaundryServiceOutlinedIcon from '@mui/icons-material/LocalLaundryServiceOutlined';
+import AcUnitOutlinedIcon from '@mui/icons-material/AcUnitOutlined';
+import SurroundSoundOutlinedIcon from '@mui/icons-material/SurroundSoundOutlined';
+import MedicalServicesOutlinedIcon from '@mui/icons-material/MedicalServicesOutlined';
+import WifiOutlinedIcon from '@mui/icons-material/WifiOutlined';
+import KitchenOutlinedIcon from '@mui/icons-material/KitchenOutlined';
+import BreakfastDiningOutlinedIcon from '@mui/icons-material/BreakfastDiningOutlined';
+//import BedroomParentOutlinedIcon from '@mui/icons-material/BedroomParentOutlined';
+//import { handleClearFields } from '../../utils/handle-clear-fields';
 //import { useContext, useState } from 'react'; pasar useContext aariba
 //import { CurrentUserContext } from '../../context/auth-context.jsx';
 // importamos funciones utilitarias que permite previsualizar y eliminar una imagen.
@@ -81,21 +80,21 @@ const RentCreateForm = () => {
       beds: 0,
       bathrooms: 0,
     },
-    services: {
-      elevator: false,
-      near_beach: false,
-      near_mountain: false,
-      hairdryer: false,
-      washing_machine: false,
-      ac: false,
-      smoke_detector: false,
-      first_kit_aid: false,
-      wifi: false,
-      refrigerator: false,
-      freezer: false,
-      toaster: false,
-      fully_equipped: false,
-    },
+
+    elevator: false,
+    near_beach: false,
+    near_mountain: false,
+    hairdryer: false,
+    washing_machine: false,
+    ac: false,
+    smoke_detector: false,
+    first_kit_aid: false,
+    wifi: false,
+    refrigerator: false,
+    freezer: false,
+    toaster: false,
+    fully_equipped: false,
+
     title: '',
     description: '',
     basePrice: '',
@@ -147,6 +146,7 @@ const RentCreateForm = () => {
   //   }
   //   return true;
   // };
+
   const handleClearFields = (e) => {
     e.preventDefault();
     setStepData({
@@ -164,21 +164,21 @@ const RentCreateForm = () => {
         beds: 0,
         bathrooms: 0,
       },
-      services: {
-        elevator: false,
-        near_beach: false,
-        near_mountain: false,
-        hairdryer: false,
-        washing_machine: false,
-        ac: false,
-        smoke_detector: false,
-        first_kit_aid: false,
-        wifi: false,
-        refrigerator: false,
-        freezer: false,
-        toaster: false,
-        fully_equipped: false,
-      },
+
+      elevator: false,
+      near_beach: false,
+      near_mountain: false,
+      hairdryer: false,
+      washing_machine: false,
+      ac: false,
+      smoke_detector: false,
+      first_kit_aid: false,
+      wifi: false,
+      refrigerator: false,
+      freezer: false,
+      toaster: false,
+      fully_equipped: false,
+
       images: [],
       title: '',
       description: '',
@@ -212,21 +212,21 @@ const RentCreateForm = () => {
         rent_description: stepData.description,
         rent_price: 0, // Agrega el precio del alquiler si es necesario
         rent_location: stepData.location,
-        services: {
-          elevator: stepData.services.elevator,
-          near_beach: stepData.services.near_beach,
-          near_mountain: stepData.services.near_mountain,
-          hairdryer: stepData.services.hairdryer,
-          washing_machine: stepData.services.washing_machine,
-          ac: stepData.services.ac,
-          smoke_detector: stepData.services.smoke_detector,
-          first_kit_aid: stepData.services.first_kit_aid,
-          wifi: stepData.services.wifi,
-          refrigerator: stepData.services.refrigerator,
-          freezer: stepData.services.freezer,
-          toaster: stepData.services.toaster,
-          fully_equipped: stepData.services.fully_equipped,
-        },
+
+        elevator: stepData.services.elevator,
+        near_beach: stepData.services.near_beach,
+        near_mountain: stepData.services.near_mountain,
+        hairdryer: stepData.services.hairdryer,
+        washing_machine: stepData.services.washing_machine,
+        ac: stepData.services.ac,
+        smoke_detector: stepData.services.smoke_detector,
+        first_kit_aid: stepData.services.first_kit_aid,
+        wifi: stepData.services.wifi,
+        refrigerator: stepData.services.refrigerator,
+        freezer: stepData.services.freezer,
+        toaster: stepData.services.toaster,
+        fully_equipped: stepData.services.fully_equipped,
+
         address: {
           street: stepData.address.street,
           city: stepData.address.city,
@@ -657,7 +657,7 @@ const RentCreateForm = () => {
                     checked={stepData.services.elevator}
                     onChange={handleServiceCheckboxChange}
                     name='elevator'
-                    icon={<ElevatorIcon style={{ color: '#002222' }} />}
+                    icon={<ElevatorOutlinedIcon style={{ color: '#002222' }} />}
                   />
                 }
                 label='Elevator'
@@ -668,62 +668,9 @@ const RentCreateForm = () => {
                     checked={stepData.services.near_beach}
                     onChange={handleServiceCheckboxChange}
                     name='near_beach'
-                    icon={<BeachAccessIcon style={{ color: '#002222' }} />}
-                  />
-                }
-                label='Near the Beach'
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={stepData.services.ac}
-                    onChange={handleServiceCheckboxChange}
-                    name='ac'
-                    icon={<AcUnitIcon style={{ color: '#002222' }} />}
-                  />
-                }
-                label='Air Conditioning'
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={stepData.services.wifi}
-                    onChange={handleServiceCheckboxChange}
-                    name='wifi'
-                    icon={<WifiIcon style={{ color: '#002222' }} />}
-                  />
-                }
-                label='Wifi'
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={stepData.services.wifi}
-                    onChange={handleServiceCheckboxChange}
-                    name='wifi'
-                    icon={<WifiIcon style={{ color: '#002222' }} />}
-                  />
-                }
-                label='Wifi'
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={stepData.services.elevator}
-                    onChange={handleServiceCheckboxChange}
-                    name='elevator'
-                    icon={<ElevatorIcon style={{ color: '#002222' }} />}
-                  />
-                }
-                label='Elevator'
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={stepData.services.near_beach}
-                    onChange={handleServiceCheckboxChange}
-                    name='near_beach'
-                    icon={<BeachAccessIcon style={{ color: '#002222' }} />}
+                    icon={
+                      <BeachAccessOutlinedIcon style={{ color: '#002222' }} />
+                    }
                   />
                 }
                 label='Near the Beach'
@@ -734,7 +681,7 @@ const RentCreateForm = () => {
                     checked={stepData.services.near_mountain}
                     onChange={handleServiceCheckboxChange}
                     name='near_mountain'
-                    icon={<MountainIcon style={{ color: '#002222' }} />}
+                    icon={<TerrainOutlinedIcon style={{ color: '#002222' }} />}
                   />
                 }
                 label='Near the Mountain'
@@ -745,7 +692,7 @@ const RentCreateForm = () => {
                     checked={stepData.services.hairdryer}
                     onChange={handleServiceCheckboxChange}
                     name='hairdryer'
-                    icon={<HairdryerIcon style={{ color: '#002222' }} />}
+                    icon={<AirOutlinedIcon style={{ color: '#002222' }} />}
                   />
                 }
                 label='Hairdryer'
@@ -756,7 +703,11 @@ const RentCreateForm = () => {
                     checked={stepData.services.washing_machine}
                     onChange={handleServiceCheckboxChange}
                     name='washing_machine'
-                    icon={<WashingMachineIcon style={{ color: '#002222' }} />}
+                    icon={
+                      <LocalLaundryServiceOutlinedIcon
+                        style={{ color: '#002222' }}
+                      />
+                    }
                   />
                 }
                 label='Washing Machine'
@@ -767,7 +718,7 @@ const RentCreateForm = () => {
                     checked={stepData.services.ac}
                     onChange={handleServiceCheckboxChange}
                     name='ac'
-                    icon={<AcUnitIcon style={{ color: '#002222' }} />}
+                    icon={<AcUnitOutlinedIcon style={{ color: '#002222' }} />}
                   />
                 }
                 label='Air Conditioning'
@@ -778,7 +729,9 @@ const RentCreateForm = () => {
                     checked={stepData.services.smoke_detector}
                     onChange={handleServiceCheckboxChange}
                     name='smoke_detector'
-                    icon={<SmokeDetectorIcon style={{ color: '#002222' }} />}
+                    icon={
+                      <SurroundSoundOutlinedIcon style={{ color: '#002222' }} />
+                    }
                   />
                 }
                 label='Smoke Detector'
@@ -789,7 +742,11 @@ const RentCreateForm = () => {
                     checked={stepData.services.first_kit_aid}
                     onChange={handleServiceCheckboxChange}
                     name='first_kit_aid'
-                    icon={<FirstAidIcon style={{ color: '#002222' }} />}
+                    icon={
+                      <MedicalServicesOutlinedIcon
+                        style={{ color: '#002222' }}
+                      />
+                    }
                   />
                 }
                 label='First Aid Kit'
@@ -800,7 +757,7 @@ const RentCreateForm = () => {
                     checked={stepData.services.wifi}
                     onChange={handleServiceCheckboxChange}
                     name='wifi'
-                    icon={<WifiIcon style={{ color: '#002222' }} />}
+                    icon={<WifiOutlinedIcon style={{ color: '#002222' }} />}
                   />
                 }
                 label='Wifi'
@@ -811,7 +768,7 @@ const RentCreateForm = () => {
                     checked={stepData.services.refrigerator}
                     onChange={handleServiceCheckboxChange}
                     name='refrigerator'
-                    icon={<RefrigeratorIcon style={{ color: '#002222' }} />}
+                    icon={<KitchenOutlinedIcon style={{ color: '#002222' }} />}
                   />
                 }
                 label='Refrigerator'
@@ -822,7 +779,7 @@ const RentCreateForm = () => {
                     checked={stepData.services.freezer}
                     onChange={handleServiceCheckboxChange}
                     name='freezer'
-                    icon={<FreezerIcon style={{ color: '#002222' }} />}
+                    icon={<KitchenOutlinedIcon style={{ color: '#002222' }} />}
                   />
                 }
                 label='Freezer'
@@ -833,7 +790,11 @@ const RentCreateForm = () => {
                     checked={stepData.services.toaster}
                     onChange={handleServiceCheckboxChange}
                     name='toaster'
-                    icon={<ToasterIcon style={{ color: '#002222' }} />}
+                    icon={
+                      <BreakfastDiningOutlinedIcon
+                        style={{ color: '#002222' }}
+                      />
+                    }
                   />
                 }
                 label='Toaster'
@@ -844,7 +805,11 @@ const RentCreateForm = () => {
                     checked={stepData.services.fully_equipped}
                     onChange={handleServiceCheckboxChange}
                     name='fully_equipped'
-                    icon={<KitchenIcon style={{ color: '#002222' }} />}
+                    icon={
+                      <BreakfastDiningOutlinedIcon
+                        style={{ color: '#002222' }}
+                      />
+                    }
                   />
                 }
                 label='Fully Equipped Kitchen'
