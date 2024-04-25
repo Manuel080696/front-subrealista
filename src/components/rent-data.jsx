@@ -30,7 +30,9 @@ export function RentData({
       <aside className="flex flex-row mx-8 py-6 items-center gap-2 border-t">
         <img
           src={
-            user && user.profilePic !== (undefined || null)
+            user &&
+            user.profilePic !== (undefined || null) &&
+            user.profilePic.length !== 0
               ? user?.profilePic
               : "/users/default_avatar.png"
           }
@@ -86,7 +88,9 @@ export function RentData({
           <span className="flex flex-col items-center bg-white w-10/12 p-6 rounded-lg shadow-xl">
             <img
               src={
-                user && user.profilePic !== (undefined || null)
+                user &&
+                user.profilePic !== (undefined || null) &&
+                user.profilePic.length !== 0
                   ? user?.profilePic
                   : "/users/default_avatar.png"
               }
@@ -99,7 +103,7 @@ export function RentData({
             </p>
 
             {user?.avg_rating ? (
-              <span className="flex align-middle justify-center">
+              <span className="flex align-middle justify-center mt-2">
                 <Rating
                   value={parseFloat(user?.avg_rating)}
                   name="size-medium"
@@ -107,7 +111,7 @@ export function RentData({
                 />
               </span>
             ) : (
-              "Sin valoraciones"
+              <p className="mt-2">Sin valoraciones</p>
             )}
 
             {user?.address && (

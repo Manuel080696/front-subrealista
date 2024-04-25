@@ -7,14 +7,14 @@ export const CurrentUserUpdateContext = createContext(() => {});
 
 export function AuthContextProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const handleUser = async () => {
       if (user) {
         const currentUser = await getUserDataService(user?.username);
         setUserData(currentUser);
-      } else if (!user) {
+      } else {
         setUserData(null);
       }
     };
@@ -23,8 +23,8 @@ export function AuthContextProvider({ children }) {
 
   useEffect(() => {
     setUser(getCurrentUserFromLocalStorage());
-    window.addEventListener("storage", () => {
-      if (key == import.meta.env.VITE_APP_CURRENT_USER_STORAGE_ID) {
+    window.addEventListener("storage", (e) => {
+      if (e.key === import.meta.env.VITE_APP_CURRENT_USER_STORAGE_ID) {
         setUser(getCurrentUserFromLocalStorage());
       }
     });

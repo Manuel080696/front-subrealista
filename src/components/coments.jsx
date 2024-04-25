@@ -8,6 +8,7 @@ export function Coments({ post, user }) {
   const [ratings, setRatings] = useState([]);
   const [tenant, setTenant] = useState();
   const { username } = useParams();
+  console.log(ratings);
   useEffect(() => {
     const fetchData = async () => {
       const ratingsData = await getTenantsRatings(
@@ -36,14 +37,13 @@ export function Coments({ post, user }) {
     fetchUserData();
   }, []);
 
-  return ratings?.length !== 0 ? (
+  return ratings !== undefined ? (
     <aside className="flex flex-col py-6 pb-8 gap-2 bg-[--tertiary-color] rounded-t-md w-full max-w-full">
       <h3
         className={`text-2xl font-bold mb-5 ${
           username?.length !== 0 ? "pl-6" : ""
         }`}
       >
-        {" "}
         {`${
           username?.length > 0
             ? `Valoraciones de ${username}`
@@ -55,8 +55,11 @@ export function Coments({ post, user }) {
     </aside>
   ) : (
     <aside className="flex flex-col py-6 pb-8 gap-2 bg-[--tertiary-color] rounded-t-md w-full max-w-full">
-      <h3 className="text-2xl font-bold mb-5">
-        {" "}
+      <h3
+        className={`text-2xl font-bold mb-5 ${
+          username?.length !== 0 ? "pl-6" : ""
+        }`}
+      >
         {`${
           username?.length > 0
             ? `Valoraciones de ${username}`

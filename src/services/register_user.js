@@ -1,28 +1,12 @@
-import { toast } from "sonner";
+import { METHODS, sendApiRequest } from "./send-api-request.js";
 
-export const registerUser = async (email, username, password) => {
+export async function registerUser(email, username, password, setError) {
   const requestBody = { email, username, password };
-
-  try {
-    const response = await fetch(
-      `${import.meta.env.VITE_APP_BACKEND}/register`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(requestBody),
-      }
-    );
-
-    if (response.ok) {
-      toast.success("Te has registrado con éxito");
-      return true;
-    } else {
-      toast.error("El registro de usuario ha fallado");
-      console.error(response.statusText);
-      return null;
-    }
-  } catch (error) {
-    console.error("Ha ocurrido un error:", error);
+  const response = await sendApiRequest(METHODS.POST, `/register`, requestBody);
+  if (response.status === "ok") {
+    return response.status;
+  } else {
+    setError(`Error: ${response.message}`);
     return null;
   }
-};
+}

@@ -75,12 +75,12 @@ export default function Search({ handleFilteredPosts }) {
               <MenuItem value={"Canarias"}>Canarias</MenuItem>
               <MenuItem value={"Cantabria"}>Cantabria</MenuItem>
               <MenuItem value={"Castilla y Leon"}>Castilla y Leon</MenuItem>
-              <MenuItem value={"Castilla - La Mancha"}>
-                Castilla - La Mancha
+              <MenuItem value={"Castilla La Mancha"}>
+                Castilla La Mancha
               </MenuItem>
               <MenuItem value={"Cataluña"}>Cataluña</MenuItem>
-              <MenuItem value={"Comunitat Valenciana"}>
-                Comunitat Valenciana
+              <MenuItem value={"Comunidad Valenciana"}>
+                Comunidad Valenciana
               </MenuItem>
               <MenuItem value={"Extremadura"}>Extremadura</MenuItem>
               <MenuItem value={"Galicia"}>Galicia</MenuItem>

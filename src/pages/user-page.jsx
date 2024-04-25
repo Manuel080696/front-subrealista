@@ -85,7 +85,6 @@ export function UserPage() {
   }, [userToken, user]);
 
   const logout = useLogout();
-
   return (
     user && (
       <Main>
