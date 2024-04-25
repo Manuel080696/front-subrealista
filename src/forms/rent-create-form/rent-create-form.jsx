@@ -1,4 +1,4 @@
-//import './rent-create-form.css';
+import './rent-create-form.css';
 import { useRef, useState } from 'react';
 // import {
 //   Elevator as ElevatorIcon,
@@ -6,6 +6,7 @@ import { useRef, useState } from 'react';
 //   AcUnit as AcUnitIcon,
 //   Wifi as WifiIcon,
 // } from '@mui/icons-material';
+
 import ElevatorOutlinedIcon from '@mui/icons-material/ElevatorOutlined';
 import BeachAccessOutlinedIcon from '@mui/icons-material/BeachAccessOutlined';
 import TerrainOutlinedIcon from '@mui/icons-material/TerrainOutlined';
@@ -17,6 +18,7 @@ import MedicalServicesOutlinedIcon from '@mui/icons-material/MedicalServicesOutl
 import WifiOutlinedIcon from '@mui/icons-material/WifiOutlined';
 import KitchenOutlinedIcon from '@mui/icons-material/KitchenOutlined';
 import BreakfastDiningOutlinedIcon from '@mui/icons-material/BreakfastDiningOutlined';
+
 //import BedroomParentOutlinedIcon from '@mui/icons-material/BedroomParentOutlined';
 //import { handleClearFields } from '../../utils/handle-clear-fields';
 //import { useContext, useState } from 'react'; pasar useContext aariba
@@ -74,12 +76,7 @@ const RentCreateForm = () => {
       postalCode: '',
     },
 
-    basicInfo: {
-      guests: 0,
-      bedrooms: 0,
-      beds: 0,
-      bathrooms: 0,
-    },
+    rent_rooms: 0,
 
     elevator: false,
     near_beach: false,
@@ -158,12 +155,8 @@ const RentCreateForm = () => {
         state: '',
         postalCode: '',
       },
-      basicInfo: {
-        guests: 0,
-        bedrooms: 0,
-        beds: 0,
-        bathrooms: 0,
-      },
+
+      rent_rooms: 0,
 
       elevator: false,
       near_beach: false,
@@ -333,26 +326,7 @@ const RentCreateForm = () => {
             >
               Selecciona ubicación
             </InputLabel>
-            {/* <InputLabel
-              shrink
-              htmlFor='location-label'
-              style={{
-                fontSize: '1rem',
-                fontWeight: 100,
-                color: '#5f6266c4',
-              }}
-            >
-              Indica tu ubicación
-            </InputLabel> */}
-            {/* <select
-                id='currency'
-                name='currency'
-                className='h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm'
-              >
-                <option>USD</option>
-                <option>CAD</option>
-                <option>EUR</option>
-              </select> */}
+
             <Select
               id='location'
               sx={{ minWidth: '100%', width: '100%' }}
@@ -500,39 +474,7 @@ const RentCreateForm = () => {
               Añade información básica sobre tu espacio
             </h2>
           </section>
-          <FormControl fullWidth>
-            <InputLabel
-              shrink
-              htmlFor='guests-label'
-              style={{
-                fontSize: '0.8rem',
-                fontWeight: 100,
-                color: '#5f6266c4',
-              }}
-            >
-              Número de huéspedes
-            </InputLabel>
-            <TextField
-              type='number'
-              value={stepData.basicInfo.guests}
-              onChange={(e) =>
-                setStepData({
-                  ...stepData,
-                  basicInfo: { ...stepData.basicInfo, guests: e.target.value },
-                })
-              }
-              inputProps={{
-                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
-              }}
-              style={{
-                fontSize: '0.8rem',
-                fontWeight: 100,
-                border: '1px solid #bdbdbd',
-                borderRadius: '4px',
-                marginTop: '16px',
-              }}
-            />
-          </FormControl>
+
           <FormControl fullWidth>
             <InputLabel
               shrink
@@ -554,75 +496,6 @@ const RentCreateForm = () => {
                   basicInfo: {
                     ...stepData.basicInfo,
                     bedrooms: e.target.value,
-                  },
-                })
-              }
-              inputProps={{
-                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
-              }}
-              style={{
-                fontSize: '0.8rem',
-                fontWeight: 100,
-                border: '1px solid #bdbdbd',
-                borderRadius: '4px',
-                marginTop: '16px',
-              }}
-            />
-          </FormControl>
-          <FormControl fullWidth>
-            <InputLabel
-              shrink
-              htmlFor='beds-label'
-              style={{
-                fontSize: '0.8rem',
-                fontWeight: 100,
-                color: '#5f6266c4',
-              }}
-            >
-              Número de camas
-            </InputLabel>
-            <TextField
-              type='number'
-              value={stepData.basicInfo.beds}
-              onChange={(e) =>
-                setStepData({
-                  ...stepData,
-                  basicInfo: { ...stepData.basicInfo, beds: e.target.value },
-                })
-              }
-              inputProps={{
-                style: { fontSize: '0.8rem', fontWeight: 100, padding: '0' },
-              }}
-              style={{
-                fontSize: '0.8rem',
-                fontWeight: 100,
-                border: '1px solid #bdbdbd',
-                borderRadius: '4px',
-                marginTop: '16px',
-              }}
-            />
-          </FormControl>
-          <FormControl fullWidth>
-            <InputLabel
-              shrink
-              htmlFor='bathrooms-label'
-              style={{
-                fontSize: '0.8rem',
-                fontWeight: 100,
-                color: '#5f6266c4',
-              }}
-            >
-              Número de baños
-            </InputLabel>
-            <TextField
-              type='number'
-              value={stepData.basicInfo.bathrooms}
-              onChange={(e) =>
-                setStepData({
-                  ...stepData,
-                  basicInfo: {
-                    ...stepData.basicInfo,
-                    bathrooms: e.target.value,
                   },
                 })
               }
@@ -882,18 +755,6 @@ const RentCreateForm = () => {
           )}
 
           <form className='conditional-img' onSubmit={(e) => unSubmitImage(e)}>
-            {/* <aside htmlFor='file-input-label' className='custom-file-label'> */}
-            {/* <span className='span-img'>
-                <img
-                  className='img-upload'
-                  src='/icons/folder.png'
-                  alt='upload'
-                  width='150'
-                  style={{ cursor: 'pointer' }}
-                />
-              </span> */}
-            {/* <span className='span-text-img'>Subir imagen</span>
-            </aside> */}
             <label htmlFor=''>
               <input
                 className='custom-file-input'
