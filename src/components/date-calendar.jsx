@@ -4,15 +4,39 @@ import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import "./date-calendar.css";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 dayjs.extend(isBetween);
 
-export function Fecha({ active, setDateValue, dateValue, dateDisable }) {
+export function Fecha({
+  active,
+  setDateValue,
+  dateValue,
+  dateDisable,
+  setActive,
+}) {
   const { id } = useParams();
   //Función adicional, creada para dar formato a la fecha.
   const formatDate = (date) => {
     return dayjs(date).format("YYYY-MM-DD");
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Verificar si el clic se produce fuera del componente Calendar
+      if (active && event.target.closest(".fecha-container") === null) {
+        setActive(false); // Cambiar el estado active a false
+      }
+    };
+
+    // Agregar el event listener cuando el componente se monta
+    document.addEventListener("click", handleClickOutside);
+
+    // Limpiar el event listener cuando el componente se desmonta
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [active, setActive]);
 
   // Función para deshabilitar las fechas seleccionadas
   const tileDisabled = ({ date }) => {
@@ -85,9 +109,12 @@ export function Fecha({ active, setDateValue, dateValue, dateDisable }) {
 
       <Calendar
         minDate={new Date()}
-        className="border-0"
+        className="border-0 fecha-container"
         selectRange={true}
-        onChange={(value) => setDateValue(value)}
+        onChange={(value) => {
+          setDateValue(value);
+          setActive(!active);
+        }}
         value={dateValue}
       />
     </section>

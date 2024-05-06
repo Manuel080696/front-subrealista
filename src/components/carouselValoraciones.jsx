@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./carouselValoraciones.css";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
 import { Rating } from "@mui/material";
 import { createPortal } from "react-dom";
 import { ModalValoracion } from "./modal-valoracion";
@@ -17,13 +16,10 @@ export default function CarouselValoraciones({
   const [activeRentId, setActiveRentId] = useState(null);
   const [dragStartX, setDragStartX] = useState(null);
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
-  const navigate = useNavigate();
+
+  console.log(ratings);
 
   const currentDate = dayjs().toISOString();
-
-  function formatDate(date) {
-    return dayjs(date).format("MMM-DD");
-  }
 
   useEffect(() => {
     const handleResize = () => {
@@ -122,145 +118,103 @@ export default function CarouselValoraciones({
           className="carousel-valoraciones-inner z-0"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
-          {!ratings
-            ? posts &&
-              images &&
-              posts.map((rent, index) => {
-                const rentImage = images[index];
+          {posts &&
+            images &&
+            posts.map((rent, index) => {
+              console.log(rent);
+              const rentImage = images[index];
+              const rentRating = searchPostRatingId(rent);
+              const ratingValue = parseInt(rentRating?.rating);
+              console.log(ratingValue);
+              const ratingComments = rentRating?.comments;
 
-                return (
-                  <li
-                    className="carousel-valoraciones-item flex flex-col justify-center items-center p-8"
-                    key={index}
-                  >
-                    <aside className="flex flex-col">
+              return isNaN(ratingValue) || ratingValue === undefined ? (
+                <li
+                  className="carousel-valoraciones-item flex flex-col justify-center items-center p-8"
+                  key={index}
+                >
+                  {activeRentId === rent.rent_id && (
+                    <>
+                      {createPortal(
+                        <section className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                          <ModalValoracion
+                            rent={rent}
+                            setActiveRentId={setActiveRentId}
+                            updateRentalsAndPosts={updateRentalsAndPosts}
+                          />
+                        </section>,
+                        document.body
+                      )}
+                    </>
+                  )}
+                  <aside className="flex flex-col">
+                    <span className="relative flex flex-col items-center justify-center">
+                      <button
+                        className="absolute bg-white px-8 py-4 rounded-xl shadow-xl text-xl font-semibold"
+                        onClick={() => setActiveRentId(rent?.rent_id)}
+                      >
+                        Vote
+                      </button>
                       <img
-                        src={rentImage[0].rent_image}
+                        src={rentImage[0]?.rent_image}
                         alt={rent.rent_title}
-                        onClick={() => navigate(`/rent/${rent.rent_id}`)}
                         className={`rounded-3xl aspect-square object-cover ${
-                          rentals[index].rental_end < currentDate
+                          rentals[index].rental_end <= currentDate
                             ? "filter grayscale"
                             : ""
                         }`}
                       />
-                      <aside className="flex flex-col pl-2 pt-2">
-                        <h3 className="font-semibold text-md">
-                          {rent.rent_title}
-                        </h3>
-                        <p className="text-sm">
-                          Ida: {formatDate(rentals[index].rental_start)}
-                        </p>
-                        <p className="text-sm">
-                          Vuelta: {formatDate(rentals[index].rental_end)}
-                        </p>
-                      </aside>
+                    </span>
+                    <aside className="flex flex-col pl-2 pt-2">
+                      <h3 className="font-semibold text-md">
+                        {rent.rent_title}
+                      </h3>
+                      <Rating
+                        value={ratingValue}
+                        name="size-medium"
+                        readOnly
+                        className="-ml-1"
+                      />
+                      <p className="mt-2">No comments jet</p>
                     </aside>
-                  </li>
-                );
-              })
-            : posts &&
-              ratings &&
-              images &&
-              posts.map((rent, index) => {
-                const rentImage = images[index];
-                const rentRating = searchPostRatingId(rent);
-                const ratingValue = parseInt(rentRating?.rating);
-                const ratingComments = rentRating?.comments;
-
-                return isNaN(ratingValue) ? (
-                  <li
-                    className="carousel-valoraciones-item flex flex-col justify-center items-center p-8"
-                    key={index}
-                  >
-                    {activeRentId === rent.rent_id && (
-                      <>
-                        {createPortal(
-                          <section className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-                            <ModalValoracion
-                              rent={rent}
-                              setActiveRentId={setActiveRentId}
-                              updateRentalsAndPosts={updateRentalsAndPosts}
-                            />
-                          </section>,
-                          document.body
-                        )}
-                      </>
-                    )}
-                    <aside className="flex flex-col">
-                      <span className="relative flex flex-col items-center justify-center">
-                        <button
-                          className="absolute bg-white px-8 py-4 rounded-xl shadow-xl text-xl font-semibold"
-                          onClick={() => setActiveRentId(rent?.rent_id)}
-                        >
-                          Vote
-                        </button>
-                        <img
-                          src={rentImage[0]?.rent_image}
-                          alt={rent.rent_title}
-                          className={`rounded-3xl aspect-square object-cover ${
-                            rentals[index].rental_end <= currentDate
-                              ? "filter grayscale"
-                              : ""
-                          }`}
-                        />
-                      </span>
-                      <aside className="flex flex-col pl-2 pt-2">
-                        <h3 className="font-semibold text-md">
-                          {rent.rent_title}
-                        </h3>
-                        <Rating
-                          value={ratingValue}
-                          name="size-medium"
-                          readOnly
-                          className="-ml-1"
-                        />
-                        <p className="mt-2">No comments jet</p>
-                      </aside>
+                  </aside>
+                </li>
+              ) : (
+                <li
+                  className="carousel-valoraciones-item flex flex-col justify-center items-center p-8"
+                  key={index}
+                >
+                  <aside className="flex flex-col">
+                    <span className="relative">
+                      <img
+                        src="/val/alreadyVoted.png"
+                        alt={rent.rent_title}
+                        className={`rounded-3xl absolute top-0 bottom-0 right-0 left-0 z-10 aspect-square object-cover p-6`}
+                      />
+                      <img
+                        src={rentImage[0]?.rent_image}
+                        alt={rent.rent_title}
+                        className={`rounded-3xl aspect-square object-cover ${
+                          !isNaN(ratingValue) ? "filter grayscale" : ""
+                        }`}
+                      />
+                    </span>
+                    <aside className="flex flex-col pl-2 pt-2">
+                      <h3 className="font-semibold text-md">
+                        {rent.rent_title}
+                      </h3>
+                      <Rating
+                        value={ratingValue}
+                        name="size-medium"
+                        readOnly
+                        className="-ml-1"
+                      />
+                      <p className="mt-2">{ratingComments}</p>
                     </aside>
-                  </li>
-                ) : (
-                  <li
-                    className="carousel-valoraciones-item flex flex-col justify-center items-center p-8"
-                    key={index}
-                  >
-                    <aside className="flex flex-col">
-                      <span className="relative">
-                        <img
-                          src="/val/alreadyVoted.png"
-                          alt={rent.rent_title}
-                          className={`rounded-3xl absolute top-0 bottom-0 right-0 left-0 z-10 aspect-square object-cover p-6 ${
-                            rentals[index].rental_end <= currentDate
-                              ? "filter grayscale"
-                              : ""
-                          }`}
-                        />
-                        <img
-                          src={rentImage[0]?.rent_image}
-                          alt={rent.rent_title}
-                          className={`rounded-3xl aspect-square object-cover ${
-                            rentals[index].rental_end <= currentDate
-                              ? "filter grayscale"
-                              : ""
-                          }`}
-                        />
-                      </span>
-                      <aside className="flex flex-col pl-2 pt-2">
-                        <h3 className="font-semibold text-md">
-                          {rent.rent_title}
-                        </h3>
-                        <Rating
-                          value={ratingValue}
-                          name="size-medium"
-                          readOnly
-                          className="-ml-1"
-                        />
-                        <p className="mt-2">{ratingComments}</p>
-                      </aside>
-                    </aside>
-                  </li>
-                );
-              })}
+                  </aside>
+                </li>
+              );
+            })}
         </ul>
 
         <span
@@ -301,170 +255,108 @@ export default function CarouselValoraciones({
           className="carousel-comments-inner z-0 flex flex-row transition-transform w-full"
           style={{ transform: `translateX(-${currentIndex * 33.33}%)` }}
         >
-          {!ratings
-            ? groupIndexes?.map((groupIndex) => (
-                <li key={groupIndex} className="flex flex-row min-w-full">
-                  {posts &&
-                    images &&
-                    posts
-                      .slice(groupIndex * 3, groupIndex * 3 + 3)
-                      .map((rent, index) => {
-                        const rentImage = images[groupIndex * 3 + index];
-                        return (
-                          <section
-                            className="carousel-valoraciones-item flex flex-col max-w-[33%] justify-center items-center py-8"
-                            key={index}
-                          >
-                            <aside className="flex flex-col">
-                              <img
-                                src={rentImage[0].rent_image}
-                                alt={rent.rent_title}
-                                onClick={() =>
-                                  navigate(`/rent/${rent.rent_id}`)
-                                }
-                                className={`rounded-3xl aspect-square object-cover max-w-56 ${
-                                  rentals[groupIndex * 3 + index].rental_end <=
-                                  currentDate
-                                    ? "filter grayscale"
-                                    : ""
-                                }`}
-                              />
-                              <aside className="flex flex-col pl-2 pt-2">
-                                <h3 className="font-semibold text-md">
-                                  {rent.rent_title}
-                                </h3>
-                                <p className="text-sm">
-                                  Ida:{" "}
-                                  {formatDate(
-                                    rentals[groupIndex * 3 + index].rental_start
-                                  )}
-                                </p>
-                                <p className="text-sm">
-                                  Vuelta:{" "}
-                                  {formatDate(
-                                    rentals[groupIndex * 3 + index].rental_end
-                                  )}
-                                </p>
-                              </aside>
-                            </aside>
-                          </section>
-                        );
-                      })}
-                </li>
-              ))
-            : groupIndexes?.map((groupIndex) => (
-                <li key={groupIndex} className="flex flex-row min-w-full">
-                  {posts &&
-                    images &&
-                    posts
-                      .slice(groupIndex * 3, groupIndex * 3 + 3)
-                      .map((rent, index) => {
-                        const rentImage = images[groupIndex * 3 + index];
-                        const rentRating = searchPostRatingId(rent);
-                        const ratingValue = parseInt(rentRating?.rating);
-                        const ratingComments = rentRating?.comments;
-                        return isNaN(ratingValue) ? (
-                          <section
-                            className="carousel-valoraciones-item flex flex-col max-w-[33%] justify-center items-center py-8"
-                            key={index}
-                          >
-                            {activeRentId === rent.rent_id && (
-                              <>
-                                {createPortal(
-                                  <section className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-                                    <ModalValoracion
-                                      rent={rent}
-                                      setActiveRentId={setActiveRentId}
-                                      updateRentalsAndPosts={
-                                        updateRentalsAndPosts
-                                      }
-                                    />
-                                  </section>,
-                                  document.body
-                                )}
-                              </>
+          {groupIndexes?.map((groupIndex) => (
+            <li key={groupIndex} className="flex flex-row min-w-full">
+              {posts &&
+                images &&
+                posts
+                  .slice(groupIndex * 3, groupIndex * 3 + 3)
+                  .map((rent, index) => {
+                    const rentImage = images[groupIndex * 3 + index];
+                    const rentRating = searchPostRatingId(rent);
+                    const ratingValue = parseInt(rentRating?.rating);
+                    const ratingComments = rentRating?.comments;
+                    console.log(ratingValue);
+                    return isNaN(ratingValue) || ratingValue === undefined ? (
+                      <section
+                        className="carousel-valoraciones-item flex flex-col max-w-[33%] justify-center items-center py-8"
+                        key={index}
+                      >
+                        {activeRentId === rent.rent_id && (
+                          <>
+                            {createPortal(
+                              <section className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                                <ModalValoracion
+                                  rent={rent}
+                                  setActiveRentId={setActiveRentId}
+                                  updateRentalsAndPosts={updateRentalsAndPosts}
+                                />
+                              </section>,
+                              document.body
                             )}
-                            <aside className="flex flex-col">
-                              <span className="flex flex-col relative items-center justify-center">
-                                <button
-                                  className="absolute bg-white px-4 py-2 rounded-xl shadow-xl"
-                                  onClick={() => setActiveRentId(rent?.rent_id)}
-                                >
-                                  Vote
-                                </button>
-                                <img
-                                  src={rentImage[0].rent_image}
-                                  alt={rent.rent_title}
-                                  className={`rounded-3xl aspect-square object-cover max-w-56 ${
-                                    rentals[groupIndex * 3 + index]
-                                      .rental_end <= currentDate
-                                      ? "filter grayscale"
-                                      : ""
-                                  }`}
-                                />
-                              </span>
-                              <aside className="flex flex-col pl-2 pt-2">
-                                <h3 className="font-semibold text-md">
-                                  {rent.rent_title}
-                                </h3>
-                                <Rating
-                                  value={ratingValue}
-                                  name="size-medium"
-                                  readOnly
-                                  className="-ml-1"
-                                />
-                                <p className="mt-2">No comments jet</p>
-                              </aside>
-                            </aside>
-                          </section>
-                        ) : (
-                          <section
-                            className="carousel-valoraciones-item flex flex-col max-w-[33%] justify-center items-center py-8"
-                            key={index}
-                          >
-                            <aside className="flex flex-col">
-                              <span className="relative">
-                                <img
-                                  src="/val/alreadyVoted.png"
-                                  alt={rent.rent_title}
-                                  className={`rounded-3xl absolute top-0 bottom-0 right-0 left-0 z-10 aspect-square object-cover p-6 ${
-                                    rentals[index].rental_end <= currentDate
-                                      ? "filter grayscale"
-                                      : ""
-                                  }`}
-                                />
-                                <img
-                                  src={rentImage[0].rent_image}
-                                  alt={rent.rent_title}
-                                  onClick={() =>
-                                    navigate(`/rent/${rent.rent_id}`)
-                                  }
-                                  className={`rounded-3xl aspect-square object-cover max-w-56 ${
-                                    rentals[groupIndex * 3 + index]
-                                      .rental_end <= currentDate
-                                      ? "filter grayscale"
-                                      : ""
-                                  }`}
-                                />
-                              </span>
-                              <aside className="flex flex-col pl-2 pt-2">
-                                <h3 className="font-semibold text-md">
-                                  {rent.rent_title}
-                                </h3>
-                                <Rating
-                                  value={ratingValue}
-                                  name="size-medium"
-                                  readOnly
-                                  className="-ml-1"
-                                />
-                                <p className="mt-2">{ratingComments}</p>
-                              </aside>
-                            </aside>
-                          </section>
-                        );
-                      })}
-                </li>
-              ))}
+                          </>
+                        )}
+                        <aside className="flex flex-col">
+                          <span className="flex flex-col relative items-center justify-center">
+                            <button
+                              className="absolute bg-white px-4 py-2 rounded-xl shadow-xl"
+                              onClick={() => setActiveRentId(rent?.rent_id)}
+                            >
+                              Vote
+                            </button>
+                            <img
+                              src={rentImage[0].rent_image}
+                              alt={rent.rent_title}
+                              className={`rounded-3xl aspect-square object-cover max-w-56 ${
+                                rentals[groupIndex * 3 + index].rental_end <=
+                                currentDate
+                                  ? "filter grayscale"
+                                  : ""
+                              }`}
+                            />
+                          </span>
+                          <aside className="flex flex-col pl-2 pt-2">
+                            <h3 className="font-semibold text-md">
+                              {rent.rent_title}
+                            </h3>
+                            <Rating
+                              value={ratingValue}
+                              name="size-medium"
+                              readOnly
+                              className="-ml-1"
+                            />
+                            <p className="mt-2">No comments jet</p>
+                          </aside>
+                        </aside>
+                      </section>
+                    ) : (
+                      <section
+                        className="carousel-valoraciones-item flex flex-col max-w-[33%] justify-center items-center py-8"
+                        key={index}
+                      >
+                        <aside className="flex flex-col">
+                          <span className="relative">
+                            <img
+                              src="/val/alreadyVoted.png"
+                              alt={rent.rent_title}
+                              className={`rounded-3xl absolute top-0 bottom-0 right-0 left-0 z-10 aspect-square object-cover p-6`}
+                            />
+                            <img
+                              src={rentImage[0].rent_image}
+                              alt={rent.rent_title}
+                              className={`rounded-3xl aspect-square object-cover max-w-56 ${
+                                !isNaN(ratingValue) ? "filter grayscale" : ""
+                              }`}
+                            />
+                          </span>
+                          <aside className="flex flex-col pl-2 pt-2">
+                            <h3 className="font-semibold text-md">
+                              {rent.rent_title}
+                            </h3>
+                            <Rating
+                              value={ratingValue}
+                              name="size-medium"
+                              readOnly
+                              className="-ml-1"
+                            />
+                            <p className="mt-2">{ratingComments}</p>
+                          </aside>
+                        </aside>
+                      </section>
+                    );
+                  })}
+            </li>
+          ))}
         </ul>
 
         {groupIndexes.length > 1 && (

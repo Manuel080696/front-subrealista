@@ -5,6 +5,7 @@ import { Main } from "../components/main";
 import { CurrentUserContext } from "../context/auth-context";
 import CarouselValoraciones from "../components/carouselValoraciones";
 import { getTenantsRatings } from "../services/get_tenants_ratings";
+import CarouselReservas from "../components/carouselReservas";
 
 export function Valoraciones() {
   const [rentals, setRentals] = useState();
@@ -25,12 +26,12 @@ export function Valoraciones() {
     const fetchRatings = async () => {
       if (userData) {
         const ratingsData = await getTenantsRatings(userData.username);
-
-        if (ratingsData) {
+        console.log(ratingsData);
+        if (ratingsData?.status === "ok") {
           setRatings(ratingsData.data);
         } else {
           setError({
-            errorVal: "Este usuario todavía no ha hecho ningúna valoración",
+            errorVal: ratingsData.message,
           });
         }
       }
@@ -72,50 +73,49 @@ export function Valoraciones() {
 
       fetchPostDataForRentals();
     }
-  }, [rentals, posts.length, ratings?.length]);
+  }, [rentals, posts?.length, ratings?.length]);
 
-  if (ratings) console.log(ratings);
+  /*   if (rentals) console.log(rentals);
+  if (posts) console.log(posts);
+  if (images) console.log(images); */
 
   return (
-    rentals &&
-    posts.length !== 0 && (
-      <Main>
-        <section className="flex flex-col relative w-screen overflow-scroll md:max-w-[75rem] md:overflow-hidden">
-          <section className="flex flex-col w-full items-center justify-center px-8 gap-12 bg-white md:max-w-[75rem] h-full">
-            <aside className="flex flex-col w-full items-center justify-center">
-              <h2 className="font-semibold text-2xl pb-2">Reservas</h2>
-              {posts?.length !== 0 ? (
-                <section className="flex flex-col w-full bg-[--tertiary-color] items-center justify-center  rounded-xl md:flex-row">
-                  <CarouselValoraciones
-                    images={images}
-                    posts={posts}
-                    rentals={rentals}
-                  />
-                </section>
-              ) : (
-                <p>{error?.errorRes}</p>
-              )}
-            </aside>
-            <aside className="flex flex-col w-full items-center justify-center">
-              <h2 className="font-semibold text-2xl pb-2">Valoraciones</h2>
-              {ratings?.length !== 0 ? (
-                <section className="flex flex-col w-full bg-[--tertiary-color] items-center justify-center rounded-xl md:flex-row">
-                  <CarouselValoraciones
-                    images={images}
-                    posts={posts}
-                    rentals={rentals}
-                    ratings={ratings}
-                    updateRentalsAndPosts={updateRentalsAndPosts}
-                  />
-                </section>
-              ) : (
-                <p>{error?.errorVal}</p>
-              )}
-            </aside>
-          </section>
-          <section></section>
+    <Main>
+      <section className="flex flex-col relative w-screen h-screen overflow-scroll md:max-w-[75rem] md:overflow-hidden">
+        <section className="flex flex-col w-full items-center justify-center px-8 gap-12 bg-white md:max-w-[75rem] h-full">
+          <aside className="flex flex-col w-full items-center justify-center">
+            <h2 className="font-semibold text-2xl pb-2">Reservas</h2>
+            {posts?.length !== 0 ? (
+              <section className="flex flex-col w-full bg-[--tertiary-color] items-center justify-center  rounded-xl md:flex-row">
+                <CarouselReservas
+                  images={images}
+                  posts={posts}
+                  rentals={rentals}
+                />
+              </section>
+            ) : (
+              <p>{error?.errorRes}</p>
+            )}
+          </aside>
+          <aside className="flex flex-col w-full items-center justify-center">
+            <h2 className="font-semibold text-2xl pb-2">Valoraciones</h2>
+            {posts?.length !== 0 ? (
+              <section className="flex flex-col w-full bg-[--tertiary-color] items-center justify-center rounded-xl md:flex-row">
+                <CarouselValoraciones
+                  images={images}
+                  posts={posts}
+                  rentals={rentals}
+                  ratings={ratings}
+                  updateRentalsAndPosts={updateRentalsAndPosts}
+                />
+              </section>
+            ) : (
+              <p>{error?.errorVal}</p>
+            )}
+          </aside>
         </section>
-      </Main>
-    )
+        <section></section>
+      </section>
+    </Main>
   );
 }

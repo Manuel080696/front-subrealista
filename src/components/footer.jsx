@@ -1,12 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LanguageIcon from "@mui/icons-material/Language";
+import { useContext } from "react";
+import { CurrentUserContext } from "../context/auth-context";
 
 export function Footer() {
+  const location = useLocation();
+  const user = useContext(CurrentUserContext);
+
   return (
-    <footer className="px-5 sticky pb-16 z-0 w-full bg-[var(--secondary-color)] md:bottom-0 md:pb-0 md:static md:px-0">
+    <footer
+      className={`px-5 static bottom-0 pb-16 z-0 w-full bg-[var(--secondary-color)] md:pb-0 md:px-0 ${
+        location.pathname === "/" ||
+        location.pathname === `/users/${user?.user?.username}` ||
+        location.pathname === `users/${user?.user?.username}/update` ||
+        location.pathname.includes("/rent/") ||
+        location.pathname.includes("/valoraciones")
+          ? "static"
+          : "fixed bottom-0"
+      }`}
+    >
       {/*Apartado about, privacidad, condiciones de uso*/}
       <section className="py-5 flex flex-col-reverse gap-7 border-solid border-t-2">
         <nav className="flex items-center justify-start text-xs font-normal md:items-center md:justify-center">

@@ -209,7 +209,7 @@ export function UserPage() {
         </article>
         <Coments user={user} />
         <h2 className="text-3xl font-bold text-center pt-3 mt-3 pb-5 md:pt-0">
-          Mis Posts
+          Mis Alojamientos
         </h2>
         <section className="flex flex-col mb-3 w-full justify-center items-center md:w-10/12 lg:w-6/12">
           <ul className="flex flex-row flex-wrap basis-2 w-full justify-center items-center gap-3 max-w-screen-2xl md:flex-nowrap">

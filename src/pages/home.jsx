@@ -7,6 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Alert, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+
 export default function Home({
   filteredPosts,
   setIsOpen,

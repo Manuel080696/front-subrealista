@@ -8,7 +8,6 @@ export function Coments({ post, user }) {
   const [ratings, setRatings] = useState([]);
   const [tenant, setTenant] = useState();
   const { username } = useParams();
-  console.log(ratings);
   useEffect(() => {
     const fetchData = async () => {
       const ratingsData = await getTenantsRatings(

@@ -75,7 +75,7 @@ export function NewUserPage() {
 
   return (
     <Main>
-      <section className="flex flex-col h-screen w-full items-center justify-center">
+      <section className="flex flex-col h-[65vh] w-full items-center justify-center">
         <h1 className="text-4xl block self-center mb-5">Crea tu cuenta</h1>
         <RegistrationForm
           formData={formData}

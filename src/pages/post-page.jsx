@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getRentData } from "../services/get-rent-data";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserDataService } from "../services/get_user";
@@ -10,6 +10,7 @@ import { RentPrice } from "../components/rent-price";
 import { PaymentGateway } from "../components/payment-gateway";
 import { Alert, Stack } from "@mui/material";
 import { CostsMobile } from "../components/costs-mobile";
+import { CurrentUserContext } from "../context/auth-context";
 
 export function PostPage({ setSuccess, success }) {
   const [post, setPost] = useState();
@@ -24,6 +25,7 @@ export function PostPage({ setSuccess, success }) {
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
   const [active, setActive] = useState(false);
   const [error, setError] = useState();
+  const { user: userLogged } = useContext(CurrentUserContext);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -68,7 +70,11 @@ export function PostPage({ setSuccess, success }) {
 
   const handlePassToPayForm = () => {
     if (rooms !== 0 && dateValue.length !== 0) {
-      setPayActive(!payActive);
+      if (userLogged !== null) {
+        setPayActive(!payActive);
+      } else {
+        setError("Para poder hacer una reserva necesitas iniciar sesión");
+      }
     } else {
       setError("Selecciona al menos una fecha de ida y vuelta");
     }
