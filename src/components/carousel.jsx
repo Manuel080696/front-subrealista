@@ -61,21 +61,13 @@ export default function Carousel({ images, rent }) {
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => {
-      if (id !== undefined) {
-        return prevIndex === images.length - 1 ? 0 : prevIndex + 1;
-      } else {
-        return prevIndex === images.images.length - 1 ? 0 : prevIndex + 1;
-      }
+      return prevIndex === images.length - 1 ? 0 : prevIndex + 1;
     });
   };
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) => {
-      if (id !== undefined) {
-        return prevIndex === 0 ? images.length - 1 : prevIndex - 1;
-      } else {
-        return prevIndex === 0 ? images.images.length - 1 : prevIndex - 1;
-      }
+      return prevIndex === 0 ? images.length - 1 : prevIndex - 1;
     });
   };
 
@@ -96,54 +88,30 @@ export default function Carousel({ images, rent }) {
         className="carousel-inner z-0"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
-        {id !== undefined && images
-          ? images?.map((image, index) => (
-              <li
-                className="carousel-item"
-                key={index}
-                onClick={() => {
-                  if (id === undefined) navigate(`/rent/${rent.rent_id}`);
-                }}
-              >
-                <img
-                  className="carousel-img-mobile"
-                  src={image?.rent_image}
-                  alt={`Slide ${index + 1}`}
-                />
-              </li>
-            ))
-          : images?.images?.map((image, index) => (
-              <li
-                className="carousel-item"
-                key={index}
-                onClick={() => {
-                  if (id === undefined) navigate(`/rent/${rent.rent_id}`);
-                }}
-              >
-                <img
-                  className="carousel-img"
-                  src={image?.rent_image}
-                  alt={`Slide ${index + 1}`}
-                />
-              </li>
-            ))}
+        {images?.map((image, index) => (
+          <li
+            className="carousel-item"
+            key={index}
+            onClick={() => {
+              if (id === undefined) navigate(`/rent/${rent.rent_id}`);
+            }}
+          >
+            <img
+              className="carousel-img"
+              src={image?.rent_image}
+              alt={`Slide ${index + 1}`}
+            />
+          </li>
+        ))}
       </ul>
       <aside className="carousel-dots bottom-2">
-        {id !== undefined && images
-          ? images?.map((_, index) => (
-              <span
-                key={index}
-                className={`dot ${index === currentIndex ? "active-dot" : ""}`}
-                onClick={() => goToSlide(index)}
-              />
-            ))
-          : images?.images?.map((_, index) => (
-              <span
-                key={index}
-                className={`dot ${index === currentIndex ? "active-dot" : ""}`}
-                onClick={() => goToSlide(index)}
-              />
-            ))}
+        {images?.map((_, index) => (
+          <span
+            key={index}
+            className={`dot ${index === currentIndex ? "active-dot" : ""}`}
+            onClick={() => goToSlide(index)}
+          />
+        ))}
       </aside>
       <span className="z-10 carousel-btn prev-btn " onClick={prevSlide}>
         &#10094;

@@ -8,14 +8,20 @@ import { CurrentUserContext } from "../context/auth-context";
 
 export function Footer() {
   const location = useLocation();
-  const user = useContext(CurrentUserContext);
+
+  const getUsernameFromPathname = () => {
+    const parts = location.pathname.split("/");
+    return parts[parts.length - 1];
+  };
+
+  const username = getUsernameFromPathname();
 
   return (
     <footer
       className={`px-5 static bottom-0 pb-16 z-0 w-full bg-[var(--secondary-color)] md:pb-0 md:px-0 ${
         location.pathname === "/" ||
-        location.pathname === `/users/${user?.user?.username}` ||
-        location.pathname === `users/${user?.user?.username}/update` ||
+        location.pathname === `/users/${username}` ||
+        location.pathname === `users/${username}/update` ||
         location.pathname.includes("/rent/") ||
         location.pathname.includes("/valoraciones")
           ? "static"

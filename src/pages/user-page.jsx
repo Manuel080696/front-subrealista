@@ -8,7 +8,7 @@ import { getUserRents } from "../services/get-all-rents-by-username";
 import { CurrentUserContext } from "../context/auth-context";
 import Carousel from "../components/carousel";
 import { getAllImages } from "../services/get-all-images";
-import { getUserDataService } from "../services/get_user";
+import { getUserDataService } from "../services/get-user";
 import { useLogout } from "../hooks/use-logout";
 import { Coments } from "../components/coments";
 export function UserPage() {
@@ -54,10 +54,11 @@ export function UserPage() {
         // Obtener todas las imágenes para cada publicación de forma concurrente
         const promises = result.data.map(async (rent) => {
           const imagesResult = await getAllImages(rent?.rent_id);
+
           if (imagesResult?.status === "ok") {
             return {
               rentId: rent?.rent_id,
-              images: imagesResult?.data[1],
+              images: imagesResult?.data?.images,
             };
           }
           return null;
@@ -215,9 +216,11 @@ export function UserPage() {
           <ul className="flex flex-row flex-wrap basis-2 w-full justify-center items-center gap-3 max-w-screen-2xl md:flex-nowrap">
             {rents.length !== 0 ? (
               rents?.map((rent) => {
-                const rentImages = images.find(
-                  (item) => item.rentId === rent.rent_id
-                );
+                // Filtrar las imágenes correspondientes a la renta actual
+                const rentImages =
+                  images.find((item) => item.rentId === rent.rent_id)?.images ||
+                  [];
+
                 return (
                   <li
                     key={rent.rent_id}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./carouselValoraciones.css";
+import "./carousel-reservas.css";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 

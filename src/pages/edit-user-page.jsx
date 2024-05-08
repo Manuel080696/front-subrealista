@@ -4,10 +4,9 @@ import { Main } from "../components/main";
 import { Link } from "react-router-dom";
 import { UserEditForm } from "../forms/user-edit-form";
 import { validateField, modifyUserSchema } from "../utils/joi-validation";
-import { updateUser } from "../services/update_user";
-import { useLogout } from "../hooks/use-logout";
+import { updateUser } from "../services/update-user";
 import { Alert, Stack } from "@mui/material";
-import { getUserDataService } from "../services/get_user";
+import { getUserDataService } from "../services/get-user";
 
 export function EditUserPage() {
   const navigate = useNavigate();
@@ -16,7 +15,6 @@ export function EditUserPage() {
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(""); // Asume que estás usando react-router-dom
-  const logout = useLogout();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -76,8 +74,7 @@ export function EditUserPage() {
     } catch (error) {
       setError("Error al actualizar el usuario");
     } finally {
-      logout();
-      navigate("/");
+      navigate(`/users/${username}`);
     }
   };
 
@@ -115,8 +112,11 @@ export function EditUserPage() {
         )}
         <p className="flex justify-center gap-2 mt-4">
           ¿Necesitas volver?
-          <Link to="/" style={{ color: "var(--quaternary-color)" }}>
-            Volver al inicio
+          <Link
+            to={`/users/${username}`}
+            style={{ color: "var(--quaternary-color)" }}
+          >
+            Volver al perfil
           </Link>
         </p>
       </section>

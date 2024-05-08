@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./carouselValoraciones.css";
+import "./carousel-valoraciones.css";
 import dayjs from "dayjs";
 import { Rating } from "@mui/material";
 import { createPortal } from "react-dom";

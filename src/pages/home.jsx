@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import HouseCard from "../components/house-card";
 import { Main } from "../components/main";
 import { fetchPosts } from "../hooks/fetch-posts";
-import { fetchImages } from "../hooks/fetch-images";
 import SearchIcon from "@mui/icons-material/Search";
 import { Alert, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -16,7 +15,6 @@ export default function Home({
   setSuccess,
 }) {
   const [posts, setPosts] = useState([]);
-  const [images, setImages] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,15 +27,7 @@ export default function Home({
         const uniquePostsData = postsData.filter((post) =>
           uniqueRentIds.has(post.rent_id)
         );
-
         setPosts(uniquePostsData);
-
-        if (uniquePostsData.length > 0) {
-          const imagesData = await fetchImages(uniquePostsData);
-          if (imagesData.length !== 0) {
-            setImages(imagesData);
-          }
-        }
       }
     };
 
@@ -64,14 +54,17 @@ export default function Home({
         </aside>
       </section>
       <section className="grid grid-cols-1 gap-5 md:grid-cols-3 xl:grid-cols-5 mt-24 md:mt-0 md:min-h-screen">
-        {images &&
-          posts?.map((rent, index) => {
-            const rentImages = images[index];
+        {posts?.map((rent, index) => {
+          const rentCover = { rent_image: rent.rent_cover };
+          const rentImages = rent.images.map((image) => ({
+            rent_image: image.rent_image,
+          }));
+          const allImages = [rentCover, ...rentImages];
 
-            return (
-              <HouseCard key={rent.rent_id} rent={rent} images={rentImages} />
-            );
-          })}
+          return (
+            <HouseCard key={rent.rent_id} rent={rent} images={allImages} />
+          );
+        })}
       </section>
       {success && success?.length !== 0 ? (
         <Stack

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { getCurrentUserFromLocalStorage } from "../utils/get-current-user";
-import { getUserDataService } from "../services/get_user";
+import { getUserDataService } from "../services/get-user";
 
 export const CurrentUserContext = createContext(null);
 export const CurrentUserUpdateContext = createContext(() => {});

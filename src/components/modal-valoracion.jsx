@@ -1,7 +1,7 @@
 import { Rating } from "@mui/material";
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { postRating } from "../services/post_rating";
+import { postRating } from "../services/post-rating";
 
 export function ModalValoracion({
   rent,

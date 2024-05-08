@@ -16,7 +16,6 @@ export const UserEditForm = ({
           autoComplete="username"
           value={formData.username}
           onChange={handleInputChange}
-          required
           error={!!validationErrors.username}
           helperText={validationErrors.username}
         />
@@ -27,7 +26,6 @@ export const UserEditForm = ({
           autoComplete="email"
           value={formData.email}
           onChange={handleInputChange}
-          required
           error={!!validationErrors.email}
           helperText={validationErrors.email}
         />
@@ -37,7 +35,6 @@ export const UserEditForm = ({
           autoComplete="address"
           value={formData.address}
           onChange={handleInputChange}
-          required
         />
 
         <TextField
@@ -46,7 +43,6 @@ export const UserEditForm = ({
           autoComplete="bio"
           value={formData.bio}
           onChange={handleInputChange}
-          required
           className="w-10/12 pl-3"
         />
         <Button type="submit" variant="contained" color="primary">

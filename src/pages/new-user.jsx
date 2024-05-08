@@ -6,7 +6,7 @@ import { RegistrationForm } from "../forms/registration-form";
 import { registerUser } from "../services/register_user";
 import { Alert, Stack } from "@mui/material";
 
-export function NewUserPage() {
+export function NewUserPage({ setEmail }) {
   const navigate = useNavigate();
 
   const [error, setError] = useState("");
@@ -16,6 +16,7 @@ export function NewUserPage() {
     username: "",
     password: "",
   });
+  const [secondPassword, setSecondPassword] = useState("");
 
   const [validationErrors, setValidationErrors] = useState({});
 
@@ -37,6 +38,8 @@ export function NewUserPage() {
       ...formData,
       [name]: value,
     });
+
+    setEmail(name === "email" ? value : formData.email);
 
     const validationError = validateField(name, value, newUserSchema);
     setValidationErrors({
@@ -61,15 +64,20 @@ export function NewUserPage() {
       console.error("Error de validación:", errors.details);
       return;
     }
+    console.log(formData.password, secondPassword);
+    if (formData?.password === secondPassword) {
+      const registrationSuccessful = await registerUser(
+        formData.email,
+        formData.username,
+        formData.password,
+        secondPassword
+      );
 
-    const registrationSuccessful = await registerUser(
-      formData.email,
-      formData.username,
-      formData.password,
-      setError
-    );
-    if (registrationSuccessful) {
-      navigate("/validate");
+      if (registrationSuccessful) {
+        navigate("/validate");
+      }
+    } else {
+      setError("Las contraseñas no coinciden");
     }
   };
 
@@ -82,6 +90,7 @@ export function NewUserPage() {
           handleInputChange={handleInputChange}
           validationErrors={validationErrors}
           handleSubmit={handleSubmit}
+          setSecondPassword={setSecondPassword}
         />
         {error ? (
           <Stack

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { getRentData } from "../services/get-rent-data";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserDataService } from "../services/get_user";
+import { getUserDataService } from "../services/get-user";
 import dayjs from "dayjs";
 import { PcGallery } from "../components/pc-gallery";
 import { MobileGallery } from "../components/mobile-gallery";
@@ -49,11 +49,11 @@ export function PostPage({ setSuccess, success }) {
   useEffect(() => {
     const fetchData = async () => {
       const postData = await getRentData(id);
-      setPost(postData.data[0]);
-      setImages(postData.data[1]);
-      setServices(postData.data[2]);
-      if (postData && postData.data[3]) {
-        const dateRange = postData.data[3].map((date) => {
+      setPost(postData?.data?.result);
+      setImages(postData?.data?.images);
+      setServices(postData?.data?.services);
+      if (postData && postData?.data?.rentals) {
+        const dateRange = postData?.data?.rentals.map((date) => {
           const dateStart = formatDate(date.rental_start);
           const dateEnd = formatDate(date.rental_end);
           return { dateStart, dateEnd };

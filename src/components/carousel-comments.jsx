@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./carouselComments.css";
+import "./carousel-comments.css";
 import { Rating } from "@mui/material";
 import { useParams } from "react-router-dom";
 

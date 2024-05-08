@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { getMyRentals } from "../services/get_user_rentals";
+import { getMyRentals } from "../services/get-user-rentals";
 import { getRentData } from "../services/get-rent-data";
 import { Main } from "../components/main";
 import { CurrentUserContext } from "../context/auth-context";
-import CarouselValoraciones from "../components/carouselValoraciones";
-import { getTenantsRatings } from "../services/get_tenants_ratings";
-import CarouselReservas from "../components/carouselReservas";
+import CarouselValoraciones from "../components/carousel-valoraciones";
+import { getTenantsRatings } from "../services/get-tenants-ratings";
+import CarouselReservas from "../components/carousel-reservas";
 
 export function Valoraciones() {
   const [rentals, setRentals] = useState();
@@ -26,13 +26,14 @@ export function Valoraciones() {
     const fetchRatings = async () => {
       if (userData) {
         const ratingsData = await getTenantsRatings(userData.username);
-        console.log(ratingsData);
+
         if (ratingsData?.status === "ok") {
           setRatings(ratingsData.data);
         } else {
-          setError({
-            errorVal: ratingsData.message,
-          });
+          setError((prevErrors) => ({
+            ...prevErrors,
+            errorVal: ratingsData?.message,
+          }));
         }
       }
     };
@@ -42,12 +43,14 @@ export function Valoraciones() {
     const fetchRentals = async () => {
       if (!rentals) {
         const rentalsData = await getMyRentals();
-        if (rentalsData) {
+
+        if (rentalsData?.status === "ok") {
           setRentals(rentalsData.data);
         } else {
-          setError({
-            errorRes: "Este usuario todavía no ha hecho ningúna reserva",
-          });
+          setError((prevErrors) => ({
+            ...prevErrors,
+            errorRes: rentalsData?.message,
+          }));
         }
       }
     };
@@ -73,11 +76,7 @@ export function Valoraciones() {
 
       fetchPostDataForRentals();
     }
-  }, [rentals, posts?.length, ratings?.length]);
-
-  /*   if (rentals) console.log(rentals);
-  if (posts) console.log(posts);
-  if (images) console.log(images); */
+  }, [rentals, userData]);
 
   return (
     <Main>

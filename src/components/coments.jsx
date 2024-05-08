@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getTenantsRatings } from "../services/get_tenants_ratings";
-import CarouselComents from "./carouselComments";
+import { getTenantsRatings } from "../services/get-tenants-ratings";
+import CarouselComents from "./carousel-comments";
 import { useParams } from "react-router-dom";
-import { getUserDataService } from "../services/get_user";
+import { getUserDataService } from "../services/get-user";
 
 export function Coments({ post, user }) {
   const [ratings, setRatings] = useState([]);

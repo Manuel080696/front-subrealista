@@ -5,6 +5,7 @@ export const RegistrationForm = ({
   validationErrors,
   handleInputChange,
   handleSubmit,
+  setSecondPassword,
 }) => (
   <section className="flex justify-center w-full md:w-9/12 xl:w-7/12">
     <span className="w-full md:w-9/12 xl:w-7/12 bg-white rounded-lg shadow-md p-5">
@@ -37,6 +38,16 @@ export const RegistrationForm = ({
           autoComplete="new-password"
           value={formData.password}
           onChange={handleInputChange}
+          required
+          error={!!validationErrors.password}
+          helperText={validationErrors.password}
+        />
+        <TextField
+          label="Repite la contraseña"
+          type="password"
+          name="repeatPassword"
+          autoComplete="new-password"
+          onChange={(e) => setSecondPassword(e.target.value)}
           required
           error={!!validationErrors.password}
           helperText={validationErrors.password}
