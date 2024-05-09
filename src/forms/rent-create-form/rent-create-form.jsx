@@ -500,7 +500,13 @@ const RentCreateForm = () => {
                   control={
                     <Checkbox
                       checked={stepData.services.elevator}
-                      onChange={handleServiceCheckboxChange}
+                      onChange={(event) =>
+                        handleServiceCheckboxChange(
+                          event,
+                          setStepData,
+                          stepData
+                        )
+                      }
                       name='elevator'
                       icon={
                         <ElevatorOutlinedIcon style={{ color: '#002222' }} />
@@ -513,7 +519,13 @@ const RentCreateForm = () => {
                   control={
                     <Checkbox
                       checked={stepData.services.near_beach}
-                      onChange={handleServiceCheckboxChange}
+                      onChange={(event) =>
+                        handleServiceCheckboxChange(
+                          event,
+                          setStepData,
+                          stepData
+                        )
+                      }
                       name='near_beach'
                       icon={
                         <BeachAccessOutlinedIcon style={{ color: '#002222' }} />
@@ -526,7 +538,13 @@ const RentCreateForm = () => {
                   control={
                     <Checkbox
                       checked={stepData.services.near_mountain}
-                      onChange={handleServiceCheckboxChange}
+                      onChange={(event) =>
+                        handleServiceCheckboxChange(
+                          event,
+                          setStepData,
+                          stepData
+                        )
+                      }
                       name='near_mountain'
                       icon={
                         <TerrainOutlinedIcon style={{ color: '#002222' }} />
@@ -539,7 +557,13 @@ const RentCreateForm = () => {
                   control={
                     <Checkbox
                       checked={stepData.services.hairdryer}
-                      onChange={handleServiceCheckboxChange}
+                      onChange={(event) =>
+                        handleServiceCheckboxChange(
+                          event,
+                          setStepData,
+                          stepData
+                        )
+                      }
                       name='hairdryer'
                       icon={<AirOutlinedIcon style={{ color: '#002222' }} />}
                     />
@@ -550,7 +574,13 @@ const RentCreateForm = () => {
                   control={
                     <Checkbox
                       checked={stepData.services.washing_machine}
-                      onChange={handleServiceCheckboxChange}
+                      onChange={(event) =>
+                        handleServiceCheckboxChange(
+                          event,
+                          setStepData,
+                          stepData
+                        )
+                      }
                       name='washing_machine'
                       icon={
                         <LocalLaundryServiceOutlinedIcon
@@ -565,7 +595,13 @@ const RentCreateForm = () => {
                   control={
                     <Checkbox
                       checked={stepData.services.ac}
-                      onChange={handleServiceCheckboxChange}
+                      onChange={(event) =>
+                        handleServiceCheckboxChange(
+                          event,
+                          setStepData,
+                          stepData
+                        )
+                      }
                       name='ac'
                       icon={<AcUnitOutlinedIcon style={{ color: '#002222' }} />}
                     />
@@ -576,7 +612,13 @@ const RentCreateForm = () => {
                   control={
                     <Checkbox
                       checked={stepData.services.smoke_detector}
-                      onChange={handleServiceCheckboxChange}
+                      onChange={(event) =>
+                        handleServiceCheckboxChange(
+                          event,
+                          setStepData,
+                          stepData
+                        )
+                      }
                       name='smoke_detector'
                       icon={
                         <SurroundSoundOutlinedIcon
@@ -591,7 +633,13 @@ const RentCreateForm = () => {
                   control={
                     <Checkbox
                       checked={stepData.services.first_kit_aid}
-                      onChange={handleServiceCheckboxChange}
+                      onChange={(event) =>
+                        handleServiceCheckboxChange(
+                          event,
+                          setStepData,
+                          stepData
+                        )
+                      }
                       name='first_kit_aid'
                       icon={
                         <MedicalServicesOutlinedIcon
@@ -606,7 +654,13 @@ const RentCreateForm = () => {
                   control={
                     <Checkbox
                       checked={stepData.services.wifi}
-                      onChange={handleServiceCheckboxChange}
+                      onChange={(event) =>
+                        handleServiceCheckboxChange(
+                          event,
+                          setStepData,
+                          stepData
+                        )
+                      }
                       name='wifi'
                       icon={<WifiOutlinedIcon style={{ color: '#002222' }} />}
                     />
@@ -617,7 +671,13 @@ const RentCreateForm = () => {
                   control={
                     <Checkbox
                       checked={stepData.services.refrigerator}
-                      onChange={handleServiceCheckboxChange}
+                      onChange={(event) =>
+                        handleServiceCheckboxChange(
+                          event,
+                          setStepData,
+                          stepData
+                        )
+                      }
                       name='refrigerator'
                       icon={
                         <KitchenOutlinedIcon style={{ color: '#002222' }} />
@@ -630,7 +690,13 @@ const RentCreateForm = () => {
                   control={
                     <Checkbox
                       checked={stepData.services.freezer}
-                      onChange={handleServiceCheckboxChange}
+                      onChange={(event) =>
+                        handleServiceCheckboxChange(
+                          event,
+                          setStepData,
+                          stepData
+                        )
+                      }
                       name='freezer'
                       icon={
                         <KitchenOutlinedIcon style={{ color: '#002222' }} />
@@ -643,7 +709,13 @@ const RentCreateForm = () => {
                   control={
                     <Checkbox
                       checked={stepData.services.toaster}
-                      onChange={handleServiceCheckboxChange}
+                      onChange={(event) =>
+                        handleServiceCheckboxChange(
+                          event,
+                          setStepData,
+                          stepData
+                        )
+                      }
                       name='toaster'
                       icon={
                         <BreakfastDiningOutlinedIcon
@@ -658,7 +730,13 @@ const RentCreateForm = () => {
                   control={
                     <Checkbox
                       checked={stepData.services.fully_equipped}
-                      onChange={handleServiceCheckboxChange}
+                      onChange={(event) =>
+                        handleServiceCheckboxChange(
+                          event,
+                          setStepData,
+                          stepData
+                        )
+                      }
                       name='fully_equipped'
                       icon={
                         <BreakfastDiningOutlinedIcon
