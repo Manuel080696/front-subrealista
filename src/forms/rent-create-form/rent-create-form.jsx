@@ -52,6 +52,8 @@ import { House, Apartment, Home, Cottage } from '@mui/icons-material';
 import { postRent } from '../../services/post-rent';
 //import { addRentService } from '../../services/rent-create';
 import { useNavigate } from 'react-router-dom';
+import { handleClearFields } from './../../utils/handle-clear-fields-formcreate';
+import { handleServiceCheckboxChange } from './../../utils/handle-services-checkbox-formcreate';
 
 const RentCreateForm = () => {
   const navigate = useNavigate();
@@ -99,19 +101,6 @@ const RentCreateForm = () => {
     totalPrice: '',
   });
 
-  //cambio de la imagenes
-  const handleServiceCheckboxChange = (event) => {
-    const { name, checked } = event.target;
-    setStepData((prevStepData) => ({
-      ...prevStepData,
-      services: {
-        ...prevStepData.services,
-        [name]: checked,
-      },
-    }));
-    console.log('Nuevo estado de stepData:', stepData);
-  };
-
   // Función para manejar el cambio de imagen
 
   const handleImageChange = (e) => {
@@ -134,53 +123,7 @@ const RentCreateForm = () => {
     const total = basePriceFloat + commissionFloat;
     setStepData({ ...stepData, totalPrice: total.toFixed(2) });
   };
-  // const validateImages = () => {
-  //   if (images.length < 5) {
-  //     alert('Debe seleccionar al menos 5 imágenes');
-  //     return false;
-  //   }
-  //   return true;
-  // };
 
-  const handleClearFields = (e) => {
-    e.preventDefault();
-    setStepData({
-      rent_type: '',
-      rent_location: '',
-      rent_address: {
-        street: '',
-        city: '',
-        state: '',
-        postalCode: '',
-      },
-
-      rent_rooms: 0,
-
-      // Crear un objeto services para almacenar los servicios seleccionados
-      services: {
-        elevator: stepData.elevator,
-        near_beach: stepData.near_beach,
-        near_mountain: stepData.near_mountain,
-        hairdryer: stepData.hairdryer,
-        washing_machine: stepData.washing_machine,
-        ac: stepData.ac,
-        smoke_detector: stepData.smoke_detector,
-        first_kit_aid: stepData.first_kit_aid,
-        wifi: stepData.wifi,
-        refrigerator: stepData.refrigerator,
-        freezer: stepData.freezer,
-        toaster: stepData.toaster,
-        fully_equipped: stepData.fully_equipped,
-      },
-
-      title: '',
-      description: '',
-      basePrice: '',
-      commission: '',
-      totalPrice: '',
-    });
-    setImages([]);
-  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     // Verificar si el valor es un número entre 0 y 20
@@ -195,10 +138,6 @@ const RentCreateForm = () => {
   // Función para manejar el envío del formulario
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    // Aquí tendría que realizar la lógica para enviar los datos al backend
-    // Por ejemplo, tendría que crear un objeto formData y enviarlo mediante una función
-    // const formData = new FormData();
 
     // Llenar formData con los datos del formulario
     try {
