@@ -80,7 +80,7 @@ export default function CarouselValoraciones({
       if (isMobileView) {
         return prevIndex === 0 ? posts.length - 1 : prevIndex - 1;
       } else {
-        const newIndex = prevIndex - 1; // Retroceder solo un elemento
+        const newIndex = prevIndex - 1;
         return newIndex < 0 ? posts.length - 1 : newIndex;
       }
     });

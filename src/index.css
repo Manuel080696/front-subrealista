@@ -20,6 +20,12 @@
   padding: 0;
 }
 
+body {
+  width: 100%;
+  max-height: 100vh;
+  min-height: 100vh;
+}
+
 #root {
   width: 100%;
   max-height: 100vh;

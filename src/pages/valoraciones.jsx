@@ -85,7 +85,7 @@ export function Valoraciones() {
           <aside className="flex flex-col w-full items-center justify-center">
             <h2 className="font-semibold text-2xl pb-2">Reservas</h2>
             {posts?.length !== 0 ? (
-              <section className="flex flex-col w-full bg-[--tertiary-color] items-center justify-center  rounded-xl md:flex-row">
+              <section className="flex flex-col w-full bg-[--tertiary-color] items-center justify-center rounded-xl md:flex-row">
                 <CarouselReservas
                   images={images}
                   posts={posts}

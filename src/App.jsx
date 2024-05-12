@@ -7,11 +7,11 @@ import { NotFound } from "./pages/not-found";
 import { LoginUserPage } from "./pages/login-page";
 import { UserPage } from "./pages/user-page";
 import { useState } from "react";
-import RentCreateForm from "./forms/rent-create-form/rent-create-form";
 import { PostPage } from "./pages/post-page";
 import { Valoraciones } from "./pages/valoraciones";
 import { EditUserPage } from "./pages/edit-user-page";
 import { Validate } from "./pages/validate";
+import { CreateRentForm } from "./forms/create-rent-form";
 
 function App() {
   const [filteredPosts, setFilteredPosts] = useState([]);
@@ -48,7 +48,7 @@ function App() {
           path="/register"
           element={<NewUserPage email={email} setEmail={setEmail} />}
         />
-        <Route path="/rent-create" element={<RentCreateForm />} />
+        <Route path="/rent-create" element={<CreateRentForm />} />
         <Route path="/login" element={<LoginUserPage />} />
         <Route
           path="/validate"
