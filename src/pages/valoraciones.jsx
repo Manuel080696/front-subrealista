@@ -57,21 +57,18 @@ export function Valoraciones() {
 
     fetchRentals();
 
-    if (rentals && rentals.length !== 0 && posts.length === 0) {
+    if (rentals && rentals?.length !== 0 && posts?.length === 0) {
       const fetchPostDataForRentals = async () => {
-        const allPosts = [];
-        const allImages = [];
-
         for (const rental of rentals) {
           const postData = await getRentData(rental.rental_rent_id);
-          if (postData) {
-            allPosts.push(postData.data[0]);
-            allImages.push(postData.data[1]);
+
+          if (postData.status === "ok") {
+            setPosts(postData?.data?.rentals);
+            setImages(postData?.data?.images);
+          } else {
+            setError("Error en la carga de posts");
           }
         }
-
-        setPosts(allPosts);
-        setImages(allImages);
       };
 
       fetchPostDataForRentals();
@@ -80,7 +77,7 @@ export function Valoraciones() {
 
   return (
     <Main>
-      <section className="flex flex-col relative w-screen h-screen overflow-scroll md:max-w-[75rem] md:overflow-hidden">
+      <section className="flex flex-col w-screen h-max overflow-scroll md:max-w-[75rem] md:overflow-hidden">
         <section className="flex flex-col w-full items-center justify-center px-8 gap-12 bg-white md:max-w-[75rem] h-full">
           <aside className="flex flex-col w-full items-center justify-center">
             <h2 className="font-semibold text-2xl pb-2">Reservas</h2>

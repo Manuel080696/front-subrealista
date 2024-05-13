@@ -71,10 +71,6 @@ export const CreateRentForm = () => {
     setActiveStep((prevStep) => prevStep - 1);
   };
 
-  console.log(!stepData?.rent_address.includes("España"));
-
-  console.log(stepData);
-
   const handleNext = () => {
     if (activeStep === 0 && !stepData?.rent_type)
       return setError("Elige un tipo de vivienda");

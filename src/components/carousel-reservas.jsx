@@ -8,7 +8,6 @@ export default function CarouselReservas({ images, posts, rentals }) {
   const [dragStartX, setDragStartX] = useState(null);
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
   const navigate = useNavigate();
-
   const currentDate = dayjs().toISOString();
 
   function formatDate(date) {
@@ -88,15 +87,15 @@ export default function CarouselReservas({ images, posts, rentals }) {
   const groupIndexes = Array.from({ length: numGroups }, (_, i) => i);
 
   return isMobileView ? (
-    <section className="w-full max-w-full">
+    <section className="w-full max-w-full relative">
       <section
-        className="carousel-valoraciones-container"
+        className="carousel-reservas-container"
         onTouchStart={(e) => handleDragStart(e)}
         onTouchMove={(e) => handleDragMove(e)}
         onTouchEnd={(e) => handleDragEnd(e)}
       >
         <ul
-          className="carousel-valoraciones-inner z-0"
+          className="carousel-reservas-inner z-0"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {posts &&
@@ -106,12 +105,12 @@ export default function CarouselReservas({ images, posts, rentals }) {
 
               return (
                 <li
-                  className="carousel-valoraciones-item flex flex-col justify-center items-center p-8"
+                  className="carousel-reservas-item flex flex-col justify-center items-center p-8"
                   key={index}
                 >
                   <aside className="flex flex-col">
                     <img
-                      src={rentImage[0].rent_image}
+                      src={rentImage?.rent_image}
                       alt={rent.rent_title}
                       onClick={() => navigate(`/rent/${rent?.rent_id}`)}
                       className={`rounded-3xl aspect-square object-cover ${
@@ -137,25 +136,25 @@ export default function CarouselReservas({ images, posts, rentals }) {
             })}
         </ul>
         <span
-          className="carousel-btn prev-valoraciones-btn z-10"
+          className="carousel-btn-res prev-res-btn z-10"
           onClick={prevSlide}
         >
           &#10094;
         </span>
         <span
-          className="carousel-btn next-valoraciones-btn z-10"
+          className="carousel-btn-res next-res-btn z-10"
           onClick={nextSlide}
         >
           &#10095;
         </span>
       </section>
-      <aside className="carousel-valoraciones-dots">
+      <aside className="carousel-reservas-dots absolute">
         {posts &&
           posts?.map((_, index) => (
             <span
               key={index}
-              className={`val-dot ${
-                index === currentIndex ? "active-dot" : ""
+              className={`res-dot ${
+                index === currentIndex ? "active-dot-res" : ""
               }`}
               onClick={() => goToSlide(index)}
             />
@@ -165,13 +164,13 @@ export default function CarouselReservas({ images, posts, rentals }) {
   ) : (
     <section className="w-full max-w-full">
       <section
-        className="carousel-comments-container overflow-hidden"
+        className="carousel-reservas-container overflow-hidden"
         onTouchStart={(e) => handleDragStart(e)}
         onTouchMove={(e) => handleDragMove(e)}
         onTouchEnd={(e) => handleDragEnd(e)}
       >
         <ul
-          className="carousel-comments-inner z-0 flex flex-row transition-transform w-full"
+          className="carousel-reservas-inner z-0 flex flex-row transition-transform w-full"
           style={{ transform: `translateX(-${currentIndex * 33.33}%)` }}
         >
           {groupIndexes?.map((groupIndex) => (
@@ -184,12 +183,12 @@ export default function CarouselReservas({ images, posts, rentals }) {
                     const rentImage = images[groupIndex * 3 + index];
                     return (
                       <section
-                        className="carousel-valoraciones-item flex flex-col max-w-[33%] justify-center items-center py-8"
+                        className="carousel-reservas-item flex flex-col max-w-[33%] justify-center items-center py-8"
                         key={index}
                       >
                         <aside className="flex flex-col">
                           <img
-                            src={rentImage[0].rent_image}
+                            src={rentImage?.rent_image}
                             alt={rent.rent_title}
                             onClick={() => navigate(`/rent/${rent.rent_id}`)}
                             className={`rounded-3xl aspect-square object-cover max-w-56 ${
@@ -227,13 +226,13 @@ export default function CarouselReservas({ images, posts, rentals }) {
         {groupIndexes.length > 1 && (
           <>
             <span
-              className="carousel-btn prev-valoraciones-btn z-10"
+              className="carousel-btn-res prev-res-btn z-10"
               onClick={prevSlide}
             >
               &#10094;
             </span>
             <span
-              className="carousel-btn next-valoraciones-btn z-10"
+              className="carousel-btn-res next-res-btn z-10"
               onClick={nextSlide}
             >
               &#10095;

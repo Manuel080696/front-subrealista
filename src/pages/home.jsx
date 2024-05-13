@@ -19,7 +19,7 @@ export default function Home({
   useEffect(() => {
     const fetchData = async () => {
       const postsData = await fetchPosts(filteredPosts);
-      console.log(postsData);
+
       if (postsData) {
         // Filtrar los rent_id únicos
         const uniqueRentIds = new Set(postsData.map((post) => post.rent_id));
@@ -38,7 +38,6 @@ export default function Home({
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down(768));
 
-  console.log(posts);
   return posts?.length !== 0 ? (
     <Main>
       <section

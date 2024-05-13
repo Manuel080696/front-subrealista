@@ -22,7 +22,7 @@
 /* Carousel puntos para desplazarse entre imagenes */
 .carousel-valoraciones-dots {
   position: absolute;
-  bottom: 10px;
+  bottom: 7rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -38,11 +38,11 @@
   cursor: pointer;
 }
 
-.active-dot {
+.active-dot-val {
   background-color: white; /* Estilo para el punto activo */
 }
 
-.carousel-btn {
+.carousel-btn-val {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -58,7 +58,7 @@
   z-index: 1;
 }
 
-.carousel-btn:hover {
+.carousel-btn-val:hover {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
@@ -74,7 +74,7 @@
 
 /* Ocultar flechas en dispositivos móviles */
 @media screen and (max-width: 768px) {
-  .carousel-btn {
+  .carousel-btn-val {
     display: none;
   }
 }

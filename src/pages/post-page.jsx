@@ -81,7 +81,7 @@ export function PostPage({ setSuccess, success }) {
   };
 
   useEffect(() => {
-    if (post) {
+    if (post && post.length !== 0) {
       const fetchUserData = async () => {
         const userData = await getUserDataService(post.rent_owner);
         setUser(userData);

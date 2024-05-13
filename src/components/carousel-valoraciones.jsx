@@ -17,8 +17,6 @@ export default function CarouselValoraciones({
   const [dragStartX, setDragStartX] = useState(null);
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
 
-  console.log(ratings);
-
   const currentDate = dayjs().toISOString();
 
   useEffect(() => {
@@ -107,7 +105,7 @@ export default function CarouselValoraciones({
   const groupIndexes = Array.from({ length: numGroups }, (_, i) => i);
 
   return isMobileView ? (
-    <section className="w-full max-w-full">
+    <section className="w-full max-w-full relative">
       <section
         className="carousel-valoraciones-container"
         onTouchStart={(e) => handleDragStart(e)}
@@ -121,11 +119,10 @@ export default function CarouselValoraciones({
           {posts &&
             images &&
             posts.map((rent, index) => {
-              console.log(rent);
               const rentImage = images[index];
               const rentRating = searchPostRatingId(rent);
               const ratingValue = parseInt(rentRating?.rating);
-              console.log(ratingValue);
+
               const ratingComments = rentRating?.comments;
 
               return isNaN(ratingValue) || ratingValue === undefined ? (
@@ -149,14 +146,16 @@ export default function CarouselValoraciones({
                   )}
                   <aside className="flex flex-col">
                     <span className="relative flex flex-col items-center justify-center">
-                      <button
-                        className="absolute bg-white px-8 py-4 rounded-xl shadow-xl text-xl font-semibold"
-                        onClick={() => setActiveRentId(rent?.rent_id)}
-                      >
-                        Vote
-                      </button>
+                      {rentals[index].rental_end <= currentDate && (
+                        <button
+                          className="absolute bg-white px-8 py-4 rounded-xl shadow-xl text-xl font-semibold z-50"
+                          onClick={() => setActiveRentId(rent?.rent_id)}
+                        >
+                          Vote
+                        </button>
+                      )}
                       <img
-                        src={rentImage[0]?.rent_image}
+                        src={rentImage?.rent_image}
                         alt={rent.rent_title}
                         className={`rounded-3xl aspect-square object-cover ${
                           rentals[index].rental_end <= currentDate
@@ -192,7 +191,7 @@ export default function CarouselValoraciones({
                         className={`rounded-3xl absolute top-0 bottom-0 right-0 left-0 z-10 aspect-square object-cover p-6`}
                       />
                       <img
-                        src={rentImage[0]?.rent_image}
+                        src={rentImage?.rent_image}
                         alt={rent.rent_title}
                         className={`rounded-3xl aspect-square object-cover ${
                           !isNaN(ratingValue) ? "filter grayscale" : ""
@@ -224,7 +223,7 @@ export default function CarouselValoraciones({
           &#10094;
         </span>
         <span
-          className="carousel-btn next-valoraciones-btn z-10"
+          className="carousel-btn-val next-valoraciones-btn z-10"
           onClick={nextSlide}
         >
           &#10095;
@@ -236,7 +235,7 @@ export default function CarouselValoraciones({
             <span
               key={index}
               className={`val-dot ${
-                index === currentIndex ? "active-dot" : ""
+                index === currentIndex ? "active-dot-val" : ""
               }`}
               onClick={() => goToSlide(index)}
             />
@@ -244,7 +243,7 @@ export default function CarouselValoraciones({
       </aside>
     </section>
   ) : (
-    <section className="w-full max-w-full">
+    <section className="w-full max-w-full relative">
       <section
         className="carousel-comments-container overflow-hidden"
         onTouchStart={(e) => handleDragStart(e)}
@@ -266,7 +265,7 @@ export default function CarouselValoraciones({
                     const rentRating = searchPostRatingId(rent);
                     const ratingValue = parseInt(rentRating?.rating);
                     const ratingComments = rentRating?.comments;
-                    console.log(ratingValue);
+
                     return isNaN(ratingValue) || ratingValue === undefined ? (
                       <section
                         className="carousel-valoraciones-item flex flex-col max-w-[33%] justify-center items-center py-8"
@@ -288,14 +287,17 @@ export default function CarouselValoraciones({
                         )}
                         <aside className="flex flex-col">
                           <span className="flex flex-col relative items-center justify-center">
-                            <button
-                              className="absolute bg-white px-4 py-2 rounded-xl shadow-xl"
-                              onClick={() => setActiveRentId(rent?.rent_id)}
-                            >
-                              Vote
-                            </button>
+                            {rentals[groupIndex * 3 + index].rental_end <=
+                              currentDate && (
+                              <button
+                                className="absolute bg-white px-4 py-2 rounded-xl shadow-xl z-50"
+                                onClick={() => setActiveRentId(rent?.rent_id)}
+                              >
+                                Vote
+                              </button>
+                            )}
                             <img
-                              src={rentImage[0].rent_image}
+                              src={rentImage?.rent_image}
                               alt={rent.rent_title}
                               className={`rounded-3xl aspect-square object-cover max-w-56 ${
                                 rentals[groupIndex * 3 + index].rental_end <=
@@ -332,7 +334,7 @@ export default function CarouselValoraciones({
                               className={`rounded-3xl absolute top-0 bottom-0 right-0 left-0 z-10 aspect-square object-cover p-6`}
                             />
                             <img
-                              src={rentImage[0].rent_image}
+                              src={rentImage?.rent_image}
                               alt={rent.rent_title}
                               className={`rounded-3xl aspect-square object-cover max-w-56 ${
                                 !isNaN(ratingValue) ? "filter grayscale" : ""

@@ -10,11 +10,13 @@ export function Coments({ post, user }) {
   const { username } = useParams();
   useEffect(() => {
     const fetchData = async () => {
-      const ratingsData = await getTenantsRatings(
-        post ? post.rent_owner : user.username
-      );
-      if (ratingsData !== undefined) {
-        setRatings(ratingsData.data);
+      if (user || post) {
+        const ratingsData = await getTenantsRatings(
+          post ? post.rent_owner : user.username
+        );
+        if (ratingsData !== undefined) {
+          setRatings(ratingsData.data);
+        }
       }
     };
     fetchData();
@@ -24,7 +26,7 @@ export function Coments({ post, user }) {
 
       if (ratings) {
         for (const rating of ratings) {
-          const tenantData = await getUserDataService(rating?.tenant_id);
+          const tenantData = await getUserDataService(rating?.tenant);
           if (tenantData) {
             allTenants.push(tenantData);
           }
@@ -34,9 +36,9 @@ export function Coments({ post, user }) {
     };
 
     fetchUserData();
-  }, []);
+  }, [user, post]);
 
-  return ratings !== undefined ? (
+  return ratings && ratings?.length !== 0 ? (
     <aside className="flex flex-col py-6 pb-8 gap-2 bg-[--tertiary-color] rounded-t-md w-full max-w-full">
       <h3
         className={`text-2xl font-bold mb-5 ${

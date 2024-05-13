@@ -81,7 +81,7 @@ export default function CarouselComents({ ratings, tenant }) {
   const numGroups = Math.ceil(ratings?.length / 2); // Calcular el número de grupos de tres elementos
   const groupIndexes = Array.from({ length: numGroups }, (_, i) => i);
 
-  return isMobileView ? (
+  return isMobileView && ratings?.length !== 0 ? (
     <section className="relative w-full max-w-full">
       <section
         className="carousel-comments-container"
@@ -116,7 +116,7 @@ export default function CarouselComents({ ratings, tenant }) {
                         className="rounded-full w-1/12"
                       />
                       <h3 className="font-semibold text-lg">
-                        {rating?.tenant_id}
+                        {rating?.tenant}
                       </h3>
                     </span>
                     <span className="flex flex-col items-center justify-center gap-2">
@@ -197,7 +197,7 @@ export default function CarouselComents({ ratings, tenant }) {
                           className="rounded-full w-2/12"
                         />
                         <h3 className="font-semibold text-lg">
-                          {rating?.tenant_id}
+                          {rating?.tenant}
                         </h3>
                       </span>
                       <span className="flex flex-col items-center">
