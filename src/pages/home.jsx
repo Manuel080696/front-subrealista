@@ -57,9 +57,10 @@ export default function Home({
       <section className="grid grid-cols-1 gap-5 md:grid-cols-3 xl:grid-cols-5 mt-24 md:mt-0 md:min-h-screen">
         {posts?.map((rent, index) => {
           const rentCover = { rent_image: rent.rent_cover };
-          const rentImages = rent.images.map((image) => ({
+          const rentImages = rent?.images?.map((image) => ({
             rent_image: image.rent_image,
           }));
+
           const allImages = [rentCover, ...rentImages];
 
           return (

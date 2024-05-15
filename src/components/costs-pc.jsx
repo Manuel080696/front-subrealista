@@ -10,10 +10,6 @@ export function CostsPc({ post, daysDiff }) {
         <p>{`${(post.rent_price * 24) / 100}€`}</p>
       </li>
       <li className="flex flex-row w-full justify-between py-1">
-        <p>Comisión de servicio Subrealista</p>
-        <p>{`${(post.rent_price * 28) / 100} €`}</p>
-      </li>
-      <li className="flex flex-row w-full justify-between py-1">
         <p>Impuestos</p>
         <p>{`${(post.rent_price * 21) / 100}€`}</p>
       </li>
@@ -22,7 +18,6 @@ export function CostsPc({ post, daysDiff }) {
         <p className="font-semibold">{`${
           post.rent_price * daysDiff +
           (post.rent_price * 24) / 100 +
-          (post.rent_price * 28) / 100 +
           (post.rent_price * 21) / 100
         }€`}</p>
       </li>

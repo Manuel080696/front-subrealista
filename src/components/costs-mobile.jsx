@@ -22,7 +22,6 @@ export function CostsMobile({
           <p className="font-semibold">{`${
             post.rent_price * daysDiff +
             (post.rent_price * 24) / 100 +
-            (post.rent_price * 28) / 100 +
             (post.rent_price * 21) / 100
           }€`}</p>
         </li>

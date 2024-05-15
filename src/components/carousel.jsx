@@ -75,7 +75,52 @@ export default function Carousel({ images, rent }) {
     setCurrentIndex(index);
   };
 
-  return (
+  return id ? (
+    <section
+      className="carousel-container"
+      onMouseMove={(e) => handleSetActiveClass(e)}
+      onMouseLeave={(e) => handleSetInactiveClass(e)}
+      onTouchStart={(e) => handleDragStart(e)}
+      onTouchMove={(e) => handleDragMove(e)}
+      onTouchEnd={(e) => handleDragEnd(e)}
+    >
+      <ul
+        className="carousel-inner z-0"
+        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+      >
+        {images?.map((image, index) => (
+          <li
+            className="carousel-item"
+            key={index}
+            onClick={() => {
+              if (id === undefined) navigate(`/rent/${rent.rent_id}`);
+            }}
+          >
+            <img
+              className="carousel-img-mobile"
+              src={image?.rent_image}
+              alt={`Slide ${index + 1}`}
+            />
+          </li>
+        ))}
+      </ul>
+      <aside className="carousel-dots bottom-2">
+        {images?.map((_, index) => (
+          <span
+            key={index}
+            className={`dot ${index === currentIndex ? "active-dot" : ""}`}
+            onClick={() => goToSlide(index)}
+          />
+        ))}
+      </aside>
+      <span className="z-10 carousel-btn prev-btn " onClick={prevSlide}>
+        &#10094;
+      </span>
+      <span className="z-10 carousel-btn next-btn" onClick={nextSlide}>
+        &#10095;
+      </span>
+    </section>
+  ) : (
     <section
       className="carousel-container"
       onMouseMove={(e) => handleSetActiveClass(e)}

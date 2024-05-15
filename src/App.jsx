@@ -6,12 +6,13 @@ import { NewUserPage } from "./pages/new-user";
 import { NotFound } from "./pages/not-found";
 import { LoginUserPage } from "./pages/login-page";
 import { UserPage } from "./pages/user-page";
-import { useState } from "react";
 import { PostPage } from "./pages/post-page";
-import { Valoraciones } from "./pages/valoraciones";
+import { Valoraciones } from "./pages/valorations";
 import { EditUserPage } from "./pages/edit-user-page";
 import { Validate } from "./pages/validate";
 import { CreateRentForm } from "./forms/create-rent-form";
+import { UsersReservations } from "./pages/user-reservations";
+import { useState } from "react";
 
 function App() {
   const [filteredPosts, setFilteredPosts] = useState([]);
@@ -62,7 +63,8 @@ function App() {
           path="/rent/:id"
           element={<PostPage setSuccess={setSuccess} success={success} />}
         />
-        <Route path="/valoraciones/" element={<Valoraciones />} />
+        <Route path="/valorations" element={<Valoraciones />} />
+        <Route path="/users-valorations" element={<UsersReservations />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

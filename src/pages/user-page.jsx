@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useCallback, useContext } from "react";
-import { Rating } from "@mui/material";
+import {
+  Divider,
+  ListItemText,
+  MenuItem,
+  MenuList,
+  Paper,
+  Rating,
+} from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -10,13 +17,16 @@ import Carousel from "../components/carousel";
 import { getAllImages } from "../services/get-all-images";
 import { getUserDataService } from "../services/get-user";
 import { useLogout } from "../hooks/use-logout";
-import { Coments } from "../components/coments";
+import { TenantsComents } from "../components/tenants-coments";
+import MenuIcon from "@mui/icons-material/Menu";
+import { OwnerComents } from "../components/owner-coments";
 export function UserPage() {
   const navigate = useNavigate();
   const { username } = useParams();
   const [rents, setRents] = useState([]);
   const [images, setImages] = useState([]);
   const [userToken, setUserToken] = useState();
+  const [showMenu, setShowMenu] = useState(false);
   const [user, setUser] = useState();
   const { userData } = useContext(CurrentUserContext);
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
@@ -85,42 +95,71 @@ export function UserPage() {
     }
   }, [userToken, user]);
 
+  const handleLogOut = () => {
+    logout();
+    navigate("/");
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showMenu && event.target.closest(".mobile-menu-container") === null) {
+        setShowMenu(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [showMenu, setShowMenu]);
+
   const logout = useLogout();
   return (
     <Main>
       <article className="flex w-full max-w-screen-2xl">
         <section className="flex flex-col w-full pb-10 md:flex-row border-b">
-          <span className="flex flex-row w-full justify-between items-start md:hidden">
+          <span className="flex flex-row w-full justify-between items-start mb-12 md:hidden">
             {userToken?.username !== user?.username ? null : (
-              <Link
-                to={`/`}
-                className="flex flex-col justify-center items-end mb-5 font-semibold underline"
-                onClick={() => logout()}
+              <button
+                onClick={() => setShowMenu(!showMenu)}
+                className={`flex flex-col absolute top-4 right-4 h-10 px-3 py-6 gap-2 border rounded-full justify-center items-center bg-white z-20 shadow-md mobile-menu-container`}
               >
-                Cerrar sesión
-              </Link>
-            )}
-            {userToken?.username !== user?.username ? null : (
-              <span className="flex flex-col">
-                <Link
-                  to={`/users/${userToken?.username}/update`}
-                  className="flex flex-col justify-center items-end mb-5 font-semibold underline"
-                >
-                  Editar perfil
-                </Link>
-                <Link
-                  to={`/rent-create`}
-                  className="flex flex-col justify-center items-end mb-5 font-semibold underline"
-                >
-                  Publica tu vivienda
-                </Link>
-                <Link
-                  to={`/valoraciones`}
-                  className="flex flex-col justify-center items-end mb-5 font-semibold underline"
-                >
-                  Reservas y valoraciones
-                </Link>
-              </span>
+                <MenuIcon sx={{ fontSize: "1.5rem", color: "dark-gray" }} />
+
+                {showMenu && (
+                  <Paper
+                    sx={{ width: "15rem", borderRadius: "20px" }}
+                    className="absolute top-14 right-10 z-0 drop-shadow-lg"
+                  >
+                    <MenuList dense>
+                      <MenuItem
+                        onClick={() =>
+                          navigate(`/users/${userToken?.username}/update`)
+                        }
+                      >
+                        <ListItemText>Editar perfil</ListItemText>
+                      </MenuItem>
+                      <MenuItem onClick={() => navigate("/valorations")}>
+                        <ListItemText>Tus Reservas y valoraciones</ListItemText>
+                      </MenuItem>
+
+                      <Divider />
+                      <MenuItem onClick={() => navigate("/users-valorations")}>
+                        <ListItemText>Alertas de reservas</ListItemText>
+                      </MenuItem>
+                      <MenuItem onClick={() => navigate("/rent-create")}>
+                        <ListItemText>Publica tu vivienda</ListItemText>
+                      </MenuItem>
+                      <MenuItem onClick={() => handleLogOut()}>
+                        <ListItemText>
+                          <strong>Cerrar sesión</strong>
+                        </ListItemText>
+                      </MenuItem>
+                    </MenuList>
+                  </Paper>
+                )}
+              </button>
             )}
           </span>
           <span
@@ -171,7 +210,7 @@ export function UserPage() {
                   Editar tu perfil
                 </button>
                 <button
-                  onClick={() => navigate(`/valoraciones`)}
+                  onClick={() => navigate(`/valorations`)}
                   className="hidden md:flex md:flex-col md:items-center md:text-xs md:mt-5 md:font-semibold md:justify-center md:w-full md:border md:border-black md:p-2 md:rounded-lg md:min-w-48 md:max-w-28 md:w-2/5"
                 >
                   Reservas y valoraciones
@@ -207,7 +246,6 @@ export function UserPage() {
           </section>
         </section>
       </article>
-      <Coments user={user} />
       <h2 className="text-3xl font-bold text-center pt-3 mt-3 pb-5 md:pt-0">
         Mis Alojamientos
       </h2>
@@ -238,6 +276,10 @@ export function UserPage() {
             </li>
           )}
         </ul>
+      </section>
+      <section className="flex flex-col w-full items-center justify-center mt-8">
+        <TenantsComents user={user} />
+        <OwnerComents user={user} />
       </section>
     </Main>
   );

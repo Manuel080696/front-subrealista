@@ -24,7 +24,7 @@ export function Fecha({
   useEffect(() => {
     const handleClickOutside = (event) => {
       // Verificar si el clic se produce fuera del componente Calendar
-      if (active && event.target.closest(".fecha-container") === null) {
+      if (!id && active && event.target.closest(".fecha-container") === null) {
         setActive(false); // Cambiar el estado active a false
       }
     };

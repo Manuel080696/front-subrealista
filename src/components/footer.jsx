@@ -3,8 +3,6 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LanguageIcon from "@mui/icons-material/Language";
-import { useContext } from "react";
-import { CurrentUserContext } from "../context/auth-context";
 
 export function Footer() {
   const location = useLocation();
@@ -22,8 +20,9 @@ export function Footer() {
         location.pathname === "/" ||
         location.pathname === `/users/${username}` ||
         location.pathname === `users/${username}/update` ||
+        location.pathname === "/users-valorations" ||
         location.pathname.includes("/rent/") ||
-        location.pathname.includes("/valoraciones")
+        location.pathname.includes("/valorations")
           ? "static"
           : "fixed bottom-0"
       }`}
