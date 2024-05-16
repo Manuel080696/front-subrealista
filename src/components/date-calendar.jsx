@@ -109,7 +109,7 @@ export function Fecha({
 
       <Calendar
         minDate={new Date()}
-        className="border-0 fecha-container"
+        className="fecha-container"
         selectRange={true}
         onChange={(value) => {
           setDateValue(value);
@@ -142,7 +142,6 @@ export function Fecha({
       </span>
       <Calendar
         minDate={new Date()}
-        className="border-0 w-full"
         selectRange={true}
         onChange={(value) => selectDateValue(value)}
         value={dateValue}

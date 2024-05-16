@@ -14,7 +14,7 @@ import { CreateRentForm } from "./forms/create-rent-form";
 import { UsersReservations } from "./pages/user-reservations";
 import { useState } from "react";
 
-function App() {
+export function App() {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [success, setSuccess] = useState();

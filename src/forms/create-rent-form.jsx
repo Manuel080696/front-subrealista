@@ -14,6 +14,10 @@ import { postRent } from "../services/post-rent";
 export const CreateRentForm = () => {
   const navigate = useNavigate();
 
+  const token = localStorage.getItem(
+    import.meta.env.VITE_APP_CURRENT_USER_STORAGE_ID
+  );
+
   const [activeStep, setActiveStep] = useState(0);
   const [error, setError] = useState("");
   const [stepData, setStepData] = useState({
@@ -48,17 +52,36 @@ export const CreateRentForm = () => {
 
     try {
       if (stepData && stepData?.rent_price !== 0) {
-        const rent_id = await postRent(stepData);
-        const rentId = JSON.parse(rent_id).rent_id[0].rent_id;
+        const formData = new FormData();
+        try {
+          formData.append("rent_title", stepData.rent_title);
+          formData.append("rent_description", stepData.rent_description);
+          formData.append("rent_type", stepData.rent_type);
+          formData.append("rent_address", stepData.rent_address);
+          formData.append("rent_rooms", stepData.rent_rooms);
+          formData.append("elevator", stepData.elevator);
+          formData.append("near_beach", stepData.near_beach);
+          formData.append("near_mountain", stepData.near_mountain);
+          formData.append("hairdryer", stepData.hairdryer);
+          formData.append("washing_machine", stepData.washing_machine);
+          formData.append("ac", stepData.ac);
+          formData.append("smoke_detector", stepData.smoke_detector);
+          formData.append("first_kit_aid", stepData.first_kit_aid);
+          formData.append("wifi", stepData.wifi);
+          formData.append("refrigerator", stepData.refrigerator);
+          formData.append("freezer", stepData.freezer);
+          formData.append("toaster", stepData.toaster);
+          formData.append("fully_equipped", stepData.fully_equipped);
+          formData.append("rent_price", stepData.rent_price);
 
-        await fetch(
-          `${import.meta.env.VITE_APP_BACKEND}` + `/rentings/images/${rentId}`,
-          {
-            method: "POST",
-            files: stepData?.images,
-          }
-        );
-        navigate("/");
+          stepData.images.forEach((image) => {
+            formData.append("images", image);
+          });
+        } finally {
+          console.log(stepData);
+          await postRent(formData, token);
+          navigate("/");
+        }
       } else {
         setError("Introduce un precio para tu vivienda");
       }

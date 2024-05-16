@@ -3,19 +3,26 @@ import { useRef, useState } from "react";
 export const RentImages = ({ setStepData, stepData }) => {
   const fileInputRef = useRef(null);
   const [selectedImages, setSelectedImages] = useState([]);
+  const [webImages, setWebImages] = useState([]);
 
   const submitImage = (e) => {
     e.preventDefault();
+
     if (e.target) {
       const files = e.target[0].files;
       if (files) {
+        console.log(files);
         const filesArray = Array.from(files);
 
         const newImages = filesArray.map((file) => URL.createObjectURL(file));
 
-        setSelectedImages([...selectedImages, ...newImages]);
+        setSelectedImages([...selectedImages, ...files]);
+        setWebImages([...webImages, ...newImages]);
 
-        setStepData({ ...stepData, images: [...selectedImages, ...newImages] });
+        setStepData({
+          ...stepData,
+          images: [...selectedImages, ...files],
+        });
       }
     }
   };
@@ -29,7 +36,7 @@ export const RentImages = ({ setStepData, stepData }) => {
       {/* codigo handle image previews,se asume que esta definida em handleAddFilePreview */}
       {stepData?.images?.length !== 0 && (
         <ul className="grid grid-cols-6 overflow-y-scroll gap-1">
-          {stepData?.images?.map((image, index) => (
+          {webImages?.map((image, index) => (
             <li key={index}>
               <img src={`${image}`} alt="rentImage" className="w-48" />
             </li>
