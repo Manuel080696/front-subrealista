@@ -11,7 +11,6 @@ export const RentImages = ({ setStepData, stepData }) => {
     if (e.target) {
       const files = e.target[0].files;
       if (files) {
-        console.log(files);
         const filesArray = Array.from(files);
 
         const newImages = filesArray.map((file) => URL.createObjectURL(file));

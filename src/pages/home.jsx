@@ -33,7 +33,7 @@ export default function Home({
     };
 
     fetchData();
-  }, [filteredPosts]);
+  }, [filteredPosts, posts?.length]);
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down(768));

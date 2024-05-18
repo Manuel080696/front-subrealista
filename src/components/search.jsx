@@ -93,7 +93,7 @@ export default function Search({ handleFilteredPosts }) {
             </Select>
           </FormControl>
         </label>
-        <label className="flex flex-col w-6/12 fecha-container bg-transparent font-medium text-sm py-4 px-5 rounded-md hover:bg-zinc-200 relative height-full">
+        <label className="flex flex-col w-8/12 fecha-container bg-transparent font-medium text-sm py-4 px-5 rounded-md hover:bg-zinc-200 relative height-full">
           Fecha
           <p
             className="w-full font-normal text-xs hover:bg-zinc-200 mt-[0.43rem]"

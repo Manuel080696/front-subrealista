@@ -10,7 +10,6 @@ export function ModalValoracion({
 }) {
   const [rate, setRate] = useState(0);
   const [comment, setComment] = useState("");
-  console.log(rent);
 
   const handleTouchStart = (e) => {
     const touchX = e.touches[0].clientX;

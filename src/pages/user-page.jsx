@@ -209,12 +209,6 @@ export function UserPage() {
                 >
                   Editar tu perfil
                 </button>
-                <button
-                  onClick={() => navigate(`/valorations`)}
-                  className="hidden md:flex md:flex-col md:items-center md:text-xs md:mt-5 md:font-semibold md:justify-center md:w-full md:border md:border-black md:p-2 md:rounded-lg md:min-w-48 md:max-w-28 md:w-2/5"
-                >
-                  Reservas y valoraciones
-                </button>
               </span>
             )}
             <ul className="flex flex-col mt-5 gap-5">

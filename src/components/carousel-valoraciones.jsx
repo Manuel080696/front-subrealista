@@ -319,13 +319,14 @@ export default function CarouselValoraciones({
                       className="carousel-valoraciones-item flex flex-col max-w-[33%] justify-center items-center py-8"
                       key={index}
                     >
-                      <aside className="flex flex-col">
-                        <span className="relative">
+                      <aside className="flex flex-col w-min">
+                        <span className="flex flex-col relative w-min">
                           <img
                             src="/val/alreadyVoted.png"
                             alt={rent.rent_title}
-                            className={`rounded-3xl absolute top-0 bottom-0 right-0 left-0 z-10 aspect-square object-cover p-6`}
+                            className={`rounded-3xl absolute top-0 bottom-0 right-0 left-0 z-10 aspect-square object-contain w-[100%]`}
                           />
+
                           <img
                             src={rent.rent_cover}
                             alt={rent.rent_title}
@@ -344,7 +345,7 @@ export default function CarouselValoraciones({
                             readOnly
                             className="-ml-1"
                           />
-                          <p className="mt-2">{ratingComments}</p>
+                          <p className="mt-2 text-sm">{ratingComments}</p>
                         </aside>
                       </aside>
                     </section>

@@ -11,9 +11,8 @@ export async function postRent(jsonData, token) {
   );
   const json = await response.json();
 
-  if (!response.ok) {
+  if (json?.status !== "ok") {
     throw new Error(json.message);
   }
-
-  return json.data[0];
+  return json;
 }

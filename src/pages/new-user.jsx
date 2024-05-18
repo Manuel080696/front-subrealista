@@ -64,7 +64,6 @@ export function NewUserPage({ setEmail }) {
       console.error("Error de validación:", errors.details);
       return;
     }
-    console.log(formData.password, secondPassword);
     if (formData?.password === secondPassword) {
       const registrationSuccessful = await registerUser(
         formData.email,

@@ -20,7 +20,6 @@ export function Footer() {
         location.pathname === "/" ||
         location.pathname === `/users/${username}` ||
         location.pathname === `users/${username}/update` ||
-        location.pathname === "/users-valorations" ||
         location.pathname.includes("/rent/") ||
         location.pathname.includes("/valorations")
           ? "static"

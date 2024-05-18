@@ -84,7 +84,7 @@ export function Fecha({
     <section
       className={`${
         active ? "flex" : "hidden"
-      } flex flex-col w-full bg-white gap-5 mt-5 md:top-24 md:-right-20 md:mt-0 md:absolute md:p-6 md:shadow-lg md:rounded-xl md:12 md:w-fit`}
+      } flex flex-col w-full bg-white gap-5 mt-5 md:top-24 md:-right-20 md:mt-0 md:absolute md:p-6 md:shadow-lg md:rounded-xl md:w-[30rem] md:w-fit`}
     >
       <span className="flex flex-row items-center justify-center p-2 gap-2 border rounded-full shadow-lg">
         {dateValue && dateValue[0] > 1 ? (
