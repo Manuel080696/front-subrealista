@@ -4,14 +4,16 @@ import { getUserDataService } from "../services/get-user";
 import { useNavigate } from "react-router-dom";
 import NewReleasesOutlinedIcon from "@mui/icons-material/NewReleasesOutlined";
 import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import "./user-reservations.css";
 import { manageRentals } from "../services/mange-rentals-status";
 import { getUsersRentals } from "../services/get-other-users-rentals";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import { deleteRental } from "../services/delete-rental-id";
 
 export const UsersReservations = () => {
   const [user, setUser] = useState([]);
   const [username, setUserName] = useState([]);
-  const [isHovered, setIsHovered] = useState(false);
   const [changuedStatus, setChanguedStatus] = useState(false);
   const [reservations, setReservations] = useState([]);
   const [pendingReservations, setPendingReservations] = useState();
@@ -46,9 +48,14 @@ export const UsersReservations = () => {
   useEffect(() => {
     const fetchUsersReservationsData = async () => {
       const data = await getUsersRentals();
-      console.log(data);
       if (data) {
-        setReservations(data.data);
+        const reservationsFilterDeleteds = data.data.filter(
+          (reservation) => reservation.rental_deleted === 0
+        );
+        if (reservationsFilterDeleteds) {
+          setReservations(reservationsFilterDeleteds);
+        }
+
         const pending = data.data.filter(
           (reservation) => reservation.rental_status === "Pendiente"
         );
@@ -93,23 +100,29 @@ export const UsersReservations = () => {
     }
   }, [username]);
 
+  const handleDeleteRental = async (reservation) => {
+    try {
+      const newReservetions = reservations.filter(
+        (reserve) => reserve.rental_id === reservation.rental_id
+      );
+      setReservations(newReservetions);
+      await deleteRental(reservation.rental_id);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return user && reservations?.length !== 0 ? (
-    <section className="flex flex-col w-full items-center my-8 justify-center md:min-h-[80vh] md:my-0">
-      <h2 className="text-center font-bold text-xl mt-8 md:text-2xl">
+    <section className="flex flex-col w-full items-center min-h-[65vh] md:my-8 md:min-h-[68vh] md:justify-center md:my-0">
+      <h2 className="text-center font-bold text-xl mt-8 mb-8 md:text-2xl md:fixed md:top-24">
         Reservas realizadas por los usuarios
       </h2>
-      <ul
-        className={`custom-scrollbar flex flex-col w-full items-center justify-center p-4 gap-4 overflow-y-scroll md:w-7/12 md:h-full md:min-w-[45rem] md:gap-8 md:mt-8 ${
-          isHovered ? "overflow-y-scroll" : ""
-        }`}
-        onMouseOver={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+      <ul className="custom-scrollbar flex flex-col w-full items-center justify-start p-4 gap-4 overflow-y-scroll overflow-x-hidden md:w-8/12 md:min-w-[45rem] md:gap-8 md:mt-8 md:max-h-[60vh] md:min-h-[60vh]">
         {reservations?.map((reservation, index) => {
           return (
             <li
               key={reservation.rental_id}
-              className="flex flex-col w-full h-full items-center bg-orange-50 py-4 px-4 justify-between md:flex-row md:items-start"
+              className="flex flex-col w-full relative h-full items-center bg-orange-50 py-4 px-4 justify-between md:w-[85%] md:flex-row md:items-start"
             >
               <aside className="flex flex-col w-full md:w-fit md:h-full">
                 <h3 className="text-lg font-bold mb-4 md:text-xl">{`${reservation.rent_title} - ${reservation.rent_location}`}</h3>
@@ -160,10 +173,14 @@ export const UsersReservations = () => {
                   >
                     <span className="flex flex-row gap-2 self-start">
                       <p>{reservation.rental_status}</p>
-                      {reservation.rental_status === "Pendiente" ? (
+                      {reservation.rental_status === "Pendiente" && (
                         <NewReleasesOutlinedIcon color="warning" />
-                      ) : (
+                      )}
+                      {reservation.rental_status === "Aceptado" && (
                         <CheckCircleOutlinedIcon color="success" />
+                      )}
+                      {reservation.rental_status === "Rechazado" && (
+                        <CancelOutlinedIcon color="error" />
                       )}
                     </span>
                     <span
@@ -186,10 +203,14 @@ export const UsersReservations = () => {
                       }`}
                     >
                       <p>{reservation.rental_status}</p>
-                      {reservation.rental_status === "Pendiente" ? (
+                      {reservation.rental_status === "Pendiente" && (
                         <NewReleasesOutlinedIcon color="warning" />
-                      ) : (
+                      )}
+                      {reservation.rental_status === "Aceptado" && (
                         <CheckCircleOutlinedIcon color="success" />
+                      )}
+                      {reservation.rental_status === "Rechazado" && (
+                        <CancelOutlinedIcon color="error" />
                       )}
                     </span>
                     <span
@@ -229,18 +250,28 @@ export const UsersReservations = () => {
                   </span>
                 )}
               </aside>
+              {reservation.rental_status === "Rechazado" && (
+                <DeleteOutlineOutlinedIcon
+                  color="error"
+                  onClick={() => handleDeleteRental(reservation)}
+                  sx={{ width: "3rem", height: "3rem" }}
+                  className="absolute top-[50%] border shadow-md rounded-md p-2 md:-right-[10%] lg:-right-[9.5%] xl:-right-[8%]"
+                />
+              )}
             </li>
           );
         })}
       </ul>
     </section>
   ) : (
-    <section className="flex flex-col w-full items-center justify-center">
-      <h2 className="text-center font-semibold text-2xl">
+    <section className="flex flex-col w-full items-center min-h-[65vh] md:my-8 md:min-h-[68vh] md:justify-center md:my-0">
+      <h2 className="text-center font-bold text-xl mt-8 mb-8 md:text-2xl md:fixed md:top-24">
         Reservas realizadas por los usuarios
       </h2>
-      <ul className="flex flex-col w-6/12 items-center justify-center p-4 overflow-y-scroll">
-        <p>Aún no has recibido ningúna reserva.</p>
+      <ul className="flex flex-col w-6/12 min-h-[64vh] w-full items-center justify-center p-4">
+        <p className="w-full text-center">
+          Aún no has recibido ningúna reserva.
+        </p>
       </ul>
     </section>
   );

@@ -2,6 +2,7 @@
   width: 100%;
   margin: 0 auto; /* Ocultar desplazamiento horizontal */
   overflow: hidden;
+  position: relative;
 }
 
 .carousel-reservas-inner {
@@ -20,7 +21,7 @@
 
 /* Carousel puntos para desplazarse entre imagenes */
 .carousel-reservas-dots {
-  bottom: 6rem;
+  bottom: 7rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;

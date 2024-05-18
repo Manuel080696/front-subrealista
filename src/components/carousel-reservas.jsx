@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./carousel-reservas.css";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import NewReleasesOutlinedIcon from "@mui/icons-material/NewReleasesOutlined";
+import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 
-export default function CarouselReservas({ images, posts, rentals }) {
+export default function CarouselReservas({ posts, rentals }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dragStartX, setDragStartX] = useState(null);
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
@@ -98,19 +101,34 @@ export default function CarouselReservas({ images, posts, rentals }) {
           className="carousel-reservas-inner z-0"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
-          {posts &&
-            images &&
-            posts.map((rent, index) => {
-              const rentImage = images[index];
-
+          {rentals &&
+            posts?.map((rent, index) => {
               return (
                 <li
                   className="carousel-reservas-item flex flex-col justify-center items-center p-8"
                   key={index}
                 >
-                  <aside className="flex flex-col">
+                  <aside className="flex flex-col relative">
+                    {rentals[index].rental_status === "Pendiente" && (
+                      <NewReleasesOutlinedIcon
+                        color="warning"
+                        className="absolute top-2 left-2 shadow-md bg-white rounded-full"
+                      />
+                    )}
+                    {rentals[index].rental_status === "Aceptado" && (
+                      <CheckCircleOutlinedIcon
+                        color="success"
+                        className="absolute top-2 left-2 shadow-md bg-white rounded-full"
+                      />
+                    )}
+                    {rentals[index].rental_status === "Rechazado" && (
+                      <CancelOutlinedIcon
+                        color="error"
+                        className="absolute top-2 left-2 shadow-md bg-white rounded-full"
+                      />
+                    )}
                     <img
-                      src={rentImage?.rent_image}
+                      src={rent.rent_cover}
                       alt={rent.rent_title}
                       onClick={() => navigate(`/rent/${rent?.rent_id}`)}
                       className={`rounded-3xl aspect-square object-cover ${
@@ -149,16 +167,15 @@ export default function CarouselReservas({ images, posts, rentals }) {
         </span>
       </section>
       <aside className="carousel-reservas-dots absolute">
-        {posts &&
-          posts?.map((_, index) => (
-            <span
-              key={index}
-              className={`res-dot ${
-                index === currentIndex ? "active-dot-res" : ""
-              }`}
-              onClick={() => goToSlide(index)}
-            />
-          ))}
+        {posts?.map((_, index) => (
+          <span
+            key={index}
+            className={`res-dot ${
+              index === currentIndex ? "active-dot-res" : ""
+            }`}
+            onClick={() => goToSlide(index)}
+          />
+        ))}
       </aside>
     </section>
   ) : (
@@ -175,50 +192,60 @@ export default function CarouselReservas({ images, posts, rentals }) {
         >
           {groupIndexes?.map((groupIndex) => (
             <li key={groupIndex} className="flex flex-row min-w-full">
-              {posts &&
-                images &&
-                posts
-                  .slice(groupIndex * 3, groupIndex * 3 + 3)
-                  .map((rent, index) => {
-                    const rentImage = images[groupIndex * 3 + index];
-                    return (
-                      <section
-                        className="carousel-reservas-item flex flex-col max-w-[33%] justify-center items-center py-8"
-                        key={index}
-                      >
-                        <aside className="flex flex-col">
-                          <img
-                            src={rentImage?.rent_image}
-                            alt={rent.rent_title}
-                            onClick={() => navigate(`/rent/${rent.rent_id}`)}
-                            className={`rounded-3xl aspect-square object-cover max-w-56 ${
-                              rentals[groupIndex * 3 + index].rental_end <=
-                              currentDate
-                                ? "filter grayscale"
-                                : ""
-                            }`}
+              {posts
+                .slice(groupIndex * 3, groupIndex * 3 + 3)
+                .map((rent, index) => {
+                  const realIndex = groupIndex * 3 + index;
+
+                  return (
+                    <section
+                      className="carousel-reservas-item flex flex-col max-w-[33%] justify-center items-center py-8"
+                      key={index}
+                    >
+                      <aside className="flex flex-col relative">
+                        {rentals[realIndex].rental_status === "Pendiente" && (
+                          <NewReleasesOutlinedIcon
+                            color="warning"
+                            className="absolute top-2 left-2 shadow-md bg-white rounded-full"
                           />
-                          <aside className="flex flex-col pl-2 pt-2">
-                            <h3 className="font-semibold text-md">
-                              {rent.rent_title}
-                            </h3>
-                            <p className="text-sm">
-                              Ida:{" "}
-                              {formatDate(
-                                rentals[groupIndex * 3 + index].rental_start
-                              )}
-                            </p>
-                            <p className="text-sm">
-                              Vuelta:{" "}
-                              {formatDate(
-                                rentals[groupIndex * 3 + index].rental_end
-                              )}
-                            </p>
-                          </aside>
+                        )}
+                        {rentals[realIndex].rental_status === "Aceptado" && (
+                          <CheckCircleOutlinedIcon
+                            color="success"
+                            className="absolute top-2 left-2 shadow-md bg-white rounded-full"
+                          />
+                        )}
+                        {rentals[realIndex].rental_status === "Rechazado" && (
+                          <CancelOutlinedIcon
+                            color="error"
+                            className="absolute top-2 left-2 shadow-md bg-white rounded-full"
+                          />
+                        )}
+                        <img
+                          src={rent.rent_cover}
+                          alt={rent.rent_title}
+                          onClick={() => navigate(`/rent/${rent.rent_id}`)}
+                          className={`rounded-3xl aspect-square object-cover max-w-56 ${
+                            rentals[realIndex]?.rental_end <= currentDate
+                              ? "filter grayscale"
+                              : ""
+                          }`}
+                        />
+                        <aside className="flex flex-col pl-2 pt-2">
+                          <h3 className="font-semibold text-md">
+                            {rent.rent_title}
+                          </h3>
+                          <p className="text-sm">
+                            Ida: {formatDate(rentals[realIndex]?.rental_start)}
+                          </p>
+                          <p className="text-sm">
+                            Vuelta: {formatDate(rentals[realIndex]?.rental_end)}
+                          </p>
                         </aside>
-                      </section>
-                    );
-                  })}
+                      </aside>
+                    </section>
+                  );
+                })}
             </li>
           ))}
         </ul>

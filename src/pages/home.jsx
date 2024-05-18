@@ -96,7 +96,7 @@ export default function Home({
         className="flex flex-col bg-white fixed top-0 items-center justify-center w-screen mb-5 p-5 border-solid border-b-2 drop-shadow-sm z-10 md:hidden"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <aside className="flex flex-row w-[90%] border-solid border-2 p-2 rounded-full drop-shadow-md bg-white text-black">
+        <aside className="flex  flex-row w-[90%] border-solid border-2 p-2 rounded-full drop-shadow-md bg-white text-black">
           <button className="flex align-center justify-center p-2 rounded-full">
             <SearchIcon className="w-5 h-5 text-black" />
           </button>
@@ -106,7 +106,11 @@ export default function Home({
           </span>
         </aside>
       </section>
-      <p className="mt-24">There are no posts yet...</p>
+      <section className="flex flex-col items-center justify-center min-h-[57vh]">
+        <p className="mt-24 ">
+          No se han encontrado alquileres con esas características...
+        </p>
+      </section>
       {success && success?.length !== 0 ? (
         <Stack
           sx={{

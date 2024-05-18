@@ -22,6 +22,8 @@ export function Header({ handleFilteredPosts, isOpen, setIsOpen }) {
           (reservation) => reservation.rental_status === "Pendiente"
         );
 
+        console.log(pending);
+
         const localStorageData = JSON.parse(
           localStorage.getItem("sawReservations")
         );

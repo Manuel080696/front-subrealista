@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import NewReleasesOutlinedIcon from "@mui/icons-material/NewReleasesOutlined";
 import { getUserDataService } from "../services/get-user";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
@@ -87,9 +86,9 @@ export const AlertMessages = ({ alertsActive, pendingReservations }) => {
         </ul>
       </section>
     ) : (
-      <ul className="custom-scrollbar flex flex-col w-7/12 items-center justify-center p-4 overflow-y-scroll">
+      <ul className="absolute -top-36 left-8 bg-white p-4 w-64 border rounded-md shadow-md z-50 md:top-14 md:right-6 md:left-auto">
         <li className="flex flex-row w-full h-full items-center bg-orange-50 py-4 px-8 justify-between">
-          <p>
+          <p className="w-full">
             No hay nuevas entradas,
             <a href="/users-valorations">
               {" "}

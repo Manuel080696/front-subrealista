@@ -47,25 +47,40 @@ export function PostPage({ setSuccess, success }) {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
-      const postData = await getRentData(id);
-      setPost(postData?.data?.result);
-      setImages(postData?.data?.images);
-      setServices(postData?.data?.services);
-      if (postData && postData?.data?.rentals) {
-        const dateRange = postData?.data?.rentals.map((date) => {
-          const dateStart = formatDate(date.rental_start);
-          const dateEnd = formatDate(date.rental_end);
-          return { dateStart, dateEnd };
-        });
-        setDisableDate(dateRange);
-        if (dateValue) {
-          const daysDifference = dayjs(dateValue[1]).diff(dateValue[0], "day");
-          setDaysDiff(daysDifference + 1);
+    try {
+      const fetchData = async () => {
+        const postData = await getRentData(id);
+        setPost(postData?.data?.result);
+        setImages(postData?.data?.images);
+        setServices(postData?.data?.services);
+        if (postData && postData?.data?.rentals) {
+          postData?.data?.rentals.map((date) => {
+            if (date.rental_status === "Aceptado") {
+              const dateStart = formatDate(date.rental_start);
+              const dateEnd = formatDate(date.rental_end);
+              setDisableDate([
+                ...disableDate,
+                {
+                  dateStart: dateStart,
+                  dateEnd: dateEnd,
+                },
+              ]);
+            }
+          });
+
+          if (dateValue) {
+            const daysDifference = dayjs(dateValue[1]).diff(
+              dateValue[0],
+              "day"
+            );
+            setDaysDiff(daysDifference + 1);
+          }
         }
-      }
-    };
-    fetchData();
+      };
+      fetchData();
+    } catch {
+      console.error("Error al cargar los datos del alquiler.");
+    }
   }, [id, dateValue]);
 
   const handlePassToPayForm = () => {
